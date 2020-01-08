@@ -13,7 +13,7 @@ public class Clientes {
     private String apellido;
     private Date createAt;
     private String email;
-    private String nombre;
+    private String nomb
 
     @Id
     @Column(name = "id", nullable = false)

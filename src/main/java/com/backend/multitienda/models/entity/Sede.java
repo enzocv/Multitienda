@@ -9,8 +9,6 @@ public class Sede {
     private int idSede;
     private String nombreSede;
     private String direccionSede;
-    private int idEmpresa;
-    private int idPais;
     private Collection<Ordencabecera> ordencabecerasByIdSede;
     private Empresa empresaByIdEmpresa;
     private Pais paisByIdPais;
@@ -45,41 +43,19 @@ public class Sede {
         this.direccionSede = direccionSede;
     }
 
-    @Basic
-    @Column(name = "id_empresa", nullable = false)
-    public int getIdEmpresa() {
-        return idEmpresa;
-    }
-
-    public void setIdEmpresa(int idEmpresa) {
-        this.idEmpresa = idEmpresa;
-    }
-
-    @Basic
-    @Column(name = "id_pais", nullable = false)
-    public int getIdPais() {
-        return idPais;
-    }
-
-    public void setIdPais(int idPais) {
-        this.idPais = idPais;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sede sede = (Sede) o;
         return idSede == sede.idSede &&
-                idEmpresa == sede.idEmpresa &&
-                idPais == sede.idPais &&
                 Objects.equals(nombreSede, sede.nombreSede) &&
                 Objects.equals(direccionSede, sede.direccionSede);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idSede, nombreSede, direccionSede, idEmpresa, idPais);
+        return Objects.hash(idSede, nombreSede, direccionSede);
     }
 
     @OneToMany(mappedBy = "sedeByIdSede")

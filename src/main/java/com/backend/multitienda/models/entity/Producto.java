@@ -13,10 +13,6 @@ public class Producto {
     private BigDecimal precioUnitario;
     private BigDecimal precioEmpaque;
     private BigDecimal precioPorMayor;
-    private int idEmpaque;
-    private int idUnidadMedida;
-    private int idEmpresa;
-    private int idCategoriaProducto;
     private boolean igvProducto;
     private Collection<Ordendetalle> ordendetallesByIdProducto;
     private Empaque empaqueByIdEmpaque;
@@ -87,46 +83,6 @@ public class Producto {
     }
 
     @Basic
-    @Column(name = "id_empaque", nullable = false)
-    public int getIdEmpaque() {
-        return idEmpaque;
-    }
-
-    public void setIdEmpaque(int idEmpaque) {
-        this.idEmpaque = idEmpaque;
-    }
-
-    @Basic
-    @Column(name = "id_unidad_medida", nullable = false)
-    public int getIdUnidadMedida() {
-        return idUnidadMedida;
-    }
-
-    public void setIdUnidadMedida(int idUnidadMedida) {
-        this.idUnidadMedida = idUnidadMedida;
-    }
-
-    @Basic
-    @Column(name = "id_empresa", nullable = false)
-    public int getIdEmpresa() {
-        return idEmpresa;
-    }
-
-    public void setIdEmpresa(int idEmpresa) {
-        this.idEmpresa = idEmpresa;
-    }
-
-    @Basic
-    @Column(name = "id_categoria_producto", nullable = false)
-    public int getIdCategoriaProducto() {
-        return idCategoriaProducto;
-    }
-
-    public void setIdCategoriaProducto(int idCategoriaProducto) {
-        this.idCategoriaProducto = idCategoriaProducto;
-    }
-
-    @Basic
     @Column(name = "igv_producto", nullable = false)
     public boolean isIgvProducto() {
         return igvProducto;
@@ -142,10 +98,6 @@ public class Producto {
         if (o == null || getClass() != o.getClass()) return false;
         Producto producto = (Producto) o;
         return idProducto == producto.idProducto &&
-                idEmpaque == producto.idEmpaque &&
-                idUnidadMedida == producto.idUnidadMedida &&
-                idEmpresa == producto.idEmpresa &&
-                idCategoriaProducto == producto.idCategoriaProducto &&
                 igvProducto == producto.igvProducto &&
                 Objects.equals(nombreProducto, producto.nombreProducto) &&
                 Objects.equals(descripcionProducto, producto.descripcionProducto) &&
@@ -156,7 +108,7 @@ public class Producto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProducto, nombreProducto, descripcionProducto, precioUnitario, precioEmpaque, precioPorMayor, idEmpaque, idUnidadMedida, idEmpresa, idCategoriaProducto, igvProducto);
+        return Objects.hash(idProducto, nombreProducto, descripcionProducto, precioUnitario, precioEmpaque, precioPorMayor, igvProducto);
     }
 
     @OneToMany(mappedBy = "productoByIdProducto")

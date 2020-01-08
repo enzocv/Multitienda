@@ -8,7 +8,6 @@ import java.util.Objects;
 @Entity
 public class Usuario {
     private int idUsuario;
-    private int idPermiso;
     private String emailUsuario;
     private String password;
     private Timestamp fechaCreacion;
@@ -24,16 +23,6 @@ public class Usuario {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    @Basic
-    @Column(name = "id_permiso", nullable = false)
-    public int getIdPermiso() {
-        return idPermiso;
-    }
-
-    public void setIdPermiso(int idPermiso) {
-        this.idPermiso = idPermiso;
     }
 
     @Basic
@@ -72,7 +61,6 @@ public class Usuario {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
         return idUsuario == usuario.idUsuario &&
-                idPermiso == usuario.idPermiso &&
                 Objects.equals(emailUsuario, usuario.emailUsuario) &&
                 Objects.equals(password, usuario.password) &&
                 Objects.equals(fechaCreacion, usuario.fechaCreacion);
@@ -80,7 +68,7 @@ public class Usuario {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUsuario, idPermiso, emailUsuario, password, fechaCreacion);
+        return Objects.hash(idUsuario, emailUsuario, password, fechaCreacion);
     }
 
     @OneToMany(mappedBy = "usuarioByIdUsuario")

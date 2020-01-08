@@ -13,7 +13,6 @@ public class Distribuidor {
     private String direccionDistribuidor;
     private String emailDistribuidor;
     private String rucDistribuidor;
-    private int idUsuario;
     private Usuario usuarioByIdUsuario;
     private Collection<Ordencabecera> ordencabecerasByIdDistribuidor;
 
@@ -87,23 +86,12 @@ public class Distribuidor {
         this.rucDistribuidor = rucDistribuidor;
     }
 
-    @Basic
-    @Column(name = "id_usuario", nullable = false)
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    @Override
+   @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Distribuidor that = (Distribuidor) o;
         return idDistribuidor == that.idDistribuidor &&
-                idUsuario == that.idUsuario &&
                 Objects.equals(nombreEmpresaDistribuidor, that.nombreEmpresaDistribuidor) &&
                 Objects.equals(nombreDistribuidor, that.nombreDistribuidor) &&
                 Objects.equals(apellidoDistribuidor, that.apellidoDistribuidor) &&
@@ -114,7 +102,7 @@ public class Distribuidor {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idDistribuidor, nombreEmpresaDistribuidor, nombreDistribuidor, apellidoDistribuidor, direccionDistribuidor, emailDistribuidor, rucDistribuidor, idUsuario);
+        return Objects.hash(idDistribuidor, nombreEmpresaDistribuidor, nombreDistribuidor, apellidoDistribuidor, direccionDistribuidor, emailDistribuidor, rucDistribuidor);
     }
 
     @ManyToOne

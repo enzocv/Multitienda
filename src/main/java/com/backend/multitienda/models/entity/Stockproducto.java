@@ -7,7 +7,6 @@ import java.util.Objects;
 public class Stockproducto {
     private int idStockProducto;
     private int stockProducto;
-    private int idProducto;
     private Producto productoByIdProducto;
 
     @Id
@@ -30,29 +29,18 @@ public class Stockproducto {
         this.stockProducto = stockProducto;
     }
 
-    @Basic
-    @Column(name = "id_producto", nullable = false)
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stockproducto that = (Stockproducto) o;
         return idStockProducto == that.idStockProducto &&
-                stockProducto == that.stockProducto &&
-                idProducto == that.idProducto;
+                stockProducto == that.stockProducto;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idStockProducto, stockProducto, idProducto);
+        return Objects.hash(idStockProducto, stockProducto);
     }
 
     @ManyToOne

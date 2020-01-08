@@ -7,7 +7,6 @@ import java.util.Objects;
 @Entity
 public class Ordendetalle {
     private int idOrdenDetalle;
-    private int idProducto;
     private int cantidadProducto;
     private Collection<Ordencabecera> ordencabecerasByIdOrdenDetalle;
     private Producto productoByIdProducto;
@@ -20,16 +19,6 @@ public class Ordendetalle {
 
     public void setIdOrdenDetalle(int idOrdenDetalle) {
         this.idOrdenDetalle = idOrdenDetalle;
-    }
-
-    @Basic
-    @Column(name = "id_producto", nullable = false)
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
     }
 
     @Basic
@@ -48,13 +37,12 @@ public class Ordendetalle {
         if (o == null || getClass() != o.getClass()) return false;
         Ordendetalle that = (Ordendetalle) o;
         return idOrdenDetalle == that.idOrdenDetalle &&
-                idProducto == that.idProducto &&
                 cantidadProducto == that.cantidadProducto;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrdenDetalle, idProducto, cantidadProducto);
+        return Objects.hash(idOrdenDetalle, cantidadProducto);
     }
 
     @OneToMany(mappedBy = "ordendetalleByIdOrdenDetalle")

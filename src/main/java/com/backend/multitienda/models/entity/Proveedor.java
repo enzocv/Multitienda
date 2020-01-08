@@ -9,8 +9,6 @@ public class Proveedor {
     private String nombreProveedor;
     private String apellidoProveedor;
     private String rucProveedor;
-    private int idUsuario;
-    private int idEmpresa;
     private Usuario usuarioByIdUsuario;
     private Empresa empresaByIdEmpresa;
 
@@ -54,34 +52,12 @@ public class Proveedor {
         this.rucProveedor = rucProveedor;
     }
 
-    @Basic
-    @Column(name = "id_usuario", nullable = false)
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    @Basic
-    @Column(name = "id_empresa", nullable = false)
-    public int getIdEmpresa() {
-        return idEmpresa;
-    }
-
-    public void setIdEmpresa(int idEmpresa) {
-        this.idEmpresa = idEmpresa;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Proveedor proveedor = (Proveedor) o;
         return idProveedor == proveedor.idProveedor &&
-                idUsuario == proveedor.idUsuario &&
-                idEmpresa == proveedor.idEmpresa &&
                 Objects.equals(nombreProveedor, proveedor.nombreProveedor) &&
                 Objects.equals(apellidoProveedor, proveedor.apellidoProveedor) &&
                 Objects.equals(rucProveedor, proveedor.rucProveedor);
@@ -89,7 +65,7 @@ public class Proveedor {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProveedor, nombreProveedor, apellidoProveedor, rucProveedor, idUsuario, idEmpresa);
+        return Objects.hash(idProveedor, nombreProveedor, apellidoProveedor, rucProveedor);
     }
 
     @ManyToOne

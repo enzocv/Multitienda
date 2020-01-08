@@ -6,7 +6,6 @@ import java.util.Objects;
 @Entity
 public class Productoimagen {
     private int idProductoImagen;
-    private int idProducto;
     private String imagenProducto;
     private Producto productoByIdProducto;
 
@@ -18,16 +17,6 @@ public class Productoimagen {
 
     public void setIdProductoImagen(int idProductoImagen) {
         this.idProductoImagen = idProductoImagen;
-    }
-
-    @Basic
-    @Column(name = "id_producto", nullable = false)
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
     }
 
     @Basic
@@ -46,13 +35,12 @@ public class Productoimagen {
         if (o == null || getClass() != o.getClass()) return false;
         Productoimagen that = (Productoimagen) o;
         return idProductoImagen == that.idProductoImagen &&
-                idProducto == that.idProducto &&
                 Objects.equals(imagenProducto, that.imagenProducto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProductoImagen, idProducto, imagenProducto);
+        return Objects.hash(idProductoImagen, imagenProducto);
     }
 
     @ManyToOne

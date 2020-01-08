@@ -8,10 +8,6 @@ import java.util.Objects;
 @Entity
 public class Ordencabecera {
     private int idOrdenCabecera;
-    private int idOrdenDetalle;
-    private int idDistribuidor;
-    private int idSede;
-    private int idEstadoOrden;
     private Date fechaOrdenRealizada;
     private Date fechaPagoRealizada;
     private BigDecimal precioTotalOrdenCabecera;
@@ -29,46 +25,6 @@ public class Ordencabecera {
 
     public void setIdOrdenCabecera(int idOrdenCabecera) {
         this.idOrdenCabecera = idOrdenCabecera;
-    }
-
-    @Basic
-    @Column(name = "id_orden_detalle", nullable = false)
-    public int getIdOrdenDetalle() {
-        return idOrdenDetalle;
-    }
-
-    public void setIdOrdenDetalle(int idOrdenDetalle) {
-        this.idOrdenDetalle = idOrdenDetalle;
-    }
-
-    @Basic
-    @Column(name = "id_distribuidor", nullable = false)
-    public int getIdDistribuidor() {
-        return idDistribuidor;
-    }
-
-    public void setIdDistribuidor(int idDistribuidor) {
-        this.idDistribuidor = idDistribuidor;
-    }
-
-    @Basic
-    @Column(name = "id_sede", nullable = false)
-    public int getIdSede() {
-        return idSede;
-    }
-
-    public void setIdSede(int idSede) {
-        this.idSede = idSede;
-    }
-
-    @Basic
-    @Column(name = "id_estado_orden", nullable = false)
-    public int getIdEstadoOrden() {
-        return idEstadoOrden;
-    }
-
-    public void setIdEstadoOrden(int idEstadoOrden) {
-        this.idEstadoOrden = idEstadoOrden;
     }
 
     @Basic
@@ -117,10 +73,6 @@ public class Ordencabecera {
         if (o == null || getClass() != o.getClass()) return false;
         Ordencabecera that = (Ordencabecera) o;
         return idOrdenCabecera == that.idOrdenCabecera &&
-                idOrdenDetalle == that.idOrdenDetalle &&
-                idDistribuidor == that.idDistribuidor &&
-                idSede == that.idSede &&
-                idEstadoOrden == that.idEstadoOrden &&
                 Objects.equals(fechaOrdenRealizada, that.fechaOrdenRealizada) &&
                 Objects.equals(fechaPagoRealizada, that.fechaPagoRealizada) &&
                 Objects.equals(precioTotalOrdenCabecera, that.precioTotalOrdenCabecera) &&
@@ -129,7 +81,7 @@ public class Ordencabecera {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrdenCabecera, idOrdenDetalle, idDistribuidor, idSede, idEstadoOrden, fechaOrdenRealizada, fechaPagoRealizada, precioTotalOrdenCabecera, comenarioOrdenCabecera);
+        return Objects.hash(idOrdenCabecera, fechaOrdenRealizada, fechaPagoRealizada, precioTotalOrdenCabecera, comenarioOrdenCabecera);
     }
 
     @ManyToOne

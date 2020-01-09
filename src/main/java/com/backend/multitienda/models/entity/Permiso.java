@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -8,6 +10,7 @@ import java.util.Objects;
 public class Permiso {
     private int idPermiso;
     private String descripcionPermiso;
+    @JsonIgnore
     private Collection<Usuario> usuariosByIdPermiso;
 
     @Id
@@ -44,7 +47,7 @@ public class Permiso {
         return Objects.hash(idPermiso, descripcionPermiso);
     }
 
-    @OneToMany(mappedBy = "permisoByIdPermiso")
+    @OneToMany(mappedBy = "permiso")
     public Collection<Usuario> getUsuariosByIdPermiso() {
         return usuariosByIdPermiso;
     }

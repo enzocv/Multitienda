@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -11,9 +13,11 @@ public class Usuario {
     private String emailUsuario;
     private String password;
     private Timestamp fechaCreacion;
+    private Permiso permiso;
+
+    @JsonIgnore
     private Collection<Distribuidor> distribuidorsByIdUsuario;
     private Collection<Proveedor> proveedorsByIdUsuario;
-    private Permiso permisoByIdPermiso;
 
     @Id
     @Column(name = "id_usuario", nullable = false)
@@ -72,6 +76,7 @@ public class Usuario {
     }
 
     @OneToMany(mappedBy = "usuarioByIdUsuario")
+    @JsonIgnore
     public Collection<Distribuidor> getDistribuidorsByIdUsuario() {
         return distribuidorsByIdUsuario;
     }
@@ -81,6 +86,7 @@ public class Usuario {
     }
 
     @OneToMany(mappedBy = "usuarioByIdUsuario")
+    @JsonIgnore
     public Collection<Proveedor> getProveedorsByIdUsuario() {
         return proveedorsByIdUsuario;
     }
@@ -91,11 +97,11 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = false)
-    public Permiso getPermisoByIdPermiso() {
-        return permisoByIdPermiso;
+    public Permiso getPermiso() {
+        return permiso;
     }
 
-    public void setPermisoByIdPermiso(Permiso permisoByIdPermiso) {
-        this.permisoByIdPermiso = permisoByIdPermiso;
+    public void setPermiso(Permiso permiso) {
+        this.permiso = permiso;
     }
 }

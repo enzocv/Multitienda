@@ -13,6 +13,14 @@ public class Permiso {
     @JsonIgnore
     private Collection<Usuario> usuariosByIdPermiso;
 
+    public Permiso(){}
+
+    public Permiso(int idPermiso, String descripcionPermiso) {
+        super();
+        this.idPermiso = idPermiso;
+        this.descripcionPermiso = descripcionPermiso;
+    }
+
     @Id
     @Column(name = "id_permiso", nullable = false)
     public int getIdPermiso() {

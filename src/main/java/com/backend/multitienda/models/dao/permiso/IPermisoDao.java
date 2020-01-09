@@ -1,7 +1,12 @@
 package com.backend.multitienda.models.dao.permiso;
 
 import com.backend.multitienda.models.entity.Permiso;
+import com.backend.multitienda.models.entity.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface IPermisoDao extends CrudRepository<Permiso,Integer> {
+@Repository
+public interface IPermisoDao extends JpaRepository<Permiso,Integer> {
 }

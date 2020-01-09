@@ -10,4 +10,8 @@ public interface IUsuarioService {
     public List<Usuario> findAdll();
 
     public void save(Usuario usuario);
+
+    public boolean existsById(Integer idUsuario);
+
+    Optional<Usuario> findById(Integer idUsuario);
 }

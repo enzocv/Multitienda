@@ -14,4 +14,6 @@ public interface IUsuarioService {
     public boolean existsById(Integer idUsuario);
 
     Optional<Usuario> findById(Integer idUsuario);
+
+    public void deleteById(Integer idUsuario);
 }

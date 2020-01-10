@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 public class Usuario {
@@ -51,6 +52,7 @@ public class Usuario {
 
     @Basic
     @Column(name = "fecha_creacion", nullable = true)
+
     public Timestamp getFechaCreacion() {
         return fechaCreacion;
     }
@@ -102,6 +104,7 @@ public class Usuario {
     }
 
     public void setPermiso(Permiso permiso) {
+
         this.permiso = permiso;
     }
 }

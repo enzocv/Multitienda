@@ -33,4 +33,9 @@ public class IUsuarioImpl implements IUsuarioService {
     public Optional<Usuario> findById(Integer idUsuario) {
         return usuarioDao.findById(idUsuario);
     }
+
+    @Override
+    public void deleteById(Integer idUsuario) {
+        usuarioDao.deleteById(idUsuario);
+    }
 }

@@ -12,9 +12,11 @@ public class Empresa {
     private String telefonoEmpresa;
     private String direccionEmpresa;
     private String emailEmpresa;
+    //private Categoriaempresa categoriaempresa;
     private Collection<Producto> productosByIdEmpresa;
     private Collection<Proveedor> proveedorsByIdEmpresa;
     private Collection<Sede> sedesByIdEmpresa;
+    //private Collection<Categoriaempresa> categoriaByCategoriaEmpresa;
 
     @Id
     @Column(name = "id_empresa", nullable = false)

@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/permiso")
+@RequestMapping("/api/permisos")
 public class PermisoController {
 
     @Autowired
     private IPermisoService permisoService;
 
-    @GetMapping("/listar")
-    public List<Permiso> listar(){
+    @GetMapping
+    public List<Permiso> getPermisos(){
         return permisoService.findAll();
     }
+
+
+
 }

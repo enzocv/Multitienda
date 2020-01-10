@@ -12,8 +12,13 @@ import java.util.Optional;
 @Service
 public class PermisoServiceImpl implements IPermisoService {
 
+
+    private final IPermisoDao permisoDao;
+
     @Autowired
-    private IPermisoDao permisoDao;
+    public PermisoServiceImpl(IPermisoDao permisoDao) {
+        this.permisoDao = permisoDao;
+    }
 
     @Override
     public List<Permiso> findAll() {

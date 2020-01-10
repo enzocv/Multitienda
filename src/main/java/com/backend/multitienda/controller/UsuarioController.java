@@ -6,6 +6,8 @@ import com.backend.multitienda.models.entity.Permiso;
 import com.backend.multitienda.models.entity.Usuario;
 import com.backend.multitienda.models.service.permiso.IPermisoService;
 import com.backend.multitienda.models.service.usuario.IUsuarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@Api(value = "Servicio de usuario", description = "Esta API permite realizar las operaciones básicas de los Usuarios")
 @RestController //notacion para un API REST
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
@@ -38,6 +40,7 @@ public class UsuarioController {
      * @return List<Usuario>
      */
     @GetMapping
+    @ApiOperation(value = "Listar usuarios", notes = "Lista todos los usuarios")
     public List<Usuario> listar(){
         return usuarioService.findAdll();
     }

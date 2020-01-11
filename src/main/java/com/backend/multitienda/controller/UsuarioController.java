@@ -1,5 +1,6 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.dao.permiso.IPermisoDao;
 import com.backend.multitienda.models.dao.usuario.IUsuarioDao;
 import com.backend.multitienda.models.entity.Permiso;
@@ -14,80 +15,86 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Api(value = "Servicio de usuario", description = "Esta API permite realizar las operaciones básicas de los Usuarios")
+@Api(value = "Servicio de usuario 2", description = "Esta API permite realizar las operaciones básicas de los " +
+  "Usuarios")
 @RestController //notacion para un API REST
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    @Autowired
-    private IUsuarioDao usuarioDao;
+  @Autowired
+  private IUsuarioDao usuarioDao;
 
-    @Autowired
-    private IPermisoDao permisoDao;
+  @Autowired
+  private IPermisoDao permisoDao;
 
-    @Autowired
-    private IPermisoService permisoService;
+  @Autowired
+  private IPermisoService permisoService;
 
-    @Autowired
-    private IUsuarioService usuarioService;
+  @Autowired
+  private IUsuarioService usuarioService;
 
-    /**
-     * Listar a todos los Usuarios
-     * @return List<Usuario>
-     */
-    @GetMapping
-    @ApiOperation(value = "Listar usuarios", notes = "Lista todos los usuarios")
-    public List<Usuario> listar(){
-        return usuarioService.findAdll();
-    }
+  @GetMapping
+  @ApiOperation(value = "Listar usuarios", notes = "Lista todos los usuarios")
+  public List<Usuario> getAllUsuarios() {
+    return usuarioService.findAdll();
+  }
 
-    /**
-     * Crear a un nuevo Usuario
-     * @param rqUsuario     Modelo Usuario con los datos para guardar
-     * @param //idPermiso     identificador de la tabla Permiso de tipo entero
-     * @return  Usuario
-     */
-    @PostMapping("/{idPermiso}")
-    public ResponseEntity crear(@RequestBody Usuario rqUsuario,
-                                @Valid @PathVariable final Integer idPermiso){
 
-        try{
-            rqUsuario.setPermiso(permisoService.findByIdPermiso(idPermiso).get());
+  @GetMapping("/{idUsuario}")
+  @ApiOperation(value = "Obtener un usuario", notes = "Obtiene un usuario por su id")
+  public ResponseEntity<Usuario> getUsuarioById(
+    @PathVariable(value = "idUsuario") int idUsuario) throws ResourceNotFoundException {
 
-            usuarioService.save(rqUsuario);
+    Usuario usuario = usuarioDao.findById(idUsuario).orElseThrow(() ->
+      new ResourceNotFoundException("No se encontró usuario con este id: " + idUsuario)
+    );
 
-            return ResponseEntity.ok(rqUsuario);
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body("Error al guardar Usuario:  " + e.getMessage());
-        }
-    }
+    return ResponseEntity.ok().body(usuario);
+  }
 
-    //rqUsuario tiene el campo Permiso como null, es necesario obtenerlo de nuevo
-    //o agregar uno nuevo
-    @PutMapping("/{idUsuario}/permiso/{idPermiso}")
-    public ResponseEntity modificar(@RequestBody Usuario rqUsuario, @Valid @PathVariable final Integer idPermiso, @Valid @PathVariable final Integer idUsuario){
-        try{
-            rqUsuario.setIdUsuario(idUsuario);
+  @PostMapping
+  @ApiOperation(value = "Crear un usuario")
+  public Usuario addUsuario(@RequestBody Usuario rqUsuario) {
+    return usuarioDao.save(rqUsuario);
+  }
 
-            rqUsuario.setPermiso(permisoService.findByIdPermiso(idPermiso).get());
+  @PutMapping("/{idUsuario}")
+  @ApiOperation(value = "Actualizar usuario")
+  public ResponseEntity<Usuario> updateUsuario(
+    @Valid @PathVariable(value = "idUsuario") Integer idUsuario,
+    @RequestBody Usuario rqUsuario) throws ResourceNotFoundException {
 
-            usuarioService.save(rqUsuario);
+    Usuario usuario = usuarioDao.findById(idUsuario).orElseThrow(() ->
+      new ResourceNotFoundException("No se encontró usuario con este id")
+    );
 
-            return ResponseEntity.ok(rqUsuario);
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body("Error al guardar Usuario:  " + e.getMessage());
-        }
-    }
+    usuario.setEmailUsuario(rqUsuario.getEmailUsuario());
+    usuario.setPassword(rqUsuario.getPassword());
+    usuario.setPermiso(rqUsuario.getPermiso());
 
-    @DeleteMapping("/{idUsuario}")
-    public void eliminar(@PathVariable Integer idUsuario){
-        usuarioService.deleteById(idUsuario);
-    }
+    final Usuario updatedUsuario = usuarioDao.save(usuario);
+    return ResponseEntity.ok(updatedUsuario);
 
+  }
+
+
+  @DeleteMapping("/{idUsuario}")
+  @ApiOperation(value = "Eliminar usuario")
+  public Map<String, Boolean> deleteUsuario(
+    @PathVariable(value = "idUsuario") Integer idUsuario) throws ResourceNotFoundException {
+
+    Usuario usuario = usuarioDao.findById(idUsuario).orElseThrow(() ->
+      new ResourceNotFoundException("No se encontró usuario con este id"));
+
+    usuarioDao.delete(usuario);
+    Map<String, Boolean> response = new HashMap<>();
+    response.put("Eliminado", Boolean.TRUE);
+    return response;
+  }
 }

@@ -1,6 +1,7 @@
 package com.backend.multitienda.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Entity
+//@DynamicUpdate
 public class Usuario {
     private int idUsuario;
     private String emailUsuario;
@@ -31,7 +33,7 @@ public class Usuario {
     }
 
     @Basic
-    @Column(name = "email_usuario", nullable = false, length = -1)
+    @Column(name = "email_usuario", nullable = true, length = -1)
     public String getEmailUsuario() {
         return emailUsuario;
     }
@@ -41,7 +43,7 @@ public class Usuario {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = -1)
+    @Column(name = "password", nullable = true, length = -1)
     public String getPassword() {
         return password;
     }
@@ -98,7 +100,7 @@ public class Usuario {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = false)
+    @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = true)
     public Permiso getPermiso() {
         return permiso;
     }

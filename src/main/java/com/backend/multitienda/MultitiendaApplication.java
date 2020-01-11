@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MultitiendaApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(MultitiendaApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(MultitiendaApplication.class, args);
+  }
 
 }

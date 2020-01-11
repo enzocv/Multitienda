@@ -1,21 +1,22 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
 @Entity
-//@DynamicUpdate
-public class Usuario {
+public class Usuario extends Auditable<String> {
     private int idUsuario;
     private String emailUsuario;
     private String password;
-    private Timestamp fechaCreacion;
     private Permiso permiso;
 
     @JsonIgnore
@@ -52,17 +53,6 @@ public class Usuario {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "fecha_creacion", nullable = true)
-
-    public Timestamp getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Timestamp fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,13 +60,12 @@ public class Usuario {
         Usuario usuario = (Usuario) o;
         return idUsuario == usuario.idUsuario &&
                 Objects.equals(emailUsuario, usuario.emailUsuario) &&
-                Objects.equals(password, usuario.password) &&
-                Objects.equals(fechaCreacion, usuario.fechaCreacion);
+                Objects.equals(password, usuario.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUsuario, emailUsuario, password, fechaCreacion);
+        return Objects.hash(idUsuario, emailUsuario, password);
     }
 
     @OneToMany(mappedBy = "usuarioByIdUsuario")

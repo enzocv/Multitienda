@@ -51,13 +51,9 @@ public class UsuarioController {
      * @param //idPermiso     identificador de la tabla Permiso de tipo entero
      * @return  Usuario
      */
-    @PostMapping("/{idPermiso}")
-    public ResponseEntity crear(@RequestBody Usuario rqUsuario,
-                                @Valid @PathVariable final Integer idPermiso){
-
+    @PostMapping
+    public ResponseEntity crear(@RequestBody Usuario rqUsuario){
         try{
-            rqUsuario.setPermiso(permisoService.findByIdPermiso(idPermiso).get());
-
             usuarioService.save(rqUsuario);
 
             return ResponseEntity.ok(rqUsuario);

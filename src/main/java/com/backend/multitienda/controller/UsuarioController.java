@@ -89,5 +89,4 @@ public class UsuarioController {
     public void eliminar(@PathVariable Integer idUsuario){
         usuarioService.deleteById(idUsuario);
     }
-
 }

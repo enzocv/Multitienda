@@ -1,7 +1,6 @@
 package com.backend.multitienda.models.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -12,11 +11,8 @@ public class Empresa {
     private String telefonoEmpresa;
     private String direccionEmpresa;
     private String emailEmpresa;
-    //private Categoriaempresa categoriaempresa;
-    private Collection<Producto> productosByIdEmpresa;
-    private Collection<Proveedor> proveedorsByIdEmpresa;
-    private Collection<Sede> sedesByIdEmpresa;
-    //private Collection<Categoriaempresa> categoriaByCategoriaEmpresa;
+    //private int idCategoriaEmpresa;
+    private Categoriaempresa categoriaempresaByIdEmpresa;
 
     @Id
     @Column(name = "id_empresa", nullable = false)
@@ -78,12 +74,23 @@ public class Empresa {
         this.emailEmpresa = emailEmpresa;
     }
 
+   /* @Basic
+    @Column(name = "id_categoria_empresa", nullable = false)
+    public int getIdCategoriaEmpresa() {
+        return idCategoriaEmpresa;
+    }
+
+    public void setIdCategoriaEmpresa(int idCategoriaEmpresa) {
+        this.idCategoriaEmpresa = idCategoriaEmpresa;
+    }
+*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Empresa empresa = (Empresa) o;
         return idEmpresa == empresa.idEmpresa &&
+                //idCategoriaEmpresa == empresa.idCategoriaEmpresa &&
                 Objects.equals(nombreEmpresa, empresa.nombreEmpresa) &&
                 Objects.equals(rucEmpresa, empresa.rucEmpresa) &&
                 Objects.equals(telefonoEmpresa, empresa.telefonoEmpresa) &&
@@ -93,33 +100,16 @@ public class Empresa {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEmpresa, nombreEmpresa, rucEmpresa, telefonoEmpresa, direccionEmpresa, emailEmpresa);
+        return Objects.hash(idEmpresa, nombreEmpresa, rucEmpresa, telefonoEmpresa, direccionEmpresa); //, idCategoriaEmpresa);
     }
 
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
-    public Collection<Producto> getProductosByIdEmpresa() {
-        return productosByIdEmpresa;
+    @OneToOne
+    @JoinColumn(name = "id_empresa", referencedColumnName = "id_categoria_empresa", nullable = false)
+    public Categoriaempresa getCategoriaempresaByIdEmpresa() {
+        return categoriaempresaByIdEmpresa;
     }
 
-    public void setProductosByIdEmpresa(Collection<Producto> productosByIdEmpresa) {
-        this.productosByIdEmpresa = productosByIdEmpresa;
-    }
-
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
-    public Collection<Proveedor> getProveedorsByIdEmpresa() {
-        return proveedorsByIdEmpresa;
-    }
-
-    public void setProveedorsByIdEmpresa(Collection<Proveedor> proveedorsByIdEmpresa) {
-        this.proveedorsByIdEmpresa = proveedorsByIdEmpresa;
-    }
-
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
-    public Collection<Sede> getSedesByIdEmpresa() {
-        return sedesByIdEmpresa;
-    }
-
-    public void setSedesByIdEmpresa(Collection<Sede> sedesByIdEmpresa) {
-        this.sedesByIdEmpresa = sedesByIdEmpresa;
+    public void setCategoriaempresaByIdEmpresa(Categoriaempresa categoriaempresaByIdEmpresa) {
+        this.categoriaempresaByIdEmpresa = categoriaempresaByIdEmpresa;
     }
 }

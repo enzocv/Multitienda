@@ -19,8 +19,8 @@ public class ICategoriaEmpresaServiceImpl implements ICategoriaEmpresaService {
     }
 
     @Override
-    public void save(Categoriaempresa categoriaEmpresa) {
-        categoriaEmpresaDao.save(categoriaEmpresa);
+    public Categoriaempresa save(Categoriaempresa categoriaEmpresa) {
+        return categoriaEmpresaDao.save(categoriaEmpresa);
     }
 
     @Override
@@ -36,5 +36,10 @@ public class ICategoriaEmpresaServiceImpl implements ICategoriaEmpresaService {
     @Override
     public void deleteById(Integer idCategoriaEmpresa) {
         categoriaEmpresaDao.deleteById(idCategoriaEmpresa);
+    }
+
+    @Override
+    public void delete(Categoriaempresa categoriaempresa) {
+        categoriaEmpresaDao.delete(categoriaempresa);
     }
 }

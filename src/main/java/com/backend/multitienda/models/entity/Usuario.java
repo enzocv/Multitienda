@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ public class Usuario {
     private int idUsuario;
     private String emailUsuario;
     private String password;
-    private Timestamp fechaCreacion;
+    private Date fechaCreacion;
     private Permiso permiso;
 
     @JsonIgnore
@@ -55,11 +56,11 @@ public class Usuario {
     @Basic
     @Column(name = "fecha_creacion", nullable = true)
 
-    public Timestamp getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Timestamp fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

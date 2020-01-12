@@ -8,8 +8,9 @@ import java.util.Optional;
 public interface ICategoriaEmpresaService {
 
     public List<Categoriaempresa> findAll();
-    public void save(Categoriaempresa categoriaEmpresa);
+    public Categoriaempresa save(Categoriaempresa categoriaEmpresa);
     public boolean existById(Integer idCategoriaEmpresa);
     Optional<Categoriaempresa> findById(Integer idCategoriaEmpresa);
     public void deleteById(Integer idCategoriaEmpresa);
+    public void delete(Categoriaempresa categoriaempresa);
 }

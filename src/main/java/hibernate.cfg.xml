@@ -26,6 +26,8 @@
         <mapping class="com.backend.multitienda.models.entity.Stockproducto"/>
         <mapping class="com.backend.multitienda.models.entity.Unidadmedida"/>
         <mapping class="com.backend.multitienda.models.entity.Usuario"/>
+        <mapping class="com.backend.multitienda.histories.PermisoHistory"/>
+        <mapping class="com.backend.multitienda.histories.UsuarioHistory"/>
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 

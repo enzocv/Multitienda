@@ -78,7 +78,7 @@ public class UsuarioController {
 
     usuario.setEmailUsuario(rqUsuario.getEmailUsuario());
     //    usuario.setPassword(rqUsuario.getPassword());
-    //    usuario.setPermiso(rqUsuario.getPermiso());
+    usuario.setPermiso(rqUsuario.getPermiso());
 
     final Usuario updatedUsuario = usuarioDao.save(usuario);
     return ResponseEntity.ok(updatedUsuario);

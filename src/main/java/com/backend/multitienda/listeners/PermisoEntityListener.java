@@ -1,9 +1,7 @@
 package com.backend.multitienda.listeners;
 
-import com.backend.multitienda.histories.PermisoHistory;
-import com.backend.multitienda.histories.UsuarioHistory;
+import com.backend.multitienda.historiesLogs.PermisoHistory;
 import com.backend.multitienda.models.entity.Permiso;
-import com.backend.multitienda.models.entity.Usuario;
 import com.backend.multitienda.utils.BeanUtil;
 
 import javax.persistence.EntityManager;

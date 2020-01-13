@@ -16,14 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 @Api(
-        value = "Servicio de categoria Empresa",
-        description = "Esta API permite realizar las " +
-                "operaciones básicas de las Cateogiras de las Empresas"
+  value = "Servicio de categoria Empresa",
+  description = "Esta API permite realizar las " +
+    "operaciones básicas de las Cateogiras de las Empresas"
 )
 @RestController
 @RequestMapping("/api/categoriaempresas")
 public class CategoriaEmpresaController {
-
     @Autowired
     private ICategoriaEmpresaService categoriaEmpresaService;
 
@@ -70,22 +69,21 @@ public class CategoriaEmpresaController {
             return ResponseEntity.badRequest().body(
                     "No se encontro ninguna Categoria con el ID: "
                     + categoriaempresa.getIdCategoriaEmpresa());
-        try{
+        try {
             categoriaEmpresaService.save(categoriaempresa);
-
             return ResponseEntity.ok(categoriaempresa);
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(
-                    "Error al modificar la Categoria de la Empresa: "
-                    + e.getMessage()
-            );
+                    "No se encontro ninguna Categoria con el ID: "
+                            + categoriaempresa.getIdCategoriaEmpresa());
         }
     }
 
     @DeleteMapping("/{idCategoriaEmpresa}")
     @ApiOperation(value = "Eliminar categoria empresa")
-    public Map<String, Boolean> deleteCategoriaEmpresa(@Valid @PathVariable Integer idCategoriaEmpresa) throws ResourceNotFoundException{
+    public Map<String, Boolean> deleteCategoriaEmpresa(@Valid @PathVariable Integer idCategoriaEmpresa)
+            throws ResourceNotFoundException{
         Categoriaempresa eliminarCategoria = categoriaEmpresaService
                                             .findById(idCategoriaEmpresa)
                                             .orElseThrow(

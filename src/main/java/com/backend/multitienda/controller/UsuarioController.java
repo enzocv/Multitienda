@@ -1,16 +1,11 @@
 package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
-import com.backend.multitienda.models.dao.permiso.IPermisoDao;
-import com.backend.multitienda.models.dao.usuario.IUsuarioDao;
-import com.backend.multitienda.models.entity.Permiso;
 import com.backend.multitienda.models.entity.Usuario;
-import com.backend.multitienda.models.service.permiso.IPermisoService;
-import com.backend.multitienda.models.service.usuario.IUsuarioService;
+import com.backend.multitienda.repositories.IUsuarioRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +13,6 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Api(value = "Servicio de usuario", description = "Esta API permite realizar las operaciones básicas de los " +
   "Usuarios")
@@ -28,21 +21,12 @@ import java.util.stream.Collectors;
 public class UsuarioController {
 
   @Autowired
-  private IUsuarioDao usuarioDao;
-
-  @Autowired
-  private IPermisoDao permisoDao;
-
-  @Autowired
-  private IPermisoService permisoService;
-
-  @Autowired
-  private IUsuarioService usuarioService;
+  private IUsuarioRepository usuarioRepository;
 
   @GetMapping
   @ApiOperation(value = "Listar usuarios", notes = "Lista todos los usuarios")
   public List<Usuario> getAllUsuarios() {
-    return usuarioService.findAdll();
+    return usuarioRepository.findAll();
   }
 
 
@@ -51,7 +35,7 @@ public class UsuarioController {
   public ResponseEntity<Usuario> getUsuarioById(
     @PathVariable(value = "idUsuario") int idUsuario) throws ResourceNotFoundException {
 
-    Usuario usuario = usuarioDao.findById(idUsuario)
+    Usuario usuario = usuarioRepository.findById(idUsuario)
       .orElseThrow(() ->
         new ResourceNotFoundException("No se encontró usuario con este id: " + idUsuario)
       );
@@ -62,7 +46,7 @@ public class UsuarioController {
   @PostMapping
   @ApiOperation(value = "Crear un usuario")
   public Usuario addUsuario(@RequestBody Usuario rqUsuario) {
-    return usuarioDao.save(rqUsuario);
+    return usuarioRepository.save(rqUsuario);
   }
 
   @PutMapping("/{idUsuario}")
@@ -71,7 +55,7 @@ public class UsuarioController {
     @Valid @PathVariable(value = "idUsuario") Integer idUsuario,
     @RequestBody Usuario rqUsuario) throws ResourceNotFoundException {
 
-    Usuario usuario = usuarioDao.findById(idUsuario)
+    Usuario usuario = usuarioRepository.findById(idUsuario)
       .orElseThrow(() ->
         new ResourceNotFoundException("No se encontró usuario con este id")
       );
@@ -80,7 +64,7 @@ public class UsuarioController {
     //    usuario.setPassword(rqUsuario.getPassword());
     usuario.setPermiso(rqUsuario.getPermiso());
 
-    final Usuario updatedUsuario = usuarioDao.save(usuario);
+    final Usuario updatedUsuario = usuarioRepository.save(usuario);
     return ResponseEntity.ok(updatedUsuario);
 
   }
@@ -91,12 +75,12 @@ public class UsuarioController {
   public Map<String, Boolean> deleteUsuario(
     @PathVariable(value = "idUsuario") Integer idUsuario) throws ResourceNotFoundException {
 
-    Usuario usuario = usuarioDao.findById(idUsuario)
+    Usuario usuario = usuarioRepository.findById(idUsuario)
       .orElseThrow(() ->
         new ResourceNotFoundException("No se encontró usuario con este id")
       );
 
-    usuarioDao.delete(usuario);
+    usuarioRepository.delete(usuario);
     Map<String, Boolean> response = new HashMap<>();
     response.put("Eliminado", Boolean.TRUE);
     return response;

@@ -2,10 +2,9 @@ package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.Categoriaempresa;
-import com.backend.multitienda.models.service.categoriaempresa.ICategoriaEmpresaService;
+import com.backend.multitienda.repositories.ICategoriaEmpresaRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,23 +14,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(
-  value = "Servicio de categoria Empresa",
-  description = "Esta API permite realizar las " +
-    "operaciones básicas de las Cateogiras de las Empresas"
-)
+@Api(value = "Servicio de categoria Empresa",description = "Esta API permite realizar las " +
+    "operaciones básicas de las Cateogiras de las Empresas")
 @RestController
 @RequestMapping("/api/categoriaempresas")
 public class CategoriaEmpresaController {
+
     @Autowired
-    private ICategoriaEmpresaService categoriaEmpresaService;
+    private ICategoriaEmpresaRepository categoriaEmpresaRepository;
 
     //region Listar
     @GetMapping
     @ApiOperation(value = "Listar categoria empresas",
                     notes = "Listar todas las categorias de las empresas")
     public List<Categoriaempresa> getAllUsuarios(){
-        return categoriaEmpresaService.findAll();
+        return categoriaEmpresaRepository.findAll();
     }
     //endregion
 
@@ -43,7 +40,7 @@ public class CategoriaEmpresaController {
     public ResponseEntity<Categoriaempresa> getCategoriaEmpresaById(
             @PathVariable int idCategoriaEmpresa
     ) throws ResourceNotFoundException{
-        Categoriaempresa categoriaEncontrada = categoriaEmpresaService.findById(idCategoriaEmpresa).orElseThrow(
+        Categoriaempresa categoriaEncontrada = categoriaEmpresaRepository.findById(idCategoriaEmpresa).orElseThrow(
                 () -> new ResourceNotFoundException(
                         "No se encontro la categoria con este ID: " + idCategoriaEmpresa)
         );
@@ -56,7 +53,7 @@ public class CategoriaEmpresaController {
     @PostMapping
     @ApiOperation(value = "Crear una categoria para las empresas")
     public Categoriaempresa addCategoriaEmpresa(@RequestBody Categoriaempresa categoriaempresa){
-        return categoriaEmpresaService.save(categoriaempresa);
+        return categoriaEmpresaRepository.save(categoriaempresa);
     }
     //endregion
 
@@ -65,12 +62,12 @@ public class CategoriaEmpresaController {
     public ResponseEntity updateCategoriaEmpresa(
             @RequestBody Categoriaempresa categoriaempresa
     ){
-        if (!categoriaEmpresaService.existById(categoriaempresa.getIdCategoriaEmpresa()))
+        if (!categoriaEmpresaRepository.existsById(categoriaempresa.getIdCategoriaEmpresa()))
             return ResponseEntity.badRequest().body(
                     "No se encontro ninguna Categoria con el ID: "
                     + categoriaempresa.getIdCategoriaEmpresa());
         try {
-            categoriaEmpresaService.save(categoriaempresa);
+            categoriaEmpresaRepository.save(categoriaempresa);
             return ResponseEntity.ok(categoriaempresa);
         }
         catch (Exception e){
@@ -84,14 +81,14 @@ public class CategoriaEmpresaController {
     @ApiOperation(value = "Eliminar categoria empresa")
     public Map<String, Boolean> deleteCategoriaEmpresa(@Valid @PathVariable Integer idCategoriaEmpresa)
             throws ResourceNotFoundException{
-        Categoriaempresa eliminarCategoria = categoriaEmpresaService
+        Categoriaempresa eliminarCategoria = categoriaEmpresaRepository
                                             .findById(idCategoriaEmpresa)
                                             .orElseThrow(
                                                     () -> new ResourceNotFoundException(
                                                             "No se encontro ninguna categoria con este id"
                                                     )
                                             );
-        categoriaEmpresaService.delete(eliminarCategoria);
+        categoriaEmpresaRepository.delete(eliminarCategoria);
         Map<String,Boolean> response = new HashMap<>();
         response.put("Eliminado",Boolean.TRUE);
         return response;

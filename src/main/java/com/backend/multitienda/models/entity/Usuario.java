@@ -1,7 +1,10 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.UsuarioEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,103 +14,103 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Entity
-//@DynamicUpdate
-public class Usuario {
-    private int idUsuario;
-    private String emailUsuario;
-    private String password;
-    private Date fechaCreacion;
-    private Permiso permiso;
+@EntityListeners(UsuarioEntityListener.class)
+public class Usuario extends Auditable<String> {
+  private int idUsuario;
+  private String emailUsuario;
+  private String password;
+  private Permiso permiso;
 
-    @JsonIgnore
-    private Collection<Distribuidor> distribuidorsByIdUsuario;
-    private Collection<Proveedor> proveedorsByIdUsuario;
+  @JsonIgnore
+  private Collection<Distribuidor> distribuidorsByIdUsuario;
+  private Collection<Proveedor> proveedorsByIdUsuario;
 
-    @Id
-    @Column(name = "id_usuario", nullable = false)
-    public int getIdUsuario() {
-        return idUsuario;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id_usuario", nullable = false)
+  public int getIdUsuario() {
+    return idUsuario;
+  }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
+  public void setIdUsuario(int idUsuario) {
+    this.idUsuario = idUsuario;
+  }
 
-    @Basic
-    @Column(name = "email_usuario", nullable = true, length = -1)
-    public String getEmailUsuario() {
-        return emailUsuario;
-    }
+  @Basic
+  @Column(name = "email_usuario", nullable = true, length = -1)
+  public String getEmailUsuario() {
+    return emailUsuario;
+  }
 
-    public void setEmailUsuario(String emailUsuario) {
-        this.emailUsuario = emailUsuario;
-    }
+  public void setEmailUsuario(String emailUsuario) {
+    this.emailUsuario = emailUsuario;
+  }
 
-    @Basic
-    @Column(name = "password", nullable = true, length = -1)
-    public String getPassword() {
-        return password;
-    }
+  @Basic
+  @Column(name = "password", nullable = true, length = -1)
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    @Basic
-    @Column(name = "fecha_creacion", nullable = true)
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Usuario usuario = (Usuario) o;
+    return idUsuario == usuario.idUsuario &&
+      Objects.equals(emailUsuario, usuario.emailUsuario) &&
+      Objects.equals(password, usuario.password);
+  }
 
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(idUsuario, emailUsuario, password);
+  }
 
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
+  @OneToMany(mappedBy = "usuarioByIdUsuario")
+  @JsonIgnore
+  public Collection<Distribuidor> getDistribuidorsByIdUsuario() {
+    return distribuidorsByIdUsuario;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return idUsuario == usuario.idUsuario &&
-                Objects.equals(emailUsuario, usuario.emailUsuario) &&
-                Objects.equals(password, usuario.password) &&
-                Objects.equals(fechaCreacion, usuario.fechaCreacion);
-    }
+  public void setDistribuidorsByIdUsuario(Collection<Distribuidor> distribuidorsByIdUsuario) {
+    this.distribuidorsByIdUsuario = distribuidorsByIdUsuario;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idUsuario, emailUsuario, password, fechaCreacion);
-    }
+  @OneToMany(mappedBy = "usuarioByIdUsuario")
+  @JsonIgnore
+  public Collection<Proveedor> getProveedorsByIdUsuario() {
+    return proveedorsByIdUsuario;
+  }
 
-    @OneToMany(mappedBy = "usuarioByIdUsuario")
-    @JsonIgnore
-    public Collection<Distribuidor> getDistribuidorsByIdUsuario() {
-        return distribuidorsByIdUsuario;
-    }
+  public void setProveedorsByIdUsuario(Collection<Proveedor> proveedorsByIdUsuario) {
+    this.proveedorsByIdUsuario = proveedorsByIdUsuario;
+  }
 
-    public void setDistribuidorsByIdUsuario(Collection<Distribuidor> distribuidorsByIdUsuario) {
-        this.distribuidorsByIdUsuario = distribuidorsByIdUsuario;
-    }
+  @ManyToOne
+  @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = true)
+  public Permiso getPermiso() {
+    return permiso;
+  }
 
-    @OneToMany(mappedBy = "usuarioByIdUsuario")
-    @JsonIgnore
-    public Collection<Proveedor> getProveedorsByIdUsuario() {
-        return proveedorsByIdUsuario;
-    }
+  public void setPermiso(Permiso permiso) {
 
-    public void setProveedorsByIdUsuario(Collection<Proveedor> proveedorsByIdUsuario) {
-        this.proveedorsByIdUsuario = proveedorsByIdUsuario;
-    }
+    this.permiso = permiso;
+  }
 
-    @ManyToOne
-    @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = true)
-    public Permiso getPermiso() {
-        return permiso;
-    }
-
-    public void setPermiso(Permiso permiso) {
-
-        this.permiso = permiso;
-    }
+  @Override
+  public String toString() {
+    return "Usuario{" +
+      "idUsuario=" + idUsuario +
+      ", emailUsuario='" + emailUsuario + '\'' +
+      ", password='" + password + '\'' +
+      ", permiso=" + permiso +
+      ", distribuidorsByIdUsuario=" + distribuidorsByIdUsuario +
+      ", proveedorsByIdUsuario=" + proveedorsByIdUsuario +
+      '}';
+  }
 }

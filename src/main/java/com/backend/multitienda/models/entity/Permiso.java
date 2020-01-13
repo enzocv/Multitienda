@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.PermisoEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -7,7 +9,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Permiso {
+@EntityListeners(PermisoEntityListener.class)
+public class Permiso extends Auditable<String> {
     private int idPermiso;
     private String descripcionPermiso;
     @JsonIgnore
@@ -62,5 +65,13 @@ public class Permiso {
 
     public void setUsuariosByIdPermiso(Collection<Usuario> usuariosByIdPermiso) {
         this.usuariosByIdPermiso = usuariosByIdPermiso;
+    }
+
+    @Override
+    public String toString() {
+        return "Permiso{" +
+          "idPermiso=" + idPermiso +
+          ", descripcionPermiso='" + descripcionPermiso + '\'' +
+          '}';
     }
 }

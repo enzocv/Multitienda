@@ -51,9 +51,10 @@ public class UsuarioController {
   public ResponseEntity<Usuario> getUsuarioById(
     @PathVariable(value = "idUsuario") int idUsuario) throws ResourceNotFoundException {
 
-    Usuario usuario = usuarioDao.findById(idUsuario).orElseThrow(() ->
-      new ResourceNotFoundException("No se encontró usuario con este id: " + idUsuario)
-    );
+    Usuario usuario = usuarioDao.findById(idUsuario)
+      .orElseThrow(() ->
+        new ResourceNotFoundException("No se encontró usuario con este id: " + idUsuario)
+      );
 
     return ResponseEntity.ok().body(usuario);
   }
@@ -70,12 +71,13 @@ public class UsuarioController {
     @Valid @PathVariable(value = "idUsuario") Integer idUsuario,
     @RequestBody Usuario rqUsuario) throws ResourceNotFoundException {
 
-    Usuario usuario = usuarioDao.findById(idUsuario).orElseThrow(() ->
-      new ResourceNotFoundException("No se encontró usuario con este id")
-    );
+    Usuario usuario = usuarioDao.findById(idUsuario)
+      .orElseThrow(() ->
+        new ResourceNotFoundException("No se encontró usuario con este id")
+      );
 
     usuario.setEmailUsuario(rqUsuario.getEmailUsuario());
-    usuario.setPassword(rqUsuario.getPassword());
+    //    usuario.setPassword(rqUsuario.getPassword());
     usuario.setPermiso(rqUsuario.getPermiso());
 
     final Usuario updatedUsuario = usuarioDao.save(usuario);
@@ -89,8 +91,10 @@ public class UsuarioController {
   public Map<String, Boolean> deleteUsuario(
     @PathVariable(value = "idUsuario") Integer idUsuario) throws ResourceNotFoundException {
 
-    Usuario usuario = usuarioDao.findById(idUsuario).orElseThrow(() ->
-      new ResourceNotFoundException("No se encontró usuario con este id"));
+    Usuario usuario = usuarioDao.findById(idUsuario)
+      .orElseThrow(() ->
+        new ResourceNotFoundException("No se encontró usuario con este id")
+      );
 
     usuarioDao.delete(usuario);
     Map<String, Boolean> response = new HashMap<>();

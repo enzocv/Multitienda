@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.SedeEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -7,7 +9,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Sede {
+@EntityListeners(SedeEntityListener.class)
+public class Sede extends Auditable<String> {
     private int idSede;
     private String nombreSede;
     private String direccionSede;

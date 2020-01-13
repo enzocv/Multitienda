@@ -4,17 +4,14 @@ import com.backend.multitienda.historiesLogs.PermisoHistory;
 import com.backend.multitienda.models.entity.Permiso;
 import com.backend.multitienda.utils.BeanUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 
 import static com.backend.multitienda.listeners.Action.*;
 import static javax.transaction.Transactional.TxType.MANDATORY;
 
 public class PermisoEntityListener {
-  @PrePersist
+  @PostPersist
   public void postPersist(Permiso target) {
     perform(target, INSERTED);
   }

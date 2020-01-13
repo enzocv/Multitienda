@@ -4,17 +4,14 @@ import com.backend.multitienda.historiesLogs.ProveedorHistory;
 import com.backend.multitienda.models.entity.Proveedor;
 import com.backend.multitienda.utils.BeanUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 
 import static com.backend.multitienda.listeners.Action.*;
 import static javax.transaction.Transactional.TxType.MANDATORY;
 
 public class ProveedorEntityListener {
-  @PrePersist
+  @PostPersist
   public void postPersist(Proveedor target) {
     perform(target, INSERTED);
   }

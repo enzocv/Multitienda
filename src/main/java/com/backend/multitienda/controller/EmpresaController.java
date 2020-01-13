@@ -45,6 +45,4 @@ public class EmpresaController {
     return empresaRepository.save(rqEmpresa);
   }
 
-
-
 }

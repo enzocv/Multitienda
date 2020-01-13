@@ -1,6 +1,9 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -8,6 +11,18 @@ public class Categoriaempresa {
     private int idCategoriaEmpresa;
     private String descripcionCategoriaEmpresa;
     private String imagenCategoriaEmpresa;
+
+    @JsonIgnore
+    private Collection<Empresa> empresasByIdCategoriaEmpresa;
+
+    @OneToMany(mappedBy = "categoriaEmpresa")
+    public Collection<Empresa> getEmpresasByIdCategoriaEmpresa() {
+        return empresasByIdCategoriaEmpresa;
+    }
+
+    public void setEmpresasByIdCategoriaEmpresa(Collection<Empresa> empresasByIdCategoriaEmpresa) {
+        this.empresasByIdCategoriaEmpresa = empresasByIdCategoriaEmpresa;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

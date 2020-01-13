@@ -104,8 +104,8 @@ public class Empresa {
         return Objects.hash(idEmpresa, nombreEmpresa, rucEmpresa, telefonoEmpresa, direccionEmpresa); //, idCategoriaEmpresa);
     }
 
-    @OneToOne
-    @JoinColumn(name = "id_empresa", referencedColumnName = "id_categoria_empresa", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_categoria_empresa", referencedColumnName = "id_categoria_empresa", nullable = false)
     public Categoriaempresa getCategoriaEmpresa() {
         return categoriaEmpresa;
     }

@@ -3,15 +3,10 @@ package com.backend.multitienda.models.entity;
 import com.backend.multitienda.audit.Auditable;
 import com.backend.multitienda.listeners.UsuarioEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Objects;
-import java.util.Optional;
 
 @Entity
 @EntityListeners(UsuarioEntityListener.class)
@@ -81,7 +76,7 @@ public class Usuario extends Auditable<String> {
     this.distribuidorsByIdUsuario = distribuidorsByIdUsuario;
   }
 
-  @OneToMany(mappedBy = "usuarioByIdUsuario")
+  @OneToMany(mappedBy = "usuario")
   @JsonIgnore
   public Collection<Proveedor> getProveedorsByIdUsuario() {
     return proveedorsByIdUsuario;

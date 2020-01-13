@@ -12,7 +12,7 @@ public class Empresa {
     private String direccionEmpresa;
     private String emailEmpresa;
     //private int idCategoriaEmpresa;
-    private Categoriaempresa categoriaempresaByIdEmpresa;
+    private Categoriaempresa categoriaEmpresa;
 
     @Id
     @Column(name = "id_empresa", nullable = false)
@@ -105,11 +105,11 @@ public class Empresa {
 
     @OneToOne
     @JoinColumn(name = "id_empresa", referencedColumnName = "id_categoria_empresa", nullable = false)
-    public Categoriaempresa getCategoriaempresaByIdEmpresa() {
-        return categoriaempresaByIdEmpresa;
+    public Categoriaempresa getCategoriaEmpresa() {
+        return categoriaEmpresa;
     }
 
-    public void setCategoriaempresaByIdEmpresa(Categoriaempresa categoriaempresaByIdEmpresa) {
-        this.categoriaempresaByIdEmpresa = categoriaempresaByIdEmpresa;
+    public void setCategoriaEmpresa(Categoriaempresa categoriaempresaByIdEmpresa) {
+        this.categoriaEmpresa = categoriaempresaByIdEmpresa;
     }
 }

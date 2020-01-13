@@ -1,13 +1,13 @@
-package com.backend.multitienda.histories;
+package com.backend.multitienda.historiesLogs;
 
 import com.backend.multitienda.listeners.Action;
-import com.backend.multitienda.models.entity.Permiso;
 import com.backend.multitienda.models.entity.Usuario;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+
 import java.util.Date;
 
 import static javax.persistence.EnumType.STRING;
@@ -15,12 +15,16 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class PermisoHistory {
+public class UsuarioHistory {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   private Integer id;
 
-  private String permisoContent;
+//  @ManyToOne
+//  @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "FK_usuario_history_usuario"))
+//  private Usuario usuario;
+
+  private String usuarioContent;
 
   @CreatedBy
   private String modifiedBy;
@@ -32,11 +36,11 @@ public class PermisoHistory {
   @Enumerated(STRING)
   private Action action;
 
-  public PermisoHistory() {
+  public UsuarioHistory() {
   }
 
-  public PermisoHistory(Permiso permiso,  Action action) {
-    this.permisoContent = permiso.toString();
+  public UsuarioHistory(Usuario usuario, Action action) {
+    this.usuarioContent = usuario.toString();
     this.action = action;
   }
 
@@ -48,12 +52,12 @@ public class PermisoHistory {
     this.id = id;
   }
 
-  public String getPermisoContent() {
-    return permisoContent;
+  public String getUsuarioContent() {
+    return usuarioContent;
   }
 
-  public void setPermisoContent(String permisoContent) {
-    this.permisoContent = permisoContent;
+  public void setUsuarioContent(String usuarioContent) {
+    this.usuarioContent = usuarioContent;
   }
 
   public String getModifiedBy() {

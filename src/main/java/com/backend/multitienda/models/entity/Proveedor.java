@@ -9,8 +9,8 @@ public class Proveedor {
     private String nombreProveedor;
     private String apellidoProveedor;
     private String rucProveedor;
-    private Usuario usuarioByIdUsuario;
-    private Empresa empresaByIdEmpresa;
+    private Usuario usuario;
+    private Empresa empresa;
 
     @Id
     @Column(name = "id_proveedor", nullable = false)
@@ -70,21 +70,21 @@ public class Proveedor {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
-    public Usuario getUsuarioByIdUsuario() {
-        return usuarioByIdUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioByIdUsuario(Usuario usuarioByIdUsuario) {
-        this.usuarioByIdUsuario = usuarioByIdUsuario;
+    public void setUsuario(Usuario usuarioByIdUsuario) {
+        this.usuario = usuarioByIdUsuario;
     }
 
     @ManyToOne
     @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)
-    public Empresa getEmpresaByIdEmpresa() {
-        return empresaByIdEmpresa;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setEmpresaByIdEmpresa(Empresa empresaByIdEmpresa) {
-        this.empresaByIdEmpresa = empresaByIdEmpresa;
+    public void setEmpresa(Empresa empresaByIdEmpresa) {
+        this.empresa = empresaByIdEmpresa;
     }
 }

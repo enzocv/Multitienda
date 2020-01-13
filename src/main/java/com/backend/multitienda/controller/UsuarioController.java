@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Api(value = "Servicio de usuario 2", description = "Esta API permite realizar las operaciones básicas de los " +
+@Api(value = "Servicio de usuario", description = "Esta API permite realizar las operaciones básicas de los " +
   "Usuarios")
 @RestController //notacion para un API REST
 @RequestMapping("/api/usuarios")

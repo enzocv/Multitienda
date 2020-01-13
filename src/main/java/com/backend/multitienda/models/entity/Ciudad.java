@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Ciudad {
     private int idCiudad;
     private String nombreCiudad;
+    private boolean estado;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +30,16 @@ public class Ciudad {
         this.nombreCiudad = nombreCiudad;
     }
 
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,8 +57,9 @@ public class Ciudad {
     @Override
     public String toString() {
         return "Ciudad{" +
-                "idCiudad=" + idCiudad +
-                ", nombreCiudad='" + nombreCiudad + '\'' +
-                '}';
+          "idCiudad=" + idCiudad +
+          ", nombreCiudad='" + nombreCiudad + '\'' +
+          ", estado=" + estado +
+          '}';
     }
 }

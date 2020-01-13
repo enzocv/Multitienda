@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -8,6 +10,9 @@ import java.util.Objects;
 public class Pais {
     private int idPais;
     private String nombrePais;
+    private boolean estado;
+
+    @JsonIgnore
     private Collection<Sede> sedesByIdPais;
 
     @Id
@@ -29,6 +34,16 @@ public class Pais {
 
     public void setNombrePais(String nombrePais) {
         this.nombrePais = nombrePais;
+    }
+
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -57,9 +72,10 @@ public class Pais {
     @Override
     public String toString() {
         return "Pais{" +
-                "idPais=" + idPais +
-                ", nombrePais='" + nombrePais + '\'' +
-                ", sedesByIdPais=" + sedesByIdPais +
-                '}';
+          "idPais=" + idPais +
+          ", nombrePais='" + nombrePais + '\'' +
+          ", estado=" + estado +
+          ", sedesByIdPais=" + sedesByIdPais +
+          '}';
     }
 }

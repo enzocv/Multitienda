@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -9,6 +11,9 @@ public class Categoriaproducto {
     private int idCategoriaProducto;
     private String nombreCategoriaProducto;
     private String imagenCategoriaProducto;
+    private boolean estado;
+
+    @JsonIgnore
     private Collection<Producto> productosByIdCategoriaProducto;
 
     @Id
@@ -42,6 +47,16 @@ public class Categoriaproducto {
         this.imagenCategoriaProducto = imagenCategoriaProducto;
     }
 
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,10 +84,11 @@ public class Categoriaproducto {
     @Override
     public String toString() {
         return "Categoriaproducto{" +
-                "idCategoriaProducto=" + idCategoriaProducto +
-                ", nombreCategoriaProducto='" + nombreCategoriaProducto + '\'' +
-                ", imagenCategoriaProducto='" + imagenCategoriaProducto + '\'' +
-                ", productosByIdCategoriaProducto=" + productosByIdCategoriaProducto +
-                '}';
+          "idCategoriaProducto=" + idCategoriaProducto +
+          ", nombreCategoriaProducto='" + nombreCategoriaProducto + '\'' +
+          ", imagenCategoriaProducto='" + imagenCategoriaProducto + '\'' +
+          ", estado=" + estado +
+          ", productosByIdCategoriaProducto=" + productosByIdCategoriaProducto +
+          '}';
     }
 }

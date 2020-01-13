@@ -15,8 +15,8 @@ public class Empresa extends Auditable<String> {
     private String telefonoEmpresa;
     private String direccionEmpresa;
     private String emailEmpresa;
-    //private int idCategoriaEmpresa;
     private Categoriaempresa categoriaEmpresa;
+    private boolean estado;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,23 +79,22 @@ public class Empresa extends Auditable<String> {
         this.emailEmpresa = emailEmpresa;
     }
 
-   /* @Basic
-    @Column(name = "id_categoria_empresa", nullable = false)
-    public int getIdCategoriaEmpresa() {
-        return idCategoriaEmpresa;
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
     }
 
-    public void setIdCategoriaEmpresa(int idCategoriaEmpresa) {
-        this.idCategoriaEmpresa = idCategoriaEmpresa;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
-*/
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Empresa empresa = (Empresa) o;
         return idEmpresa == empresa.idEmpresa &&
-                //idCategoriaEmpresa == empresa.idCategoriaEmpresa &&
                 Objects.equals(nombreEmpresa, empresa.nombreEmpresa) &&
                 Objects.equals(rucEmpresa, empresa.rucEmpresa) &&
                 Objects.equals(telefonoEmpresa, empresa.telefonoEmpresa) &&
@@ -105,7 +104,7 @@ public class Empresa extends Auditable<String> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEmpresa, nombreEmpresa, rucEmpresa, telefonoEmpresa, direccionEmpresa); //, idCategoriaEmpresa);
+        return Objects.hash(idEmpresa, nombreEmpresa, rucEmpresa, telefonoEmpresa, direccionEmpresa);
     }
 
     @ManyToOne
@@ -121,13 +120,14 @@ public class Empresa extends Auditable<String> {
     @Override
     public String toString() {
         return "Empresa{" +
-                "idEmpresa=" + idEmpresa +
-                ", nombreEmpresa='" + nombreEmpresa + '\'' +
-                ", rucEmpresa='" + rucEmpresa + '\'' +
-                ", telefonoEmpresa='" + telefonoEmpresa + '\'' +
-                ", direccionEmpresa='" + direccionEmpresa + '\'' +
-                ", emailEmpresa='" + emailEmpresa + '\'' +
-                ", categoriaEmpresa=" + categoriaEmpresa +
-                '}';
+          "idEmpresa=" + idEmpresa +
+          ", nombreEmpresa='" + nombreEmpresa + '\'' +
+          ", rucEmpresa='" + rucEmpresa + '\'' +
+          ", telefonoEmpresa='" + telefonoEmpresa + '\'' +
+          ", direccionEmpresa='" + direccionEmpresa + '\'' +
+          ", emailEmpresa='" + emailEmpresa + '\'' +
+          ", categoriaEmpresa=" + categoriaEmpresa +
+          ", estado=" + estado +
+          '}';
     }
 }

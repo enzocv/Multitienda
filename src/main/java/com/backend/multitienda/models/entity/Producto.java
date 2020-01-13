@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -14,11 +16,14 @@ public class Producto {
     private BigDecimal precioEmpaque;
     private BigDecimal precioPorMayor;
     private boolean igvProducto;
-    private Collection<Ordendetalle> ordendetallesByIdProducto;
     private Empaque empaqueByIdEmpaque;
     private Unidadmedida unidadmedidaByIdUnidadMedida;
     private Empresa empresaByIdEmpresa;
     private Categoriaproducto categoriaproductoByIdCategoriaProducto;
+    private boolean estado;
+
+    @JsonIgnore
+    private Collection<Ordendetalle> ordendetallesByIdProducto;
     private Collection<Productoimagen> productoimagensByIdProducto;
     private Collection<Stockproducto> stockproductosByIdProducto;
 
@@ -91,6 +96,16 @@ public class Producto {
 
     public void setIgvProducto(boolean igvProducto) {
         this.igvProducto = igvProducto;
+    }
+
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -182,20 +197,21 @@ public class Producto {
     @Override
     public String toString() {
         return "Producto{" +
-                "idProducto=" + idProducto +
-                ", nombreProducto='" + nombreProducto + '\'' +
-                ", descripcionProducto='" + descripcionProducto + '\'' +
-                ", precioUnitario=" + precioUnitario +
-                ", precioEmpaque=" + precioEmpaque +
-                ", precioPorMayor=" + precioPorMayor +
-                ", igvProducto=" + igvProducto +
-                ", ordendetallesByIdProducto=" + ordendetallesByIdProducto +
-                ", empaqueByIdEmpaque=" + empaqueByIdEmpaque +
-                ", unidadmedidaByIdUnidadMedida=" + unidadmedidaByIdUnidadMedida +
-                ", empresaByIdEmpresa=" + empresaByIdEmpresa +
-                ", categoriaproductoByIdCategoriaProducto=" + categoriaproductoByIdCategoriaProducto +
-                ", productoimagensByIdProducto=" + productoimagensByIdProducto +
-                ", stockproductosByIdProducto=" + stockproductosByIdProducto +
-                '}';
+          "idProducto=" + idProducto +
+          ", nombreProducto='" + nombreProducto + '\'' +
+          ", descripcionProducto='" + descripcionProducto + '\'' +
+          ", precioUnitario=" + precioUnitario +
+          ", precioEmpaque=" + precioEmpaque +
+          ", precioPorMayor=" + precioPorMayor +
+          ", igvProducto=" + igvProducto +
+          ", empaqueByIdEmpaque=" + empaqueByIdEmpaque +
+          ", unidadmedidaByIdUnidadMedida=" + unidadmedidaByIdUnidadMedida +
+          ", empresaByIdEmpresa=" + empresaByIdEmpresa +
+          ", categoriaproductoByIdCategoriaProducto=" + categoriaproductoByIdCategoriaProducto +
+          ", estado=" + estado +
+          ", ordendetallesByIdProducto=" + ordendetallesByIdProducto +
+          ", productoimagensByIdProducto=" + productoimagensByIdProducto +
+          ", stockproductosByIdProducto=" + stockproductosByIdProducto +
+          '}';
     }
 }

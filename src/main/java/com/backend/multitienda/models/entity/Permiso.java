@@ -13,6 +13,8 @@ import java.util.Objects;
 public class Permiso extends Auditable<String> {
     private int idPermiso;
     private String descripcionPermiso;
+    private boolean estado;
+
     @JsonIgnore
     private Collection<Usuario> usuariosByIdPermiso;
 
@@ -45,6 +47,16 @@ public class Permiso extends Auditable<String> {
         this.descripcionPermiso = descripcionPermiso;
     }
 
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +85,8 @@ public class Permiso extends Auditable<String> {
         return "Permiso{" +
           "idPermiso=" + idPermiso +
           ", descripcionPermiso='" + descripcionPermiso + '\'' +
+          ", estado=" + estado +
+          ", usuariosByIdPermiso=" + usuariosByIdPermiso +
           '}';
     }
 }

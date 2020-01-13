@@ -8,6 +8,7 @@ public class Productoimagen {
     private int idProductoImagen;
     private String imagenProducto;
     private Producto productoByIdProducto;
+    private boolean estado;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,16 @@ public class Productoimagen {
 
     public void setImagenProducto(String imagenProducto) {
         this.imagenProducto = imagenProducto;
+    }
+
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -57,9 +68,10 @@ public class Productoimagen {
     @Override
     public String toString() {
         return "Productoimagen{" +
-                "idProductoImagen=" + idProductoImagen +
-                ", imagenProducto='" + imagenProducto + '\'' +
-                ", productoByIdProducto=" + productoByIdProducto +
-                '}';
+          "idProductoImagen=" + idProductoImagen +
+          ", imagenProducto='" + imagenProducto + '\'' +
+          ", productoByIdProducto=" + productoByIdProducto +
+          ", estado=" + estado +
+          '}';
     }
 }

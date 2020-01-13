@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -11,6 +13,9 @@ public class Empaque {
     private String descripcionEmpaque;
     private BigDecimal precioEmpaque;
     private int cantidadProductoEmpaque;
+    private boolean estado;
+
+    @JsonIgnore
     private Collection<Producto> productosByIdEmpaque;
 
     @Id
@@ -54,6 +59,16 @@ public class Empaque {
         this.cantidadProductoEmpaque = cantidadProductoEmpaque;
     }
 
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,11 +97,12 @@ public class Empaque {
     @Override
     public String toString() {
         return "Empaque{" +
-                "idEmpaque=" + idEmpaque +
-                ", descripcionEmpaque='" + descripcionEmpaque + '\'' +
-                ", precioEmpaque=" + precioEmpaque +
-                ", cantidadProductoEmpaque=" + cantidadProductoEmpaque +
-                ", productosByIdEmpaque=" + productosByIdEmpaque +
-                '}';
+          "idEmpaque=" + idEmpaque +
+          ", descripcionEmpaque='" + descripcionEmpaque + '\'' +
+          ", precioEmpaque=" + precioEmpaque +
+          ", cantidadProductoEmpaque=" + cantidadProductoEmpaque +
+          ", estado=" + estado +
+          ", productosByIdEmpaque=" + productosByIdEmpaque +
+          '}';
     }
 }

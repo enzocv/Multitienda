@@ -11,6 +11,7 @@ public class Proveedor {
     private String rucProveedor;
     private Usuario usuario;
     private Empresa empresa;
+    private boolean estado;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +54,16 @@ public class Proveedor {
         this.rucProveedor = rucProveedor;
     }
 
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,12 +103,13 @@ public class Proveedor {
     @Override
     public String toString() {
         return "Proveedor{" +
-                "idProveedor=" + idProveedor +
-                ", nombreProveedor='" + nombreProveedor + '\'' +
-                ", apellidoProveedor='" + apellidoProveedor + '\'' +
-                ", rucProveedor='" + rucProveedor + '\'' +
-                ", usuario=" + usuario +
-                ", empresa=" + empresa +
-                '}';
+          "idProveedor=" + idProveedor +
+          ", nombreProveedor='" + nombreProveedor + '\'' +
+          ", apellidoProveedor='" + apellidoProveedor + '\'' +
+          ", rucProveedor='" + rucProveedor + '\'' +
+          ", usuario=" + usuario +
+          ", empresa=" + empresa +
+          ", estado=" + estado +
+          '}';
     }
 }

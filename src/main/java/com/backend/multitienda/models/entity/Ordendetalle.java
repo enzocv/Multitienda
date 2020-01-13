@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -8,8 +10,11 @@ import java.util.Objects;
 public class Ordendetalle {
     private int idOrdenDetalle;
     private int cantidadProducto;
-    private Collection<Ordencabecera> ordencabecerasByIdOrdenDetalle;
     private Producto productoByIdProducto;
+    private boolean estado;
+
+    @JsonIgnore
+    private Collection<Ordencabecera> ordencabecerasByIdOrdenDetalle;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +35,16 @@ public class Ordendetalle {
 
     public void setCantidadProducto(int cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -68,10 +83,11 @@ public class Ordendetalle {
     @Override
     public String toString() {
         return "Ordendetalle{" +
-                "idOrdenDetalle=" + idOrdenDetalle +
-                ", cantidadProducto=" + cantidadProducto +
-                ", ordencabecerasByIdOrdenDetalle=" + ordencabecerasByIdOrdenDetalle +
-                ", productoByIdProducto=" + productoByIdProducto +
-                '}';
+          "idOrdenDetalle=" + idOrdenDetalle +
+          ", cantidadProducto=" + cantidadProducto +
+          ", productoByIdProducto=" + productoByIdProducto +
+          ", estado=" + estado +
+          ", ordencabecerasByIdOrdenDetalle=" + ordencabecerasByIdOrdenDetalle +
+          '}';
     }
 }

@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Stockproducto {
     private int idStockProducto;
     private int stockProducto;
+    private boolean estado;
     private Producto productoByIdProducto;
 
     @Id
@@ -30,6 +31,16 @@ public class Stockproducto {
         this.stockProducto = stockProducto;
     }
 
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,7 +52,7 @@ public class Stockproducto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idStockProducto, stockProducto);
+        return Objects.hash(idStockProducto, stockProducto, estado);
     }
 
     @ManyToOne
@@ -57,9 +68,10 @@ public class Stockproducto {
     @Override
     public String toString() {
         return "Stockproducto{" +
-                "idStockProducto=" + idStockProducto +
-                ", stockProducto=" + stockProducto +
-                ", productoByIdProducto=" + productoByIdProducto +
-                '}';
+          "idStockProducto=" + idStockProducto +
+          ", stockProducto=" + stockProducto +
+          ", estado=" + estado +
+          ", productoByIdProducto=" + productoByIdProducto +
+          '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -9,9 +11,12 @@ public class Sede {
     private int idSede;
     private String nombreSede;
     private String direccionSede;
-    private Collection<Ordencabecera> ordencabecerasByIdSede;
     private Empresa empresaByIdEmpresa;
     private Pais paisByIdPais;
+    private boolean estado;
+
+    @JsonIgnore
+    private Collection<Ordencabecera> ordencabecerasByIdSede;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +47,16 @@ public class Sede {
 
     public void setDireccionSede(String direccionSede) {
         this.direccionSede = direccionSede;
+    }
+
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -91,12 +106,13 @@ public class Sede {
     @Override
     public String toString() {
         return "Sede{" +
-                "idSede=" + idSede +
-                ", nombreSede='" + nombreSede + '\'' +
-                ", direccionSede='" + direccionSede + '\'' +
-                ", ordencabecerasByIdSede=" + ordencabecerasByIdSede +
-                ", empresaByIdEmpresa=" + empresaByIdEmpresa +
-                ", paisByIdPais=" + paisByIdPais +
-                '}';
+          "idSede=" + idSede +
+          ", nombreSede='" + nombreSede + '\'' +
+          ", direccionSede='" + direccionSede + '\'' +
+          ", empresaByIdEmpresa=" + empresaByIdEmpresa +
+          ", paisByIdPais=" + paisByIdPais +
+          ", estado=" + estado +
+          ", ordencabecerasByIdSede=" + ordencabecerasByIdSede +
+          '}';
     }
 }

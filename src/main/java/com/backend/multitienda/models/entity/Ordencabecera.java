@@ -16,6 +16,7 @@ public class Ordencabecera {
     private Distribuidor distribuidorByIdDistribuidor;
     private Sede sedeByIdSede;
     private Estadoorden estadoordenByIdEstadoOrden;
+    private boolean estado;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +67,16 @@ public class Ordencabecera {
 
     public void setComenarioOrdenCabecera(String comenarioOrdenCabecera) {
         this.comenarioOrdenCabecera = comenarioOrdenCabecera;
+    }
+
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -128,15 +139,16 @@ public class Ordencabecera {
     @Override
     public String toString() {
         return "Ordencabecera{" +
-                "idOrdenCabecera=" + idOrdenCabecera +
-                ", fechaOrdenRealizada=" + fechaOrdenRealizada +
-                ", fechaPagoRealizada=" + fechaPagoRealizada +
-                ", precioTotalOrdenCabecera=" + precioTotalOrdenCabecera +
-                ", comenarioOrdenCabecera='" + comenarioOrdenCabecera + '\'' +
-                ", ordendetalleByIdOrdenDetalle=" + ordendetalleByIdOrdenDetalle +
-                ", distribuidorByIdDistribuidor=" + distribuidorByIdDistribuidor +
-                ", sedeByIdSede=" + sedeByIdSede +
-                ", estadoordenByIdEstadoOrden=" + estadoordenByIdEstadoOrden +
-                '}';
+          "idOrdenCabecera=" + idOrdenCabecera +
+          ", fechaOrdenRealizada=" + fechaOrdenRealizada +
+          ", fechaPagoRealizada=" + fechaPagoRealizada +
+          ", precioTotalOrdenCabecera=" + precioTotalOrdenCabecera +
+          ", comenarioOrdenCabecera='" + comenarioOrdenCabecera + '\'' +
+          ", ordendetalleByIdOrdenDetalle=" + ordendetalleByIdOrdenDetalle +
+          ", distribuidorByIdDistribuidor=" + distribuidorByIdDistribuidor +
+          ", sedeByIdSede=" + sedeByIdSede +
+          ", estadoordenByIdEstadoOrden=" + estadoordenByIdEstadoOrden +
+          ", estado=" + estado +
+          '}';
     }
 }

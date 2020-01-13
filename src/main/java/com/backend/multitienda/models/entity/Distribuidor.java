@@ -19,6 +19,7 @@ public class Distribuidor extends Auditable<String> {
     private String emailDistribuidor;
     private String rucDistribuidor;
     private Usuario usuarioByIdUsuario;
+    private boolean estado;
 
     @JsonIgnore
     private Collection<Ordencabecera> ordencabecerasByIdDistribuidor;
@@ -94,6 +95,16 @@ public class Distribuidor extends Auditable<String> {
         this.rucDistribuidor = rucDistribuidor;
     }
 
+  @Basic
+  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+  public boolean getEstado() {
+    return estado;
+  }
+
+  public void setEstado(boolean estado) {
+    this.estado = estado;
+  }
+
    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -132,18 +143,19 @@ public class Distribuidor extends Auditable<String> {
         this.ordencabecerasByIdDistribuidor = ordencabecerasByIdDistribuidor;
     }
 
-    @Override
-    public String toString() {
-        return "Distribuidor{" +
-                "idDistribuidor=" + idDistribuidor +
-                ", nombreEmpresaDistribuidor='" + nombreEmpresaDistribuidor + '\'' +
-                ", nombreDistribuidor='" + nombreDistribuidor + '\'' +
-                ", apellidoDistribuidor='" + apellidoDistribuidor + '\'' +
-                ", direccionDistribuidor='" + direccionDistribuidor + '\'' +
-                ", emailDistribuidor='" + emailDistribuidor + '\'' +
-                ", rucDistribuidor='" + rucDistribuidor + '\'' +
-                ", usuarioByIdUsuario=" + usuarioByIdUsuario +
-                ", ordencabecerasByIdDistribuidor=" + ordencabecerasByIdDistribuidor +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Distribuidor{" +
+      "idDistribuidor=" + idDistribuidor +
+      ", nombreEmpresaDistribuidor='" + nombreEmpresaDistribuidor + '\'' +
+      ", nombreDistribuidor='" + nombreDistribuidor + '\'' +
+      ", apellidoDistribuidor='" + apellidoDistribuidor + '\'' +
+      ", direccionDistribuidor='" + direccionDistribuidor + '\'' +
+      ", emailDistribuidor='" + emailDistribuidor + '\'' +
+      ", rucDistribuidor='" + rucDistribuidor + '\'' +
+      ", usuarioByIdUsuario=" + usuarioByIdUsuario +
+      ", estado=" + estado +
+      ", ordencabecerasByIdDistribuidor=" + ordencabecerasByIdDistribuidor +
+      '}';
+  }
 }

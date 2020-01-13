@@ -11,6 +11,7 @@ public class Categoriaempresa {
     private int idCategoriaEmpresa;
     private String descripcionCategoriaEmpresa;
     private String imagenCategoriaEmpresa;
+    private boolean estado;
 
     @JsonIgnore
     private Collection<Empresa> empresasByIdCategoriaEmpresa;
@@ -55,6 +56,16 @@ public class Categoriaempresa {
         this.imagenCategoriaEmpresa = imagenCategoriaEmpresa;
     }
 
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,9 +84,11 @@ public class Categoriaempresa {
     @Override
     public String toString() {
         return "Categoriaempresa{" +
-                "idCategoriaEmpresa=" + idCategoriaEmpresa +
-                ", descripcionCategoriaEmpresa='" + descripcionCategoriaEmpresa + '\'' +
-                ", imagenCategoriaEmpresa='" + imagenCategoriaEmpresa + '\'' +
-                '}';
+          "idCategoriaEmpresa=" + idCategoriaEmpresa +
+          ", descripcionCategoriaEmpresa='" + descripcionCategoriaEmpresa + '\'' +
+          ", imagenCategoriaEmpresa='" + imagenCategoriaEmpresa + '\'' +
+          ", estado=" + estado +
+          ", empresasByIdCategoriaEmpresa=" + empresasByIdCategoriaEmpresa +
+          '}';
     }
 }

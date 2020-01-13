@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -8,6 +10,9 @@ import java.util.Objects;
 public class Estadoorden {
     private int idEstadoOrden;
     private String descripcionEstadoOrden;
+    private boolean estado;
+
+    @JsonIgnore
     private Collection<Ordencabecera> ordencabecerasByIdEstadoOrden;
 
     @Id
@@ -29,6 +34,16 @@ public class Estadoorden {
 
     public void setDescripcionEstadoOrden(String descripcionEstadoOrden) {
         this.descripcionEstadoOrden = descripcionEstadoOrden;
+    }
+
+    @Basic
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -57,9 +72,10 @@ public class Estadoorden {
     @Override
     public String toString() {
         return "Estadoorden{" +
-                "idEstadoOrden=" + idEstadoOrden +
-                ", descripcionEstadoOrden='" + descripcionEstadoOrden + '\'' +
-                ", ordencabecerasByIdEstadoOrden=" + ordencabecerasByIdEstadoOrden +
-                '}';
+          "idEstadoOrden=" + idEstadoOrden +
+          ", descripcionEstadoOrden='" + descripcionEstadoOrden + '\'' +
+          ", estado=" + estado +
+          ", ordencabecerasByIdEstadoOrden=" + ordencabecerasByIdEstadoOrden +
+          '}';
     }
 }

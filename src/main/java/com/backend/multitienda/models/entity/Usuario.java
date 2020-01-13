@@ -15,6 +15,7 @@ public class Usuario extends Auditable<String> {
   private String emailUsuario;
   private String password;
   private Permiso permiso;
+  private boolean estado;
 
   @JsonIgnore
   private Collection<Distribuidor> distribuidorsByIdUsuario;
@@ -51,6 +52,16 @@ public class Usuario extends Auditable<String> {
     this.password = password;
   }
 
+  @Basic
+  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+  public boolean getEstado() {
+    return estado;
+  }
+
+  public void setEstado(boolean estado) {
+    this.estado = estado;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -58,12 +69,13 @@ public class Usuario extends Auditable<String> {
     Usuario usuario = (Usuario) o;
     return idUsuario == usuario.idUsuario &&
       Objects.equals(emailUsuario, usuario.emailUsuario) &&
-      Objects.equals(password, usuario.password);
+      Objects.equals(password, usuario.password) &&
+      Objects.equals(estado, usuario.estado);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(idUsuario, emailUsuario, password);
+    return Objects.hash(idUsuario, emailUsuario, password, estado);
   }
 
   @OneToMany(mappedBy = "usuarioByIdUsuario")
@@ -104,6 +116,7 @@ public class Usuario extends Auditable<String> {
       ", emailUsuario='" + emailUsuario + '\'' +
       ", password='" + password + '\'' +
       ", permiso=" + permiso +
+      ", estado=" + estado +
       ", distribuidorsByIdUsuario=" + distribuidorsByIdUsuario +
       ", proveedorsByIdUsuario=" + proveedorsByIdUsuario +
       '}';

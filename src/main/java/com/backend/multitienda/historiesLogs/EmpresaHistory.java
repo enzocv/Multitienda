@@ -19,7 +19,7 @@ public class EmpresaHistory {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(name = "empresa_content", length = -1)
+  @Column(name = "empresa_content",nullable = true, length = -1)
   private String empresaContent;
 
   @CreatedBy

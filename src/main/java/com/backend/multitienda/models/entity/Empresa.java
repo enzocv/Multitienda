@@ -16,7 +16,7 @@ public class Empresa extends Auditable<String> {
     private String direccionEmpresa;
     private String emailEmpresa;
     private Categoriaempresa categoriaEmpresa;
-    private boolean estado;
+    private String estado;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,12 +80,12 @@ public class Empresa extends Auditable<String> {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

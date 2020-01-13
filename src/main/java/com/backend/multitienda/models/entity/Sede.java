@@ -16,7 +16,7 @@ public class Sede extends Auditable<String> {
     private String direccionSede;
     private Empresa empresaByIdEmpresa;
     private Pais paisByIdPais;
-    private boolean estado;
+    private String estado;
 
     @JsonIgnore
     private Collection<Ordencabecera> ordencabecerasByIdSede;
@@ -53,12 +53,12 @@ public class Sede extends Auditable<String> {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

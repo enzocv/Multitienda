@@ -20,10 +20,7 @@ public class UsuarioHistory {
   @GeneratedValue
   private Integer id;
 
-//  @ManyToOne
-//  @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "FK_usuario_history_usuario"))
-//  private Usuario usuario;
-
+  @Column(name = "usuario_content",nullable = true, length = -1)
   private String usuarioContent;
 
   @CreatedBy

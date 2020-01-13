@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Stockproducto {
     private int idStockProducto;
     private int stockProducto;
-    private boolean estado;
+    private String estado;
     private Producto productoByIdProducto;
 
     @Id
@@ -32,12 +32,12 @@ public class Stockproducto {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

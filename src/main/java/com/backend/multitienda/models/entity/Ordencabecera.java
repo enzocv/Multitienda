@@ -16,7 +16,7 @@ public class Ordencabecera {
     private Distribuidor distribuidorByIdDistribuidor;
     private Sede sedeByIdSede;
     private Estadoorden estadoordenByIdEstadoOrden;
-    private boolean estado;
+    private String estado;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,12 +70,12 @@ public class Ordencabecera {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

@@ -12,6 +12,7 @@ public class Ordendetalle {
     private Producto productoByIdProducto;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_orden_detalle", nullable = false)
     public int getIdOrdenDetalle() {
         return idOrdenDetalle;
@@ -62,5 +63,15 @@ public class Ordendetalle {
 
     public void setProductoByIdProducto(Producto productoByIdProducto) {
         this.productoByIdProducto = productoByIdProducto;
+    }
+
+    @Override
+    public String toString() {
+        return "Ordendetalle{" +
+                "idOrdenDetalle=" + idOrdenDetalle +
+                ", cantidadProducto=" + cantidadProducto +
+                ", ordencabecerasByIdOrdenDetalle=" + ordencabecerasByIdOrdenDetalle +
+                ", productoByIdProducto=" + productoByIdProducto +
+                '}';
     }
 }

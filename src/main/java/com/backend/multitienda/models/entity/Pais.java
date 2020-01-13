@@ -11,6 +11,7 @@ public class Pais {
     private Collection<Sede> sedesByIdPais;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pais", nullable = false)
     public int getIdPais() {
         return idPais;
@@ -51,5 +52,14 @@ public class Pais {
 
     public void setSedesByIdPais(Collection<Sede> sedesByIdPais) {
         this.sedesByIdPais = sedesByIdPais;
+    }
+
+    @Override
+    public String toString() {
+        return "Pais{" +
+                "idPais=" + idPais +
+                ", nombrePais='" + nombrePais + '\'' +
+                ", sedesByIdPais=" + sedesByIdPais +
+                '}';
     }
 }

@@ -23,6 +23,7 @@ public class Producto {
     private Collection<Stockproducto> stockproductosByIdProducto;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto", nullable = false)
     public int getIdProducto() {
         return idProducto;
@@ -176,5 +177,25 @@ public class Producto {
 
     public void setStockproductosByIdProducto(Collection<Stockproducto> stockproductosByIdProducto) {
         this.stockproductosByIdProducto = stockproductosByIdProducto;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "idProducto=" + idProducto +
+                ", nombreProducto='" + nombreProducto + '\'' +
+                ", descripcionProducto='" + descripcionProducto + '\'' +
+                ", precioUnitario=" + precioUnitario +
+                ", precioEmpaque=" + precioEmpaque +
+                ", precioPorMayor=" + precioPorMayor +
+                ", igvProducto=" + igvProducto +
+                ", ordendetallesByIdProducto=" + ordendetallesByIdProducto +
+                ", empaqueByIdEmpaque=" + empaqueByIdEmpaque +
+                ", unidadmedidaByIdUnidadMedida=" + unidadmedidaByIdUnidadMedida +
+                ", empresaByIdEmpresa=" + empresaByIdEmpresa +
+                ", categoriaproductoByIdCategoriaProducto=" + categoriaproductoByIdCategoriaProducto +
+                ", productoimagensByIdProducto=" + productoimagensByIdProducto +
+                ", stockproductosByIdProducto=" + stockproductosByIdProducto +
+                '}';
     }
 }

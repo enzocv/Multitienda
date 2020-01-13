@@ -17,6 +17,7 @@ public class Distribuidor {
     private Collection<Ordencabecera> ordencabecerasByIdDistribuidor;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_distribuidor", nullable = false)
     public int getIdDistribuidor() {
         return idDistribuidor;
@@ -122,5 +123,20 @@ public class Distribuidor {
 
     public void setOrdencabecerasByIdDistribuidor(Collection<Ordencabecera> ordencabecerasByIdDistribuidor) {
         this.ordencabecerasByIdDistribuidor = ordencabecerasByIdDistribuidor;
+    }
+
+    @Override
+    public String toString() {
+        return "Distribuidor{" +
+                "idDistribuidor=" + idDistribuidor +
+                ", nombreEmpresaDistribuidor='" + nombreEmpresaDistribuidor + '\'' +
+                ", nombreDistribuidor='" + nombreDistribuidor + '\'' +
+                ", apellidoDistribuidor='" + apellidoDistribuidor + '\'' +
+                ", direccionDistribuidor='" + direccionDistribuidor + '\'' +
+                ", emailDistribuidor='" + emailDistribuidor + '\'' +
+                ", rucDistribuidor='" + rucDistribuidor + '\'' +
+                ", usuarioByIdUsuario=" + usuarioByIdUsuario +
+                ", ordencabecerasByIdDistribuidor=" + ordencabecerasByIdDistribuidor +
+                '}';
     }
 }

@@ -15,7 +15,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 public class ProveedorEntityListener {
   @PrePersist
-  public void prePersist(Proveedor target) {
+  public void postPersist(Proveedor target) {
     perform(target, INSERTED);
   }
 

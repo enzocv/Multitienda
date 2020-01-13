@@ -18,6 +18,7 @@ public class Ordencabecera {
     private Estadoorden estadoordenByIdEstadoOrden;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_orden_cabecera", nullable = false)
     public int getIdOrdenCabecera() {
         return idOrdenCabecera;
@@ -122,5 +123,20 @@ public class Ordencabecera {
 
     public void setEstadoordenByIdEstadoOrden(Estadoorden estadoordenByIdEstadoOrden) {
         this.estadoordenByIdEstadoOrden = estadoordenByIdEstadoOrden;
+    }
+
+    @Override
+    public String toString() {
+        return "Ordencabecera{" +
+                "idOrdenCabecera=" + idOrdenCabecera +
+                ", fechaOrdenRealizada=" + fechaOrdenRealizada +
+                ", fechaPagoRealizada=" + fechaPagoRealizada +
+                ", precioTotalOrdenCabecera=" + precioTotalOrdenCabecera +
+                ", comenarioOrdenCabecera='" + comenarioOrdenCabecera + '\'' +
+                ", ordendetalleByIdOrdenDetalle=" + ordendetalleByIdOrdenDetalle +
+                ", distribuidorByIdDistribuidor=" + distribuidorByIdDistribuidor +
+                ", sedeByIdSede=" + sedeByIdSede +
+                ", estadoordenByIdEstadoOrden=" + estadoordenByIdEstadoOrden +
+                '}';
     }
 }

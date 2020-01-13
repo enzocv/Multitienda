@@ -10,6 +10,7 @@ public class Stockproducto {
     private Producto productoByIdProducto;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_stock_producto", nullable = false)
     public int getIdStockProducto() {
         return idStockProducto;
@@ -51,5 +52,14 @@ public class Stockproducto {
 
     public void setProductoByIdProducto(Producto productoByIdProducto) {
         this.productoByIdProducto = productoByIdProducto;
+    }
+
+    @Override
+    public String toString() {
+        return "Stockproducto{" +
+                "idStockProducto=" + idStockProducto +
+                ", stockProducto=" + stockProducto +
+                ", productoByIdProducto=" + productoByIdProducto +
+                '}';
     }
 }

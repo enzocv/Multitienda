@@ -1,9 +1,6 @@
 package com.backend.multitienda.models.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +10,7 @@ public class Categoriaempresa {
     private String imagenCategoriaEmpresa;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria_empresa", nullable = false)
     public int getIdCategoriaEmpresa() {
         return idCategoriaEmpresa;
@@ -55,5 +53,14 @@ public class Categoriaempresa {
     @Override
     public int hashCode() {
         return Objects.hash(idCategoriaEmpresa, descripcionCategoriaEmpresa, imagenCategoriaEmpresa);
+    }
+
+    @Override
+    public String toString() {
+        return "Categoriaempresa{" +
+                "idCategoriaEmpresa=" + idCategoriaEmpresa +
+                ", descripcionCategoriaEmpresa='" + descripcionCategoriaEmpresa + '\'' +
+                ", imagenCategoriaEmpresa='" + imagenCategoriaEmpresa + '\'' +
+                '}';
     }
 }

@@ -14,6 +14,7 @@ public class Sede {
     private Pais paisByIdPais;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_sede", nullable = false)
     public int getIdSede() {
         return idSede;
@@ -85,5 +86,17 @@ public class Sede {
 
     public void setPaisByIdPais(Pais paisByIdPais) {
         this.paisByIdPais = paisByIdPais;
+    }
+
+    @Override
+    public String toString() {
+        return "Sede{" +
+                "idSede=" + idSede +
+                ", nombreSede='" + nombreSede + '\'' +
+                ", direccionSede='" + direccionSede + '\'' +
+                ", ordencabecerasByIdSede=" + ordencabecerasByIdSede +
+                ", empresaByIdEmpresa=" + empresaByIdEmpresa +
+                ", paisByIdPais=" + paisByIdPais +
+                '}';
     }
 }

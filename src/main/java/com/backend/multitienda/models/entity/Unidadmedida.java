@@ -11,6 +11,7 @@ public class Unidadmedida {
     private Collection<Producto> productosByIdUnidadMedida;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_unidad_medida", nullable = false)
     public int getIdUnidadMedida() {
         return idUnidadMedida;
@@ -51,5 +52,14 @@ public class Unidadmedida {
 
     public void setProductosByIdUnidadMedida(Collection<Producto> productosByIdUnidadMedida) {
         this.productosByIdUnidadMedida = productosByIdUnidadMedida;
+    }
+
+    @Override
+    public String toString() {
+        return "Unidadmedida{" +
+                "idUnidadMedida=" + idUnidadMedida +
+                ", descripcionUnidadMedida='" + descripcionUnidadMedida + '\'' +
+                ", productosByIdUnidadMedida=" + productosByIdUnidadMedida +
+                '}';
     }
 }

@@ -11,6 +11,7 @@ public class Estadoorden {
     private Collection<Ordencabecera> ordencabecerasByIdEstadoOrden;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estado_orden", nullable = false)
     public int getIdEstadoOrden() {
         return idEstadoOrden;
@@ -51,5 +52,14 @@ public class Estadoorden {
 
     public void setOrdencabecerasByIdEstadoOrden(Collection<Ordencabecera> ordencabecerasByIdEstadoOrden) {
         this.ordencabecerasByIdEstadoOrden = ordencabecerasByIdEstadoOrden;
+    }
+
+    @Override
+    public String toString() {
+        return "Estadoorden{" +
+                "idEstadoOrden=" + idEstadoOrden +
+                ", descripcionEstadoOrden='" + descripcionEstadoOrden + '\'' +
+                ", ordencabecerasByIdEstadoOrden=" + ordencabecerasByIdEstadoOrden +
+                '}';
     }
 }

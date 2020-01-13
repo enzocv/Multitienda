@@ -15,7 +15,7 @@ import static javax.transaction.Transactional.TxType.MANDATORY;
 
 public class PermisoEntityListener {
   @PrePersist
-  public void prePersist(Permiso target) {
+  public void postPersist(Permiso target) {
     perform(target, INSERTED);
   }
 

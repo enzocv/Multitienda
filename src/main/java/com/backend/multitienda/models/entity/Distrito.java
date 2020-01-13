@@ -1,9 +1,6 @@
 package com.backend.multitienda.models.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +9,7 @@ public class Distrito {
     private String nombreDistrito;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_distrito", nullable = false)
     public int getIdDistrito() {
         return idDistrito;
@@ -43,5 +41,13 @@ public class Distrito {
     @Override
     public int hashCode() {
         return Objects.hash(idDistrito, nombreDistrito);
+    }
+
+    @Override
+    public String toString() {
+        return "Distrito{" +
+                "idDistrito=" + idDistrito +
+                ", nombreDistrito='" + nombreDistrito + '\'' +
+                '}';
     }
 }

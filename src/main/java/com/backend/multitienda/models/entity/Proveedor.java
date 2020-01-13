@@ -13,6 +13,7 @@ public class Proveedor {
     private Empresa empresa;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_proveedor", nullable = false)
     public int getIdProveedor() {
         return idProveedor;
@@ -86,5 +87,17 @@ public class Proveedor {
 
     public void setEmpresa(Empresa empresaByIdEmpresa) {
         this.empresa = empresaByIdEmpresa;
+    }
+
+    @Override
+    public String toString() {
+        return "Proveedor{" +
+                "idProveedor=" + idProveedor +
+                ", nombreProveedor='" + nombreProveedor + '\'' +
+                ", apellidoProveedor='" + apellidoProveedor + '\'' +
+                ", rucProveedor='" + rucProveedor + '\'' +
+                ", usuario=" + usuario +
+                ", empresa=" + empresa +
+                '}';
     }
 }

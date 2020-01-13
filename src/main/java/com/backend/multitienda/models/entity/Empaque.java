@@ -14,6 +14,7 @@ public class Empaque {
     private Collection<Producto> productosByIdEmpaque;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_empaque", nullable = false)
     public int getIdEmpaque() {
         return idEmpaque;
@@ -76,5 +77,16 @@ public class Empaque {
 
     public void setProductosByIdEmpaque(Collection<Producto> productosByIdEmpaque) {
         this.productosByIdEmpaque = productosByIdEmpaque;
+    }
+
+    @Override
+    public String toString() {
+        return "Empaque{" +
+                "idEmpaque=" + idEmpaque +
+                ", descripcionEmpaque='" + descripcionEmpaque + '\'' +
+                ", precioEmpaque=" + precioEmpaque +
+                ", cantidadProductoEmpaque=" + cantidadProductoEmpaque +
+                ", productosByIdEmpaque=" + productosByIdEmpaque +
+                '}';
     }
 }

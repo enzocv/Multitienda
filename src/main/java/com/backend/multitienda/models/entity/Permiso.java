@@ -25,6 +25,7 @@ public class Permiso extends Auditable<String> {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_permiso", nullable = false)
     public int getIdPermiso() {
         return idPermiso;

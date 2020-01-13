@@ -15,6 +15,7 @@ public class Empresa {
     private Categoriaempresa categoriaEmpresa;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_empresa", nullable = false)
     public int getIdEmpresa() {
         return idEmpresa;
@@ -111,5 +112,18 @@ public class Empresa {
 
     public void setCategoriaEmpresa(Categoriaempresa categoriaempresaByIdEmpresa) {
         this.categoriaEmpresa = categoriaempresaByIdEmpresa;
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" +
+                "idEmpresa=" + idEmpresa +
+                ", nombreEmpresa='" + nombreEmpresa + '\'' +
+                ", rucEmpresa='" + rucEmpresa + '\'' +
+                ", telefonoEmpresa='" + telefonoEmpresa + '\'' +
+                ", direccionEmpresa='" + direccionEmpresa + '\'' +
+                ", emailEmpresa='" + emailEmpresa + '\'' +
+                ", categoriaEmpresa=" + categoriaEmpresa +
+                '}';
     }
 }

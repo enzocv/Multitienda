@@ -1,11 +1,16 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.DistribuidorEntityListener;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Distribuidor {
+@EntityListeners(DistribuidorEntityListener.class)
+public class Distribuidor extends Auditable<String> {
     private int idDistribuidor;
     private String nombreEmpresaDistribuidor;
     private String nombreDistribuidor;
@@ -14,6 +19,8 @@ public class Distribuidor {
     private String emailDistribuidor;
     private String rucDistribuidor;
     private Usuario usuarioByIdUsuario;
+
+    @JsonIgnore
     private Collection<Ordencabecera> ordencabecerasByIdDistribuidor;
 
     @Id

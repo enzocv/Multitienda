@@ -1,10 +1,14 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.EmpresaEntityListener;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Empresa {
+@EntityListeners(EmpresaEntityListener.class)
+public class Empresa extends Auditable<String> {
     private int idEmpresa;
     private String nombreEmpresa;
     private String rucEmpresa;

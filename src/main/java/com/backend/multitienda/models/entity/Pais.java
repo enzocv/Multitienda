@@ -11,20 +11,10 @@ public class Pais {
     private int idPais;
     private String nombrePais;
     private String estado;
-
-    @JsonIgnore
+    
     private Collection<Sede> sedesByIdPais;
     private Collection<Ciudad> ciudadesByIdPais;
-
-    @OneToMany(mappedBy = "paisByIdPais")
-    public Collection<Ciudad> getCiudadByIdPais() {
-        return ciudadesByIdPais;
-    }
-
-    public void setCiudadByIdPais(Collection<Ciudad> ciudadByIdPais) {
-        this.ciudadesByIdPais = ciudadByIdPais;
-    }
-
+    private Collection<Empresa> empresasByIdPais;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,6 +61,7 @@ public class Pais {
         return Objects.hash(idPais, nombrePais);
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "paisByIdPais")
     public Collection<Sede> getSedesByIdPais() {
         return sedesByIdPais;
@@ -80,13 +71,35 @@ public class Pais {
         this.sedesByIdPais = sedesByIdPais;
     }
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "paisByIdPais")
+    public Collection<Ciudad> getCiudadByIdPais() {
+        return ciudadesByIdPais;
+    }
+
+    public void setCiudadByIdPais(Collection<Ciudad> ciudadByIdPais) {
+        this.ciudadesByIdPais = ciudadByIdPais;
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "paisByIdPais")
+    public Collection<Empresa> getEmpresasByIdPais() {
+        return empresasByIdPais;
+    }
+
+    public void setEmpresasByIdPais(Collection<Empresa> empresasByIdPais) {
+        this.empresasByIdPais = empresasByIdPais;
+    }
+
     @Override
     public String toString() {
         return "Pais{" +
           "idPais=" + idPais +
           ", nombrePais='" + nombrePais + '\'' +
-          ", estado=" + estado +
+          ", estado='" + estado + '\'' +
           ", sedesByIdPais=" + sedesByIdPais +
+          ", ciudadesByIdPais=" + ciudadesByIdPais +
+          ", empresasByIdPais=" + empresasByIdPais +
           '}';
     }
 }

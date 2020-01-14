@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -10,18 +12,6 @@ public class Distrito {
     private String estado;
 
     private Ciudad ciudadByIdCiudad;
-
-    @ManyToOne
-    @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad", nullable = false)
-    public Ciudad getCiudadByIdCiudad() {
-        return ciudadByIdCiudad;
-    }
-
-    public void setCiudadByIdCiudad(Ciudad ciudadByIdCiudad) {
-        this.ciudadByIdCiudad = ciudadByIdCiudad;
-    }
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +56,16 @@ public class Distrito {
     @Override
     public int hashCode() {
         return Objects.hash(idDistrito, nombreDistrito);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad", nullable = false)
+    public Ciudad getCiudadByIdCiudad() {
+        return ciudadByIdCiudad;
+    }
+
+    public void setCiudadByIdCiudad(Ciudad ciudadByIdCiudad) {
+        this.ciudadByIdCiudad = ciudadByIdCiudad;
     }
 
     @Override

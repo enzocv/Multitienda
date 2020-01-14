@@ -2,6 +2,7 @@ package com.backend.multitienda.models.entity;
 
 import com.backend.multitienda.audit.Auditable;
 import com.backend.multitienda.listeners.EmpresaEntityListener;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class Empresa extends Auditable<String> {
     private String direccionEmpresa;
     private String emailEmpresa;
     private Categoriaempresa categoriaEmpresa;
+    private Pais paisByIdPais;
     private String estado;
 
     @Id
@@ -117,6 +119,16 @@ public class Empresa extends Auditable<String> {
         this.categoriaEmpresa = categoriaempresaByIdEmpresa;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", nullable = true)
+    public Pais getPaisByIdPais() {
+        return paisByIdPais;
+    }
+
+    public void setPaisByIdPais(Pais paisByIdPais) {
+        this.paisByIdPais = paisByIdPais;
+    }
+
     @Override
     public String toString() {
         return "Empresa{" +
@@ -127,7 +139,8 @@ public class Empresa extends Auditable<String> {
           ", direccionEmpresa='" + direccionEmpresa + '\'' +
           ", emailEmpresa='" + emailEmpresa + '\'' +
           ", categoriaEmpresa=" + categoriaEmpresa +
-          ", estado=" + estado +
+          ", paisByIdPais=" + paisByIdPais +
+          ", estado='" + estado + '\'' +
           '}';
     }
 }

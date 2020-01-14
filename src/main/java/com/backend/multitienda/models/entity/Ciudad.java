@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -9,30 +11,10 @@ public class Ciudad {
     private int idCiudad;
     private String nombreCiudad;
     private String estado;
-
     private Pais paisByIdPais;
 
-    @OneToMany(mappedBy = "ciudadByIdCiudad")
-    public Collection<Distrito> getDistritosByIdCiudad() {
-        return distritosByIdCiudad;
-    }
-
-    public void setDistritosByIdCiudad(Collection<Distrito> distritosByIdCiudad) {
-        this.distritosByIdCiudad = distritosByIdCiudad;
-    }
-
+    @JsonIgnore
     private Collection<Distrito> distritosByIdCiudad;
-
-    @ManyToOne
-    @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", nullable = false)
-    public Pais getPaisByIdPais() {
-        return paisByIdPais;
-    }
-
-    public void setPaisByIdPais(Pais paisByIdPais) {
-        this.paisByIdPais = paisByIdPais;
-    }
-
 
 
     @Id
@@ -78,6 +60,26 @@ public class Ciudad {
     @Override
     public int hashCode() {
         return Objects.hash(idCiudad, nombreCiudad);
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ciudadByIdCiudad")
+    public Collection<Distrito> getDistritosByIdCiudad() {
+        return distritosByIdCiudad;
+    }
+
+    public void setDistritosByIdCiudad(Collection<Distrito> distritosByIdCiudad) {
+        this.distritosByIdCiudad = distritosByIdCiudad;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", nullable = false)
+    public Pais getPaisByIdPais() {
+        return paisByIdPais;
+    }
+
+    public void setPaisByIdPais(Pais paisByIdPais) {
+        this.paisByIdPais = paisByIdPais;
     }
 
     @Override

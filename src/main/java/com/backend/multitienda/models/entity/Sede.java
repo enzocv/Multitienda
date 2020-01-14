@@ -20,6 +20,7 @@ public class Sede extends Auditable<String> {
 
     @JsonIgnore
     private Collection<Ordencabecera> ordencabecerasByIdSede;
+    private Collection<Stockproducto> stockproductosByIdSede;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,6 +86,17 @@ public class Sede extends Auditable<String> {
     public void setOrdencabecerasByIdSede(Collection<Ordencabecera> ordencabecerasByIdSede) {
         this.ordencabecerasByIdSede = ordencabecerasByIdSede;
     }
+
+    //relacion Sede StockProducto
+    @OneToMany(mappedBy = "sedeByIdSede")
+    public Collection<Stockproducto> getStockProductosByIdSede() {
+        return stockproductosByIdSede;
+    }
+
+    public void setStockProductosByIdSede(Collection<Stockproducto> stockproductosByIdSede) {
+        this.stockproductosByIdSede = stockproductosByIdSede;
+    }
+
 
     @ManyToOne
     @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)

@@ -9,6 +9,7 @@ public class Stockproducto {
     private int stockProducto;
     private String estado;
     private Producto productoByIdProducto;
+    private Sede sedeByIdSede;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,13 +66,24 @@ public class Stockproducto {
         this.productoByIdProducto = productoByIdProducto;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "id_sede", referencedColumnName = "id_sede", nullable = false)
+    public Sede getSedeByIdSede() {
+        return sedeByIdSede;
+    }
+
+    public void setSedeByIdSede(Sede sedeByIdSede) {
+        this.sedeByIdSede = sedeByIdSede;
+    }
+
     @Override
     public String toString() {
         return "Stockproducto{" +
           "idStockProducto=" + idStockProducto +
           ", stockProducto=" + stockProducto +
-          ", estado=" + estado +
+          ", estado='" + estado + '\'' +
           ", productoByIdProducto=" + productoByIdProducto +
+          ", sedeByIdSede=" + sedeByIdSede +
           '}';
     }
 }

@@ -19,6 +19,7 @@ public class PermisoHistory {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @Column(name = "permiso_content", nullable = true, length = -1)
   private String permisoContent;
 
   @CreatedBy

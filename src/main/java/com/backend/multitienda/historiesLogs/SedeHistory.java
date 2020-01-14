@@ -1,7 +1,7 @@
 package com.backend.multitienda.historiesLogs;
 
 import com.backend.multitienda.listeners.Action;
-import com.backend.multitienda.models.entity.Empresa;
+import com.backend.multitienda.models.entity.Sede;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,13 +14,14 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class EmpresaHistory {
+public class SedeHistory {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(name = "empresa_content",nullable = true, length = -1)
-  private String empresaContent;
+  @Column(name = "sede_content",nullable = true ,length = -1)
+  private String sedeContent;
 
   @CreatedBy
   private String modifiedBy;
@@ -32,14 +33,6 @@ public class EmpresaHistory {
   @Enumerated(STRING)
   private Action action;
 
-  public EmpresaHistory() {
-  }
-
-  public EmpresaHistory(Empresa empresa, Action action) {
-    this.empresaContent = empresa.toString();
-    this.action = action;
-  }
-
   public Integer getId() {
     return id;
   }
@@ -48,12 +41,12 @@ public class EmpresaHistory {
     this.id = id;
   }
 
-  public String getEmpresaContent() {
-    return empresaContent;
+  public String getSedeContent() {
+    return sedeContent;
   }
 
-  public void setEmpresaContent(String empresaContent) {
-    this.empresaContent = empresaContent;
+  public void setSedeContent(String sedeContent) {
+    this.sedeContent = sedeContent;
   }
 
   public String getModifiedBy() {
@@ -77,6 +70,14 @@ public class EmpresaHistory {
   }
 
   public void setAction(Action action) {
+    this.action = action;
+  }
+
+  public SedeHistory() {
+  }
+
+  public SedeHistory(Sede sede, Action action) {
+    this.sedeContent = sede.toString();
     this.action = action;
   }
 }

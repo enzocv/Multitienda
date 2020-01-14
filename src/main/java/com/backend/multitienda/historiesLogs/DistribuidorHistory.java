@@ -20,6 +20,7 @@ public class DistribuidorHistory {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @Column(name = "distribuidor_content",nullable = true, length = -1)
   private String distribuidorContent;
 
   @CreatedBy

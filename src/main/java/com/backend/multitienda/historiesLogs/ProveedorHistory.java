@@ -19,6 +19,7 @@ public class ProveedorHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "proveedor_content",nullable = true, length = -1)
     private String proveedorContent;
 
     @CreatedBy

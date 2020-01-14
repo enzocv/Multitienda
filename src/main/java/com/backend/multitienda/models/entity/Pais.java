@@ -10,10 +10,11 @@ import java.util.Objects;
 public class Pais {
     private int idPais;
     private String nombrePais;
-    private boolean estado;
-
-    @JsonIgnore
+    private String estado;
+    
     private Collection<Sede> sedesByIdPais;
+    private Collection<Ciudad> ciudadesByIdPais;
+    private Collection<Empresa> empresasByIdPais;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,12 +38,12 @@ public class Pais {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -60,6 +61,7 @@ public class Pais {
         return Objects.hash(idPais, nombrePais);
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "paisByIdPais")
     public Collection<Sede> getSedesByIdPais() {
         return sedesByIdPais;
@@ -69,13 +71,35 @@ public class Pais {
         this.sedesByIdPais = sedesByIdPais;
     }
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "paisByIdPais")
+    public Collection<Ciudad> getCiudadByIdPais() {
+        return ciudadesByIdPais;
+    }
+
+    public void setCiudadByIdPais(Collection<Ciudad> ciudadByIdPais) {
+        this.ciudadesByIdPais = ciudadByIdPais;
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "paisByIdPais")
+    public Collection<Empresa> getEmpresasByIdPais() {
+        return empresasByIdPais;
+    }
+
+    public void setEmpresasByIdPais(Collection<Empresa> empresasByIdPais) {
+        this.empresasByIdPais = empresasByIdPais;
+    }
+
     @Override
     public String toString() {
         return "Pais{" +
           "idPais=" + idPais +
           ", nombrePais='" + nombrePais + '\'' +
-          ", estado=" + estado +
+          ", estado='" + estado + '\'' +
           ", sedesByIdPais=" + sedesByIdPais +
+          ", ciudadesByIdPais=" + ciudadesByIdPais +
+          ", empresasByIdPais=" + empresasByIdPais +
           '}';
     }
 }

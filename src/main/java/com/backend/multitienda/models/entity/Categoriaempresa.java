@@ -11,7 +11,7 @@ public class Categoriaempresa {
     private int idCategoriaEmpresa;
     private String descripcionCategoriaEmpresa;
     private String imagenCategoriaEmpresa;
-    private boolean estado;
+    private String estado;
 
     @JsonIgnore
     private Collection<Empresa> empresasByIdCategoriaEmpresa;
@@ -57,12 +57,12 @@ public class Categoriaempresa {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

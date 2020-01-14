@@ -19,7 +19,7 @@ public class Distribuidor extends Auditable<String> {
     private String emailDistribuidor;
     private String rucDistribuidor;
     private Usuario usuarioByIdUsuario;
-    private boolean estado;
+    private String estado;
 
     @JsonIgnore
     private Collection<Ordencabecera> ordencabecerasByIdDistribuidor;
@@ -96,12 +96,12 @@ public class Distribuidor extends Auditable<String> {
     }
 
   @Basic
-  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-  public boolean getEstado() {
+  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+  public String getEstado() {
     return estado;
   }
 
-  public void setEstado(boolean estado) {
+  public void setEstado(String estado) {
     this.estado = estado;
   }
 

@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.SedeEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -7,16 +9,18 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Sede {
+@EntityListeners(SedeEntityListener.class)
+public class Sede extends Auditable<String> {
     private int idSede;
     private String nombreSede;
     private String direccionSede;
     private Empresa empresaByIdEmpresa;
     private Pais paisByIdPais;
-    private boolean estado;
+    private String estado;
 
     @JsonIgnore
     private Collection<Ordencabecera> ordencabecerasByIdSede;
+    private Collection<Stockproducto> stockproductosByIdSede;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,12 +54,12 @@ public class Sede {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -82,6 +86,17 @@ public class Sede {
     public void setOrdencabecerasByIdSede(Collection<Ordencabecera> ordencabecerasByIdSede) {
         this.ordencabecerasByIdSede = ordencabecerasByIdSede;
     }
+
+    //relacion Sede StockProducto
+    @OneToMany(mappedBy = "sedeByIdSede")
+    public Collection<Stockproducto> getStockProductosByIdSede() {
+        return stockproductosByIdSede;
+    }
+
+    public void setStockProductosByIdSede(Collection<Stockproducto> stockproductosByIdSede) {
+        this.stockproductosByIdSede = stockproductosByIdSede;
+    }
+
 
     @ManyToOne
     @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)

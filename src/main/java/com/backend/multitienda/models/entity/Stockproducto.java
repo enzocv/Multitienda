@@ -7,8 +7,9 @@ import java.util.Objects;
 public class Stockproducto {
     private int idStockProducto;
     private int stockProducto;
-    private boolean estado;
+    private String estado;
     private Producto productoByIdProducto;
+    private Sede sedeByIdSede;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +33,12 @@ public class Stockproducto {
     }
 
     @Basic
-    @Column(name = "estado", length = 1, columnDefinition = "BIT")
-    public boolean getEstado() {
+    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -65,13 +66,24 @@ public class Stockproducto {
         this.productoByIdProducto = productoByIdProducto;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "id_sede", referencedColumnName = "id_sede", nullable = false)
+    public Sede getSedeByIdSede() {
+        return sedeByIdSede;
+    }
+
+    public void setSedeByIdSede(Sede sedeByIdSede) {
+        this.sedeByIdSede = sedeByIdSede;
+    }
+
     @Override
     public String toString() {
         return "Stockproducto{" +
           "idStockProducto=" + idStockProducto +
           ", stockProducto=" + stockProducto +
-          ", estado=" + estado +
+          ", estado='" + estado + '\'' +
           ", productoByIdProducto=" + productoByIdProducto +
+          ", sedeByIdSede=" + sedeByIdSede +
           '}';
     }
 }

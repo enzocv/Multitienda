@@ -39,4 +39,44 @@ public class EmpresaHistory {
     this.empresaContent = empresa.toString();
     this.action = action;
   }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getEmpresaContent() {
+    return empresaContent;
+  }
+
+  public void setEmpresaContent(String empresaContent) {
+    this.empresaContent = empresaContent;
+  }
+
+  public String getModifiedBy() {
+    return modifiedBy;
+  }
+
+  public void setModifiedBy(String modifiedBy) {
+    this.modifiedBy = modifiedBy;
+  }
+
+  public Date getModifiedDate() {
+    return modifiedDate;
+  }
+
+  public void setModifiedDate(Date modifiedDate) {
+    this.modifiedDate = modifiedDate;
+  }
+
+  public Action getAction() {
+    return action;
+  }
+
+  public void setAction(Action action) {
+    this.action = action;
+  }
 }

@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,9 @@ public class UsuarioController {
 
   @Autowired
   private IUsuarioRepository usuarioRepository;
+
+  @Autowired
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
   @GetMapping
   @ApiOperation(value = "Listar usuarios", notes = "Lista todos los usuarios")
@@ -46,6 +50,7 @@ public class UsuarioController {
   @PostMapping
   @ApiOperation(value = "Crear un usuario")
   public Usuario addUsuario(@RequestBody Usuario rqUsuario) {
+    rqUsuario.setPassword(bCryptPasswordEncoder.encode(rqUsuario.getPassword()));
     return usuarioRepository.save(rqUsuario);
   }
 

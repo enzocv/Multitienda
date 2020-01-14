@@ -43,6 +43,7 @@ public class Usuario extends Auditable<String> {
   }
 
   @Basic
+  @JsonIgnore
   @Column(name = "password", nullable = true, length = -1)
   public String getPassword() {
     return password;

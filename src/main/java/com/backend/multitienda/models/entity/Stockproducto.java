@@ -32,7 +32,7 @@ public class Stockproducto {
     }
 
     @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "BIT")
+    @Column(name = "estado", length = 1, columnDefinition = "BIT")
     public boolean getEstado() {
         return estado;
     }

@@ -17,6 +17,7 @@ import java.util.Map;
 @Api(value = "Servicio de categoria Empresa",description = "Esta API permite realizar las " +
     "operaciones básicas de las Cateogiras de las Empresas")
 @RestController
+@CrossOrigin
 @RequestMapping("/api/categoriaempresas")
 public class CategoriaEmpresaController {
 

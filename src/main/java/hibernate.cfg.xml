@@ -4,12 +4,16 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://localhost:3306/db_multitienda</property>
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <mapping class="com.backend.multitienda.models.entity.Categoriaempresa"/>
-        <mapping class="com.backend.multitienda.models.entity.Categoriaproducto"/>
+        <property name="connection.url">
+            jdbc:mysql://localhost:3306/db_multitienda
+        </property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver
+        </property>
+        <mapping
+                class="com.backend.multitienda.models.entity.Categoriaempresa"/>
+        <mapping
+                class="com.backend.multitienda.models.entity.Categoriaproducto"/>
         <mapping class="com.backend.multitienda.models.entity.Ciudad"/>
-        <mapping class="com.backend.multitienda.models.entity.Clientes"/>
         <mapping class="com.backend.multitienda.models.entity.Distribuidor"/>
         <mapping class="com.backend.multitienda.models.entity.Distrito"/>
         <mapping class="com.backend.multitienda.models.entity.Empaque"/>
@@ -28,6 +32,11 @@
         <mapping class="com.backend.multitienda.models.entity.Usuario"/>
         <mapping class="com.backend.multitienda.historiesLogs.PermisoHistory"/>
         <mapping class="com.backend.multitienda.historiesLogs.UsuarioHistory"/>
+        <mapping class="com.backend.multitienda.historiesLogs.EmpresaHistory"/>
+        <mapping
+                class="com.backend.multitienda.historiesLogs.DistribuidorHistory"/>
+        <mapping
+                class="com.backend.multitienda.historiesLogs.ProveedorHistory"/>
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 

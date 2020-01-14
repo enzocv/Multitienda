@@ -1,5 +1,6 @@
 package com.backend.multitienda.audit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,18 +21,22 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 public abstract class Auditable<U> {
 
   @CreatedBy
+  @JsonIgnore
   protected U createdBy;
 
 
   @CreatedDate
+  @JsonIgnore
   @Temporal(TIMESTAMP)
   protected LocalDateTime createdDate;
 
 
   @LastModifiedBy
+  @JsonIgnore
   protected U lastModifiedBy;
 
   @LastModifiedDate
+  @JsonIgnore
   @Temporal(TIMESTAMP)
   protected LocalDateTime lastModifiedDate;
 

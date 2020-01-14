@@ -9,6 +9,20 @@ public class Distrito {
     private String nombreDistrito;
     private String estado;
 
+    private Ciudad ciudadByIdCiudad;
+
+    @ManyToOne
+    @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad", nullable = false)
+    public Ciudad getCiudadByIdCiudad() {
+        return ciudadByIdCiudad;
+    }
+
+    public void setCiudadByIdCiudad(Ciudad ciudadByIdCiudad) {
+        this.ciudadByIdCiudad = ciudadByIdCiudad;
+    }
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_distrito", nullable = false)

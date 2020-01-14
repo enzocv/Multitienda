@@ -14,6 +14,17 @@ public class Pais {
 
     @JsonIgnore
     private Collection<Sede> sedesByIdPais;
+    private Collection<Ciudad> ciudadesByIdPais;
+
+    @OneToMany(mappedBy = "paisByIdPais")
+    public Collection<Ciudad> getCiudadByIdPais() {
+        return ciudadesByIdPais;
+    }
+
+    public void setCiudadByIdPais(Collection<Ciudad> ciudadByIdPais) {
+        this.ciudadesByIdPais = ciudadByIdPais;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

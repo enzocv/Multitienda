@@ -1,6 +1,7 @@
 package com.backend.multitienda.models.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -8,6 +9,31 @@ public class Ciudad {
     private int idCiudad;
     private String nombreCiudad;
     private String estado;
+
+    private Pais paisByIdPais;
+
+    @OneToMany(mappedBy = "ciudadByIdCiudad")
+    public Collection<Distrito> getDistritosByIdCiudad() {
+        return distritosByIdCiudad;
+    }
+
+    public void setDistritosByIdCiudad(Collection<Distrito> distritosByIdCiudad) {
+        this.distritosByIdCiudad = distritosByIdCiudad;
+    }
+
+    private Collection<Distrito> distritosByIdCiudad;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", nullable = false)
+    public Pais getPaisByIdPais() {
+        return paisByIdPais;
+    }
+
+    public void setPaisByIdPais(Pais paisByIdPais) {
+        this.paisByIdPais = paisByIdPais;
+    }
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

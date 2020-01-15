@@ -2,6 +2,7 @@ package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.CategoriaEmpresa;
+import com.backend.multitienda.models.entity.CategoriaProducto;
 import com.backend.multitienda.repositories.ICategoriaEmpresaRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,9 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.backend.multitienda.models.entity.Estado.ACTIVO;
+import static com.backend.multitienda.models.entity.Estado.INACTIVO;
 
 @Api(value = "Servicio de categoria Empresa", description = "Esta API permite realizar las " +
   "operaciones básicas de las Cateogiras de las Empresas")
@@ -33,7 +37,6 @@ public class CategoriaEmpresaController {
   }
   //endregion
 
-
   //region Obtener por ID
   @GetMapping("/{idCategoriaEmpresa}")
   @ApiOperation(value = "Obtener una categoria",
@@ -53,28 +56,25 @@ public class CategoriaEmpresaController {
   //region Crear
   @PostMapping
   @ApiOperation(value = "Crear una categoria para las empresas")
-  public CategoriaEmpresa addCategoriaEmpresa(@RequestBody CategoriaEmpresa categoriaempresa) {
-    return categoriaEmpresaRepository.save(categoriaempresa);
+  public CategoriaEmpresa addCategoriaEmpresa(@RequestBody CategoriaEmpresa rqCategoriaempresa) {
+    rqCategoriaempresa.setEstado(ACTIVO.getName());
+    return categoriaEmpresaRepository.save(rqCategoriaempresa);
   }
   //endregion
 
   @PutMapping
   @ApiOperation(value = "Actualizar categoria Empresa")
-  public ResponseEntity updateCategoriaEmpresa(
-    @RequestBody CategoriaEmpresa categoriaempresa
-  ) {
-    if (!categoriaEmpresaRepository.existsById(categoriaempresa.getIdCategoriaEmpresa()))
-      return ResponseEntity.badRequest().body(
-        "No se encontro ninguna Categoria con el ID: "
-          + categoriaempresa.getIdCategoriaEmpresa());
-    try {
-      categoriaEmpresaRepository.save(categoriaempresa);
-      return ResponseEntity.ok(categoriaempresa);
-    } catch (Exception e) {
-      return ResponseEntity.badRequest().body(
-        "No se encontro ninguna Categoria con el ID: "
-          + categoriaempresa.getIdCategoriaEmpresa());
-    }
+  public ResponseEntity<CategoriaEmpresa> updateCategoriaEmpresa(
+    @Valid @PathVariable Integer idCategoriaEmpresa,
+    @RequestBody CategoriaEmpresa rqCategoriaempresa) throws ResourceNotFoundException {
+    CategoriaEmpresa obtenerCategoriaEmpresa = categoriaEmpresaRepository.findById(idCategoriaEmpresa)
+      .orElseThrow(
+        ()-> new ResourceNotFoundException("No se encontro ninguna Categoria Empresa con el id: " + idCategoriaEmpresa)
+      );
+
+    final CategoriaEmpresa updateCategoriaEmpresa = categoriaEmpresaRepository.save(rqCategoriaempresa);
+
+    return ResponseEntity.ok(updateCategoriaEmpresa);
   }
 
   @DeleteMapping("/{idCategoriaEmpresa}")
@@ -88,6 +88,7 @@ public class CategoriaEmpresaController {
           "No se encontro ninguna categoria con este id"
         )
       );
+    eliminarCategoria.setEstado(INACTIVO.getName());
     categoriaEmpresaRepository.delete(eliminarCategoria);
     Map<String, Boolean> response = new HashMap<>();
     response.put("Eliminado", Boolean.TRUE);

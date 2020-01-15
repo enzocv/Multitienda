@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.backend.multitienda.models.entity.Estado.ACTIVO;
+import static com.backend.multitienda.models.entity.Estado.INACTIVO;
+
 @Api(value = "Servicio de Sede", description = "Esta API permite realizar las operaciones básicas de las " +
   "Sedes")
 @RestController
@@ -45,6 +48,7 @@ public class SedeController {
   @PostMapping
   @ApiOperation(value = "Crear una Sede")
   public Sede addSede(@RequestBody Sede rqsede){
+    rqsede.setEstado(ACTIVO.getName());
     return sedesRepository.save(rqsede);
   }
 
@@ -58,7 +62,8 @@ public class SedeController {
         new ResourceNotFoundException("No se encontró sede con este id")
       );
 
-    sedesRepository.delete(obtenerSede);
+    obtenerSede.setEstado(INACTIVO.getName());
+    sedesRepository.save(obtenerSede);
     Map<String, Boolean> response = new HashMap<>();
     response.put("Eliminado", Boolean.TRUE);
     return response;

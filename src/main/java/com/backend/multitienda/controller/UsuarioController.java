@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.backend.multitienda.models.entity.Estado.ACTIVO;
+import static com.backend.multitienda.models.entity.Estado.INACTIVO;
+
 @Api(value = "Servicio de usuario", description = "Esta API permite realizar las operaciones básicas de los " +
   "Usuarios")
 @RestController //notacion para un API REST
@@ -51,6 +54,7 @@ public class UsuarioController {
   @ApiOperation(value = "Crear un usuario")
   public Usuario addUsuario(@RequestBody Usuario rqUsuario) {
     rqUsuario.setPassword(bCryptPasswordEncoder.encode(rqUsuario.getPassword()));
+    rqUsuario.setEstado(ACTIVO.getName());
     return usuarioRepository.save(rqUsuario);
   }
 
@@ -85,7 +89,8 @@ public class UsuarioController {
         new ResourceNotFoundException("No se encontró usuario con este id")
       );
 
-    usuarioRepository.delete(usuario);
+    usuario.setEstado(INACTIVO.getName());
+    usuarioRepository.save(usuario);
     Map<String, Boolean> response = new HashMap<>();
     response.put("Eliminado", Boolean.TRUE);
     return response;

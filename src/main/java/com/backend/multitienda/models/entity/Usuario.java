@@ -25,7 +25,7 @@ public class Usuario extends Auditable<String> {
   private String emailUsuario;
 
   @Basic
-  @JsonIgnore
+  //  @JsonIgnore
   @Column(name = "password", nullable = false, columnDefinition = "TEXT")
   private String password;
 

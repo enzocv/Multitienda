@@ -10,24 +10,24 @@
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver
         </property>
         <mapping
-                class="com.backend.multitienda.models.entity.Categoriaempresa"/>
+                class="com.backend.multitienda.models.entity.CategoriaEmpresa"/>
         <mapping
-                class="com.backend.multitienda.models.entity.Categoriaproducto"/>
+                class="com.backend.multitienda.models.entity.CategoriaProducto"/>
         <mapping class="com.backend.multitienda.models.entity.Ciudad"/>
         <mapping class="com.backend.multitienda.models.entity.Distribuidor"/>
         <mapping class="com.backend.multitienda.models.entity.Distrito"/>
         <mapping class="com.backend.multitienda.models.entity.Empaque"/>
         <mapping class="com.backend.multitienda.models.entity.Empresa"/>
-        <mapping class="com.backend.multitienda.models.entity.Estadoorden"/>
-        <mapping class="com.backend.multitienda.models.entity.Ordencabecera"/>
-        <mapping class="com.backend.multitienda.models.entity.Ordendetalle"/>
+        <mapping class="com.backend.multitienda.models.entity.EstadoOrden"/>
+        <mapping class="com.backend.multitienda.models.entity.OrdenCabecera"/>
+        <mapping class="com.backend.multitienda.models.entity.OrdenDetalle"/>
         <mapping class="com.backend.multitienda.models.entity.Pais"/>
         <mapping class="com.backend.multitienda.models.entity.Permiso"/>
         <mapping class="com.backend.multitienda.models.entity.Producto"/>
         <mapping class="com.backend.multitienda.models.entity.Productoimagen"/>
         <mapping class="com.backend.multitienda.models.entity.Proveedor"/>
         <mapping class="com.backend.multitienda.models.entity.Sede"/>
-        <mapping class="com.backend.multitienda.models.entity.Stockproducto"/>
+        <mapping class="com.backend.multitienda.models.entity.StockProducto"/>
         <mapping class="com.backend.multitienda.models.entity.Unidadmedida"/>
         <mapping class="com.backend.multitienda.models.entity.Usuario"/>
         <mapping class="com.backend.multitienda.historiesLogs.PermisoHistory"/>

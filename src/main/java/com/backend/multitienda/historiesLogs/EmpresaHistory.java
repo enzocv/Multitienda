@@ -2,6 +2,7 @@ package com.backend.multitienda.historiesLogs;
 
 import com.backend.multitienda.listeners.Action;
 import com.backend.multitienda.models.entity.Empresa;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,6 +13,7 @@ import java.util.Date;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
+@Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class EmpresaHistory {
@@ -19,7 +21,7 @@ public class EmpresaHistory {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(name = "empresa_content",nullable = true, length = -1)
+  @Column(name = "empresa_content", nullable = false, columnDefinition = "TEXT")
   private String empresaContent;
 
   @CreatedBy
@@ -37,46 +39,6 @@ public class EmpresaHistory {
 
   public EmpresaHistory(Empresa empresa, Action action) {
     this.empresaContent = empresa.toString();
-    this.action = action;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getEmpresaContent() {
-    return empresaContent;
-  }
-
-  public void setEmpresaContent(String empresaContent) {
-    this.empresaContent = empresaContent;
-  }
-
-  public String getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
-  public Date getModifiedDate() {
-    return modifiedDate;
-  }
-
-  public void setModifiedDate(Date modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  public Action getAction() {
-    return action;
-  }
-
-  public void setAction(Action action) {
     this.action = action;
   }
 }

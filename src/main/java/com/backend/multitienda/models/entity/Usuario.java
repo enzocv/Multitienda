@@ -3,123 +3,48 @@ package com.backend.multitienda.models.entity;
 import com.backend.multitienda.audit.Auditable;
 import com.backend.multitienda.listeners.UsuarioEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @EntityListeners(UsuarioEntityListener.class)
 public class Usuario extends Auditable<String> {
-  private int idUsuario;
-  private String emailUsuario;
-  private String password;
-  private Permiso permiso;
-  private String estado;
-
-  @JsonIgnore
-  private Collection<Distribuidor> distribuidorsByIdUsuario;
-  private Collection<Proveedor> proveedorsByIdUsuario;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id_usuario", nullable = false)
-  public int getIdUsuario() {
-    return idUsuario;
-  }
-
-  public void setIdUsuario(int idUsuario) {
-    this.idUsuario = idUsuario;
-  }
+  private int idUsuario;
 
   @Basic
-  @Column(name = "email_usuario", nullable = true, length = -1)
-  public String getEmailUsuario() {
-    return emailUsuario;
-  }
-
-  public void setEmailUsuario(String emailUsuario) {
-    this.emailUsuario = emailUsuario;
-  }
+  @Column(name = "email_usuario", nullable = false, length = 50)
+  private String emailUsuario;
 
   @Basic
   @JsonIgnore
-  @Column(name = "password", nullable = true, length = -1)
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
+  @Column(name = "password", nullable = false, columnDefinition = "TEXT")
+  private String password;
 
   @Basic
-  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
-  public String getEstado() {
-    return estado;
-  }
+  @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
+  private String estado;
 
-  public void setEstado(String estado) {
-    this.estado = estado;
-  }
+  @ManyToOne
+  @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = false)
+  private Permiso permiso;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Usuario usuario = (Usuario) o;
-    return idUsuario == usuario.idUsuario &&
-      Objects.equals(emailUsuario, usuario.emailUsuario) &&
-      Objects.equals(password, usuario.password) &&
-      Objects.equals(estado, usuario.estado);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(idUsuario, emailUsuario, password, estado);
-  }
-
-  @OneToMany(mappedBy = "usuarioByIdUsuario")
   @JsonIgnore
-  public Collection<Distribuidor> getDistribuidorsByIdUsuario() {
-    return distribuidorsByIdUsuario;
-  }
+  @OneToMany(mappedBy = "usuario")
+  private Collection<Distribuidor> distribuidores;
 
-  public void setDistribuidorsByIdUsuario(Collection<Distribuidor> distribuidorsByIdUsuario) {
-    this.distribuidorsByIdUsuario = distribuidorsByIdUsuario;
-  }
 
   @OneToMany(mappedBy = "usuario")
   @JsonIgnore
-  public Collection<Proveedor> getProveedorsByIdUsuario() {
-    return proveedorsByIdUsuario;
-  }
+  private Collection<Proveedor> proveedores;
 
-  public void setProveedorsByIdUsuario(Collection<Proveedor> proveedorsByIdUsuario) {
-    this.proveedorsByIdUsuario = proveedorsByIdUsuario;
-  }
 
-  @ManyToOne
-  @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = true)
-  public Permiso getPermiso() {
-    return permiso;
-  }
-
-  public void setPermiso(Permiso permiso) {
-
-    this.permiso = permiso;
-  }
-
-  @Override
-  public String toString() {
-    return "Usuario{" +
-      "idUsuario=" + idUsuario +
-      ", emailUsuario='" + emailUsuario + '\'' +
-      ", password='" + password + '\'' +
-      ", permiso=" + permiso +
-      ", estado=" + estado +
-      ", distribuidorsByIdUsuario=" + distribuidorsByIdUsuario +
-      ", proveedorsByIdUsuario=" + proveedorsByIdUsuario +
-      '}';
-  }
 }

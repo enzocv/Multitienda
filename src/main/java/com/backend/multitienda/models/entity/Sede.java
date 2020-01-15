@@ -3,131 +3,43 @@ package com.backend.multitienda.models.entity;
 import com.backend.multitienda.audit.Auditable;
 import com.backend.multitienda.listeners.SedeEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @EntityListeners(SedeEntityListener.class)
 public class Sede extends Auditable<String> {
-    private int idSede;
-    private String nombreSede;
-    private String direccionSede;
-    private Empresa empresaByIdEmpresa;
-    private Pais paisByIdPais;
-    private String estado;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id_sede", nullable = false)
+  private int idSede;
 
-    @JsonIgnore
-    private Collection<Ordencabecera> ordencabecerasByIdSede;
-    private Collection<Stockproducto> stockproductosByIdSede;
+  @Basic
+  @Column(name = "nombre_sede", nullable = false, length = 50)
+  private String nombreSede;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_sede", nullable = false)
-    public int getIdSede() {
-        return idSede;
-    }
+  @Basic
+  @Column(name = "direccion_sede", nullable = false)
+  private String direccionSede;
 
-    public void setIdSede(int idSede) {
-        this.idSede = idSede;
-    }
+  @Basic
+  @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
+  private String estado;
 
-    @Basic
-    @Column(name = "nombre_sede", nullable = false, length = 50)
-    public String getNombreSede() {
-        return nombreSede;
-    }
+  @ManyToOne
+  @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)
+  private Empresa empresa;
 
-    public void setNombreSede(String nombreSede) {
-        this.nombreSede = nombreSede;
-    }
+  @JsonIgnore
+  @OneToMany(mappedBy = "sede")
+  private Collection<OrdenCabecera> ordenCabeceras;
 
-    @Basic
-    @Column(name = "direccion_sede", nullable = false, length = -1)
-    public String getDireccionSede() {
-        return direccionSede;
-    }
+  @OneToMany(mappedBy = "sede")
+  private Collection<StockProducto> stockProductos;
 
-    public void setDireccionSede(String direccionSede) {
-        this.direccionSede = direccionSede;
-    }
-
-    @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sede sede = (Sede) o;
-        return idSede == sede.idSede &&
-                Objects.equals(nombreSede, sede.nombreSede) &&
-                Objects.equals(direccionSede, sede.direccionSede);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idSede, nombreSede, direccionSede);
-    }
-
-    @OneToMany(mappedBy = "sedeByIdSede")
-    public Collection<Ordencabecera> getOrdencabecerasByIdSede() {
-        return ordencabecerasByIdSede;
-    }
-
-    public void setOrdencabecerasByIdSede(Collection<Ordencabecera> ordencabecerasByIdSede) {
-        this.ordencabecerasByIdSede = ordencabecerasByIdSede;
-    }
-
-    //relacion Sede StockProducto
-    @OneToMany(mappedBy = "sedeByIdSede")
-    public Collection<Stockproducto> getStockProductosByIdSede() {
-        return stockproductosByIdSede;
-    }
-
-    public void setStockProductosByIdSede(Collection<Stockproducto> stockproductosByIdSede) {
-        this.stockproductosByIdSede = stockproductosByIdSede;
-    }
-
-
-    @ManyToOne
-    @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)
-    public Empresa getEmpresaByIdEmpresa() {
-        return empresaByIdEmpresa;
-    }
-
-    public void setEmpresaByIdEmpresa(Empresa empresaByIdEmpresa) {
-        this.empresaByIdEmpresa = empresaByIdEmpresa;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", nullable = false)
-    public Pais getPaisByIdPais() {
-        return paisByIdPais;
-    }
-
-    public void setPaisByIdPais(Pais paisByIdPais) {
-        this.paisByIdPais = paisByIdPais;
-    }
-
-    @Override
-    public String toString() {
-        return "Sede{" +
-          "idSede=" + idSede +
-          ", nombreSede='" + nombreSede + '\'' +
-          ", direccionSede='" + direccionSede + '\'' +
-          ", empresaByIdEmpresa=" + empresaByIdEmpresa +
-          ", paisByIdPais=" + paisByIdPais +
-          ", estado=" + estado +
-          ", ordencabecerasByIdSede=" + ordencabecerasByIdSede +
-          '}';
-    }
 }

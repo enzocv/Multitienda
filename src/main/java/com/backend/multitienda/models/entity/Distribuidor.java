@@ -3,159 +3,60 @@ package com.backend.multitienda.models.entity;
 import com.backend.multitienda.audit.Auditable;
 import com.backend.multitienda.listeners.DistribuidorEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
+@Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @EntityListeners(DistribuidorEntityListener.class)
 public class Distribuidor extends Auditable<String> {
-    private int idDistribuidor;
-    private String nombreEmpresaDistribuidor;
-    private String nombreDistribuidor;
-    private String apellidoDistribuidor;
-    private String direccionDistribuidor;
-    private String emailDistribuidor;
-    private String rucDistribuidor;
-    private Usuario usuarioByIdUsuario;
-    private String estado;
 
-    @JsonIgnore
-    private Collection<Ordencabecera> ordencabecerasByIdDistribuidor;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_distribuidor", nullable = false)
-    public int getIdDistribuidor() {
-        return idDistribuidor;
-    }
-
-    public void setIdDistribuidor(int idDistribuidor) {
-        this.idDistribuidor = idDistribuidor;
-    }
-
-    @Basic
-    @Column(name = "nombre_empresa_distribuidor", nullable = false, length = 50)
-    public String getNombreEmpresaDistribuidor() {
-        return nombreEmpresaDistribuidor;
-    }
-
-    public void setNombreEmpresaDistribuidor(String nombreEmpresaDistribuidor) {
-        this.nombreEmpresaDistribuidor = nombreEmpresaDistribuidor;
-    }
-
-    @Basic
-    @Column(name = "nombre_distribuidor", nullable = false, length = 50)
-    public String getNombreDistribuidor() {
-        return nombreDistribuidor;
-    }
-
-    public void setNombreDistribuidor(String nombreDistribuidor) {
-        this.nombreDistribuidor = nombreDistribuidor;
-    }
-
-    @Basic
-    @Column(name = "apellido_distribuidor", nullable = false, length = 50)
-    public String getApellidoDistribuidor() {
-        return apellidoDistribuidor;
-    }
-
-    public void setApellidoDistribuidor(String apellidoDistribuidor) {
-        this.apellidoDistribuidor = apellidoDistribuidor;
-    }
-
-    @Basic
-    @Column(name = "direccion_distribuidor", nullable = false, length = -1)
-    public String getDireccionDistribuidor() {
-        return direccionDistribuidor;
-    }
-
-    public void setDireccionDistribuidor(String direccionDistribuidor) {
-        this.direccionDistribuidor = direccionDistribuidor;
-    }
-
-    @Basic
-    @Column(name = "email_distribuidor", nullable = false, length = 50)
-    public String getEmailDistribuidor() {
-        return emailDistribuidor;
-    }
-
-    public void setEmailDistribuidor(String emailDistribuidor) {
-        this.emailDistribuidor = emailDistribuidor;
-    }
-
-    @Basic
-    @Column(name = "ruc_distribuidor", nullable = false, length = 11)
-    public String getRucDistribuidor() {
-        return rucDistribuidor;
-    }
-
-    public void setRucDistribuidor(String rucDistribuidor) {
-        this.rucDistribuidor = rucDistribuidor;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id_distribuidor", nullable = false)
+  private int idDistribuidor;
 
   @Basic
-  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
-  public String getEstado() {
-    return estado;
-  }
+  @Column(name = "nombre_empresa_distribuidor", nullable = false, length = 50)
+  private String nombreEmpresaDistribuidor;
 
-  public void setEstado(String estado) {
-    this.estado = estado;
-  }
+  @Basic
+  @Column(name = "nombre_distribuidor", nullable = false, length = 50)
+  private String nombreDistribuidor;
 
-   @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Distribuidor that = (Distribuidor) o;
-        return idDistribuidor == that.idDistribuidor &&
-                Objects.equals(nombreEmpresaDistribuidor, that.nombreEmpresaDistribuidor) &&
-                Objects.equals(nombreDistribuidor, that.nombreDistribuidor) &&
-                Objects.equals(apellidoDistribuidor, that.apellidoDistribuidor) &&
-                Objects.equals(direccionDistribuidor, that.direccionDistribuidor) &&
-                Objects.equals(emailDistribuidor, that.emailDistribuidor) &&
-                Objects.equals(rucDistribuidor, that.rucDistribuidor);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(idDistribuidor, nombreEmpresaDistribuidor, nombreDistribuidor, apellidoDistribuidor, direccionDistribuidor, emailDistribuidor, rucDistribuidor);
-    }
+  @Basic
+  @Column(name = "apellido_distribuidor", nullable = false, length = 50)
+  private String apellidoDistribuidor;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
-    public Usuario getUsuarioByIdUsuario() {
-        return usuarioByIdUsuario;
-    }
+  @Basic
+  @Column(name = "direccion_distribuidor", nullable = false)
+  private String direccionDistribuidor;
 
-    public void setUsuarioByIdUsuario(Usuario usuarioByIdUsuario) {
-        this.usuarioByIdUsuario = usuarioByIdUsuario;
-    }
 
-    @OneToMany(mappedBy = "distribuidorByIdDistribuidor")
-    public Collection<Ordencabecera> getOrdencabecerasByIdDistribuidor() {
-        return ordencabecerasByIdDistribuidor;
-    }
+  @Basic
+  @Column(name = "email_distribuidor", nullable = false, length = 50)
+  private String emailDistribuidor;
 
-    public void setOrdencabecerasByIdDistribuidor(Collection<Ordencabecera> ordencabecerasByIdDistribuidor) {
-        this.ordencabecerasByIdDistribuidor = ordencabecerasByIdDistribuidor;
-    }
+  @Basic
+  @Column(name = "ruc_distribuidor", nullable = false, length = 11)
+  private String rucDistribuidor;
 
-  @Override
-  public String toString() {
-    return "Distribuidor{" +
-      "idDistribuidor=" + idDistribuidor +
-      ", nombreEmpresaDistribuidor='" + nombreEmpresaDistribuidor + '\'' +
-      ", nombreDistribuidor='" + nombreDistribuidor + '\'' +
-      ", apellidoDistribuidor='" + apellidoDistribuidor + '\'' +
-      ", direccionDistribuidor='" + direccionDistribuidor + '\'' +
-      ", emailDistribuidor='" + emailDistribuidor + '\'' +
-      ", rucDistribuidor='" + rucDistribuidor + '\'' +
-      ", usuarioByIdUsuario=" + usuarioByIdUsuario +
-      ", estado=" + estado +
-      ", ordencabecerasByIdDistribuidor=" + ordencabecerasByIdDistribuidor +
-      '}';
-  }
+
+  @Basic
+  @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
+  private String estado;
+
+  @ManyToOne
+  @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
+  private Usuario usuario;
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "distribuidor")
+  private Collection<OrdenCabecera> ordenesCabeceras;
+
 }

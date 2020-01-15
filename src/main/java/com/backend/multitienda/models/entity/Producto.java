@@ -1,217 +1,75 @@
 package com.backend.multitienda.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Objects;
 
+@Data
 @Entity
 public class Producto {
-    private int idProducto;
-    private String nombreProducto;
-    private String descripcionProducto;
-    private BigDecimal precioUnitario;
-    private BigDecimal precioEmpaque;
-    private BigDecimal precioPorMayor;
-    private boolean igvProducto;
-    private Empaque empaqueByIdEmpaque;
-    private Unidadmedida unidadmedidaByIdUnidadMedida;
-    private Empresa empresaByIdEmpresa;
-    private Categoriaproducto categoriaproductoByIdCategoriaProducto;
-    private String estado;
 
-    @JsonIgnore
-    private Collection<Ordendetalle> ordendetallesByIdProducto;
-    private Collection<Productoimagen> productoimagensByIdProducto;
-    private Collection<Stockproducto> stockproductosByIdProducto;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id_producto", nullable = false)
+  private int idProducto;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto", nullable = false)
-    public int getIdProducto() {
-        return idProducto;
-    }
+  @Basic
+  @Column(name = "nombre_producto", nullable = false, length = 50)
+  private String nombreProducto;
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
-    }
+  @Basic
+  @Column(name = "descripcion_producto", nullable = false)
+  private String descripcionProducto;
 
-    @Basic
-    @Column(name = "nombre_producto", nullable = false, length = 50)
-    public String getNombreProducto() {
-        return nombreProducto;
-    }
+  @Basic
+  @Column(name = "precio_unitario", nullable = false, precision = 2)
+  private BigDecimal precioUnitario;
 
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
-    }
+  @Basic
+  @Column(name = "precio_empaque", nullable = false, precision = 2)
+  private BigDecimal precioEmpaque;
 
-    @Basic
-    @Column(name = "descripcion_producto", nullable = false, length = -1)
-    public String getDescripcionProducto() {
-        return descripcionProducto;
-    }
+  @Basic
+  @Column(name = "precio_por_mayor", nullable = false, precision = 2)
+  private BigDecimal precioPorMayor;
 
-    public void setDescripcionProducto(String descripcionProducto) {
-        this.descripcionProducto = descripcionProducto;
-    }
+  @Basic
+  @Column(name = "igv_producto", nullable = false)
+  private boolean igvProducto;
 
-    @Basic
-    @Column(name = "precio_unitario", nullable = false, precision = 2)
-    public BigDecimal getPrecioUnitario() {
-        return precioUnitario;
-    }
+  @Basic
+  @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
+  private String estado;
 
-    public void setPrecioUnitario(BigDecimal precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
+  @ManyToOne
+  @JoinColumn(name = "id_empaque", referencedColumnName = "id_empaque", nullable = false)
+  private Empaque empaque;
 
-    @Basic
-    @Column(name = "precio_empaque", nullable = false, precision = 2)
-    public BigDecimal getPrecioEmpaque() {
-        return precioEmpaque;
-    }
+  @ManyToOne
+  @JoinColumn(name = "id_unidad_medida", referencedColumnName = "id_unidad_medida", nullable = false)
+  private Unidadmedida unidadMedida;
 
-    public void setPrecioEmpaque(BigDecimal precioEmpaque) {
-        this.precioEmpaque = precioEmpaque;
-    }
+  @ManyToOne
+  @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)
+  private Empresa empresa;
 
-    @Basic
-    @Column(name = "precio_por_mayor", nullable = false, precision = 2)
-    public BigDecimal getPrecioPorMayor() {
-        return precioPorMayor;
-    }
+  @ManyToOne
+  @JoinColumn(name = "id_categoria_producto", referencedColumnName = "id_categoria_producto", nullable = false)
+  private CategoriaProducto categoriaProducto;
 
-    public void setPrecioPorMayor(BigDecimal precioPorMayor) {
-        this.precioPorMayor = precioPorMayor;
-    }
+  @JsonIgnore
+  @OneToMany(mappedBy = "producto")
+  private Collection<OrdenDetalle> ordenesDetalles;
 
-    @Basic
-    @Column(name = "igv_producto", nullable = false)
-    public boolean isIgvProducto() {
-        return igvProducto;
-    }
+  @JsonIgnore
+  @OneToMany(mappedBy = "producto")
+  private Collection<Productoimagen> productosImagenes;
 
-    public void setIgvProducto(boolean igvProducto) {
-        this.igvProducto = igvProducto;
-    }
+  @JsonIgnore
+  @OneToMany(mappedBy = "producto")
+  private Collection<StockProducto> stocksProductos;
 
-    @Basic
-    @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Producto producto = (Producto) o;
-        return idProducto == producto.idProducto &&
-                igvProducto == producto.igvProducto &&
-                Objects.equals(nombreProducto, producto.nombreProducto) &&
-                Objects.equals(descripcionProducto, producto.descripcionProducto) &&
-                Objects.equals(precioUnitario, producto.precioUnitario) &&
-                Objects.equals(precioEmpaque, producto.precioEmpaque) &&
-                Objects.equals(precioPorMayor, producto.precioPorMayor);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idProducto, nombreProducto, descripcionProducto, precioUnitario, precioEmpaque, precioPorMayor, igvProducto);
-    }
-
-    @OneToMany(mappedBy = "productoByIdProducto")
-    public Collection<Ordendetalle> getOrdendetallesByIdProducto() {
-        return ordendetallesByIdProducto;
-    }
-
-    public void setOrdendetallesByIdProducto(Collection<Ordendetalle> ordendetallesByIdProducto) {
-        this.ordendetallesByIdProducto = ordendetallesByIdProducto;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_empaque", referencedColumnName = "id_empaque", nullable = false)
-    public Empaque getEmpaqueByIdEmpaque() {
-        return empaqueByIdEmpaque;
-    }
-
-    public void setEmpaqueByIdEmpaque(Empaque empaqueByIdEmpaque) {
-        this.empaqueByIdEmpaque = empaqueByIdEmpaque;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_unidad_medida", referencedColumnName = "id_unidad_medida", nullable = false)
-    public Unidadmedida getUnidadmedidaByIdUnidadMedida() {
-        return unidadmedidaByIdUnidadMedida;
-    }
-
-    public void setUnidadmedidaByIdUnidadMedida(Unidadmedida unidadmedidaByIdUnidadMedida) {
-        this.unidadmedidaByIdUnidadMedida = unidadmedidaByIdUnidadMedida;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)
-    public Empresa getEmpresaByIdEmpresa() {
-        return empresaByIdEmpresa;
-    }
-
-    public void setEmpresaByIdEmpresa(Empresa empresaByIdEmpresa) {
-        this.empresaByIdEmpresa = empresaByIdEmpresa;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_categoria_producto", referencedColumnName = "id_categoria_producto", nullable = false)
-    public Categoriaproducto getCategoriaproductoByIdCategoriaProducto() {
-        return categoriaproductoByIdCategoriaProducto;
-    }
-
-    public void setCategoriaproductoByIdCategoriaProducto(Categoriaproducto categoriaproductoByIdCategoriaProducto) {
-        this.categoriaproductoByIdCategoriaProducto = categoriaproductoByIdCategoriaProducto;
-    }
-
-    @OneToMany(mappedBy = "productoByIdProducto")
-    public Collection<Productoimagen> getProductoimagensByIdProducto() {
-        return productoimagensByIdProducto;
-    }
-
-    public void setProductoimagensByIdProducto(Collection<Productoimagen> productoimagensByIdProducto) {
-        this.productoimagensByIdProducto = productoimagensByIdProducto;
-    }
-
-    @OneToMany(mappedBy = "productoByIdProducto")
-    public Collection<Stockproducto> getStockproductosByIdProducto() {
-        return stockproductosByIdProducto;
-    }
-
-    public void setStockproductosByIdProducto(Collection<Stockproducto> stockproductosByIdProducto) {
-        this.stockproductosByIdProducto = stockproductosByIdProducto;
-    }
-
-    @Override
-    public String toString() {
-        return "Producto{" +
-          "idProducto=" + idProducto +
-          ", nombreProducto='" + nombreProducto + '\'' +
-          ", descripcionProducto='" + descripcionProducto + '\'' +
-          ", precioUnitario=" + precioUnitario +
-          ", precioEmpaque=" + precioEmpaque +
-          ", precioPorMayor=" + precioPorMayor +
-          ", igvProducto=" + igvProducto +
-          ", empaqueByIdEmpaque=" + empaqueByIdEmpaque +
-          ", unidadmedidaByIdUnidadMedida=" + unidadmedidaByIdUnidadMedida +
-          ", empresaByIdEmpresa=" + empresaByIdEmpresa +
-          ", categoriaproductoByIdCategoriaProducto=" + categoriaproductoByIdCategoriaProducto +
-          ", estado=" + estado +
-          ", ordendetallesByIdProducto=" + ordendetallesByIdProducto +
-          ", productoimagensByIdProducto=" + productoimagensByIdProducto +
-          ", stockproductosByIdProducto=" + stockproductosByIdProducto +
-          '}';
-    }
 }

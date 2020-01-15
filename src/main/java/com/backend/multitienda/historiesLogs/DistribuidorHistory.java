@@ -2,7 +2,7 @@ package com.backend.multitienda.historiesLogs;
 
 import com.backend.multitienda.listeners.Action;
 import com.backend.multitienda.models.entity.Distribuidor;
-import com.backend.multitienda.models.entity.Permiso;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,6 +13,7 @@ import java.util.Date;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
+@Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class DistribuidorHistory {
@@ -20,7 +21,7 @@ public class DistribuidorHistory {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(name = "distribuidor_content",nullable = true, length = -1)
+  @Column(name = "distribuidor_content", nullable = false, columnDefinition = "TEXT")
   private String distribuidorContent;
 
   @CreatedBy

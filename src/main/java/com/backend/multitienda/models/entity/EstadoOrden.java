@@ -8,23 +8,22 @@ import java.util.Collection;
 
 @Data
 @Entity
-public class Unidadmedida {
-
+public class EstadoOrden {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id_unidad_medida", nullable = false)
-  private int idUnidadMedida;
+  @Column(name = "id_estado_orden", nullable = false)
+  private int idEstadoOrden;
 
   @Basic
-  @Column(name = "descripcion_unidad_medida", nullable = false)
-  private String descripcionUnidadMedida;
+  @Column(name = "descripcion_estado_orden", nullable = false, length = 50)
+  private String descripcionEstadoOrden;
 
   @Basic
   @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
   private String estado;
 
-  @OneToMany(mappedBy = "unidadMedida")
   @JsonIgnore
-  private Collection<Producto> productos;
+  @OneToMany(mappedBy = "estadoOrden")
+  private Collection<OrdenCabecera> ordenCabeceras;
 
 }

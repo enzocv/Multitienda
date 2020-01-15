@@ -2,6 +2,7 @@ package com.backend.multitienda.historiesLogs;
 
 import com.backend.multitienda.listeners.Action;
 import com.backend.multitienda.models.entity.Proveedor;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,71 +13,32 @@ import java.util.Date;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
+@Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class ProveedorHistory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @Column(name = "proveedor_content",nullable = true, length = -1)
-    private String proveedorContent;
+  @Column(name = "proveedor_content", nullable = false, columnDefinition = "TEXT")
+  private String proveedorContent;
 
-    @CreatedBy
-    private String modifiedBy;
+  @CreatedBy
+  private String modifiedBy;
 
-    @CreatedDate
-    @Temporal(TIMESTAMP)
-    private Date modifiedDate;
+  @CreatedDate
+  @Temporal(TIMESTAMP)
+  private Date modifiedDate;
 
-    @Enumerated(STRING)
-    private Action action;
+  @Enumerated(STRING)
+  private Action action;
 
-    public ProveedorHistory() {
-    }
+  public ProveedorHistory() {
+  }
 
-    public ProveedorHistory(Proveedor proveedor, Action action) {
-        this.proveedorContent = proveedor.toString();
-        this.action = action;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getProveedorContent() {
-        return proveedorContent;
-    }
-
-    public void setProveedorContent(String proveedorContent) {
-        this.proveedorContent = proveedorContent;
-    }
-
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public Action getAction() {
-        return action;
-    }
-
-    public void setAction(Action action) {
-        this.action = action;
-    }
+  public ProveedorHistory(Proveedor proveedor, Action action) {
+    this.proveedorContent = proveedor.toString();
+    this.action = action;
+  }
 }

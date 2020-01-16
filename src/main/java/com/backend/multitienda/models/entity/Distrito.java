@@ -1,8 +1,10 @@
 package com.backend.multitienda.models.entity;
 
-import javax.persistence.*;
-import java.util.Objects;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 @Entity
 public class Distrito {
 
@@ -16,7 +18,7 @@ public class Distrito {
   private String nombreDistrito;
 
   @Basic
-  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+  @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
   private String estado;
 
   @ManyToOne

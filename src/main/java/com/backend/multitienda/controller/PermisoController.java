@@ -1,8 +1,8 @@
 package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
-import com.backend.multitienda.models.entity.Permiso;
-import com.backend.multitienda.repositories.IPermisoRepository;
+import com.backend.multitienda.models.entity.Rol;
+import com.backend.multitienda.repositories.IRolRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,38 +12,38 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/permisos")
+@RequestMapping("/api/roles")
 public class PermisoController {
 
-    @Autowired
-    private IPermisoRepository permisoRepository;
+  @Autowired
+  private IRolRepository rolRepository;
 
-    @GetMapping
-    public List<Permiso> getPermisos(){
-        return permisoRepository.findAll();
-    }
+  @GetMapping
+  public List<Rol> getPermisos() {
+    return rolRepository.findAll();
+  }
 
-    @PostMapping
-    @ApiOperation(value = "Crear un permiso")
-    public Permiso addPermiso(@RequestBody Permiso rqPermiso) {
-        return permisoRepository.save(rqPermiso);
-    }
+  @PostMapping
+  @ApiOperation(value = "Crear un rol")
+  public Rol addPermiso(@RequestBody Rol rqRol) {
+    return rolRepository.save(rqRol);
+  }
 
-    @PutMapping("/{idPermiso}")
-    @ApiOperation(value = "Actualizar permiso")
-    public ResponseEntity<Permiso> updatePermiso(
-      @Valid @PathVariable(value = "idPermiso") Integer idPermiso,
-      @RequestBody Permiso rqPermiso) throws ResourceNotFoundException {
+  @PutMapping("/{idRol}")
+  @ApiOperation(value = "Actualizar rol")
+  public ResponseEntity<Rol> updatePermiso(
+    @Valid @PathVariable(value = "idRol") Integer idRol,
+    @RequestBody Rol rqRol) throws ResourceNotFoundException {
 
-        Permiso permiso = permisoRepository.findById(idPermiso)
-          .orElseThrow(() ->
-            new ResourceNotFoundException("No se encontró permiso con este id")
-          );
+    Rol rol = rolRepository.findById(idRol)
+      .orElseThrow(() ->
+        new ResourceNotFoundException("No se encontró rol con este id")
+      );
 
-        permiso.setDescripcionPermiso(rqPermiso.getDescripcionPermiso());
+    rol.setDescripcionRol(rqRol.getDescripcionRol());
 
-        final Permiso updatedPermiso = permisoRepository.save(permiso);
-        return ResponseEntity.ok(updatedPermiso);
+    final Rol updatedRol = rolRepository.save(rol);
+    return ResponseEntity.ok(updatedRol);
 
-    }
+  }
 }

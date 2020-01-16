@@ -39,7 +39,7 @@ public class Empresa extends Auditable<String> {
   private String emailEmpresa;
 
   @Basic
-  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+  @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
   private String estado;
 
   @ManyToOne

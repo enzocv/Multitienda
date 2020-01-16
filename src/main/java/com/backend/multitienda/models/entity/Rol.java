@@ -8,27 +8,23 @@ import java.util.Collection;
 
 @Data
 @Entity
-public class Ciudad {
+public class Rol {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id_ciudad", nullable = false)
-  private int idCiudad;
+  @Column(name = "id_rol", nullable = false)
+  private int idRol;
 
   @Basic
-  @Column(name = "nombre_ciudad", nullable = false, length = 50)
-  private String nombreCiudad;
+  @Column(name = "descripcion_rol", nullable = false, length = 50)
+  private String descripcionRol;
 
   @Basic
   @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
   private String estado;
 
-  @ManyToOne
-  @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", nullable = false)
-  private Pais pais;
-
   @JsonIgnore
-  @OneToMany(mappedBy = "ciudad")
-  private Collection<Distrito> distritos;
+  @OneToMany(mappedBy = "rol")
+  private Collection<Usuario> usuarios;
 
 }

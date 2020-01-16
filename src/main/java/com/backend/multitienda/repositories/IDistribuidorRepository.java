@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IDistribuidorRepository extends JpaRepository<Distribuidor,Integer> {
+public interface IDistribuidorRepository extends JpaRepository<Distribuidor, Integer> {
+  Distribuidor findByUsuario_IdUsuario(int idUsuario);
 }

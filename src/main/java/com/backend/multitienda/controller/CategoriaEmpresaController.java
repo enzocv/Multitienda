@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.backend.multitienda.models.entity.Estado.ACTIVO;
+
 @Api(value = "Servicio de categoria Empresa", description = "Esta API permite realizar las " +
   "operaciones básicas de las Cateogiras de las Empresas")
 @RestController
@@ -54,6 +56,7 @@ public class CategoriaEmpresaController {
   @PostMapping
   @ApiOperation(value = "Crear una categoria para las empresas")
   public CategoriaEmpresa addCategoriaEmpresa(@RequestBody CategoriaEmpresa categoriaempresa) {
+    categoriaempresa.setEstado(ACTIVO.getName());
     return categoriaEmpresaRepository.save(categoriaempresa);
   }
   //endregion

@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.backend.multitienda.models.entity.Estado.ACTIVO;
+import static com.backend.multitienda.models.entity.Estado.INACTIVO;
+
 @Api(value = "Servicio para producto", description = "Esta API permite realizar las operaciones basicas para productos")
 @RestController
 @RequestMapping("/api/productos")
@@ -40,6 +43,7 @@ public class ProductoController {
   @PostMapping
   @ApiOperation(value = "Crear un producto",notes = "Crear un producto nuevo")
   public Producto addProducto(@RequestBody Producto rqProducto){
+    rqProducto.setEstado(ACTIVO.getName());
     return productoRepository.save(rqProducto);
   }
 
@@ -66,7 +70,7 @@ public class ProductoController {
       .orElseThrow(
         () -> new ResourceNotFoundException("No se encontro el producto con este id")
       );
-    obtenerProducto.setEstado("I");
+    obtenerProducto.setEstado(INACTIVO.getName());
 
     final Producto eliminarProducto = productoRepository.save(obtenerProducto);
 

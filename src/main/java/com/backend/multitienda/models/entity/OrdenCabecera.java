@@ -36,7 +36,7 @@ public class OrdenCabecera extends Auditable<String> {
   private String comenarioOrdenCabecera;
 
   @Basic
-  @Column(name = "estado", nullable = true, length = 1, columnDefinition = "CHAR")
+  @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
   private String estado;
 
   @ManyToOne
@@ -50,7 +50,6 @@ public class OrdenCabecera extends Auditable<String> {
   @ManyToOne
   @JoinColumn(name = "id_sede", referencedColumnName = "id_sede", nullable = false)
   private Sede sede;
-
 
   @ManyToOne
   @JoinColumn(name = "id_estado_orden", referencedColumnName = "id_estado_orden", nullable = false)

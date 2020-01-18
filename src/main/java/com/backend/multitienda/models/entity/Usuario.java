@@ -34,8 +34,8 @@ public class Usuario extends Auditable<String> {
   private String estado;
 
   @ManyToOne
-  @JoinColumn(name = "id_permiso", referencedColumnName = "id_permiso", nullable = false)
-  private Permiso permiso;
+  @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", nullable = false)
+  private Rol rol;
 
   @JsonIgnore
   @OneToMany(mappedBy = "usuario")

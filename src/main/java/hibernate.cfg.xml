@@ -22,15 +22,14 @@
         <mapping class="com.backend.multitienda.models.entity.OrdenCabecera"/>
         <mapping class="com.backend.multitienda.models.entity.OrdenDetalle"/>
         <mapping class="com.backend.multitienda.models.entity.Pais"/>
-        <mapping class="com.backend.multitienda.models.entity.Permiso"/>
+        <mapping class="com.backend.multitienda.models.entity.Rol"/>
         <mapping class="com.backend.multitienda.models.entity.Producto"/>
-        <mapping class="com.backend.multitienda.models.entity.Productoimagen"/>
+        <mapping class="com.backend.multitienda.models.entity.ProductoImagen"/>
         <mapping class="com.backend.multitienda.models.entity.Proveedor"/>
         <mapping class="com.backend.multitienda.models.entity.Sede"/>
         <mapping class="com.backend.multitienda.models.entity.StockProducto"/>
-        <mapping class="com.backend.multitienda.models.entity.Unidadmedida"/>
+        <mapping class="com.backend.multitienda.models.entity.UnidadMedida"/>
         <mapping class="com.backend.multitienda.models.entity.Usuario"/>
-        <mapping class="com.backend.multitienda.historiesLogs.PermisoHistory"/>
         <mapping class="com.backend.multitienda.historiesLogs.UsuarioHistory"/>
         <mapping class="com.backend.multitienda.historiesLogs.EmpresaHistory"/>
         <mapping

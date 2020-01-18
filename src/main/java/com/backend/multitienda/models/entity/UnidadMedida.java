@@ -8,7 +8,7 @@ import java.util.Collection;
 
 @Data
 @Entity
-public class Unidadmedida {
+public class UnidadMedida {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

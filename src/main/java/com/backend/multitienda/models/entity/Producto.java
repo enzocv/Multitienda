@@ -50,7 +50,7 @@ public class Producto {
 
   @ManyToOne
   @JoinColumn(name = "id_unidad_medida", referencedColumnName = "id_unidad_medida", nullable = false)
-  private Unidadmedida unidadMedida;
+  private UnidadMedida unidadMedida;
 
   @ManyToOne
   @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)
@@ -66,7 +66,7 @@ public class Producto {
 
   @JsonIgnore
   @OneToMany(mappedBy = "producto")
-  private Collection<Productoimagen> productosImagenes;
+  private Collection<ProductoImagen> productosImagenes;
 
   @JsonIgnore
   @OneToMany(mappedBy = "producto")

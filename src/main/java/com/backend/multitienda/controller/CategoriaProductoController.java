@@ -2,7 +2,7 @@ package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.CategoriaProducto;
-import com.backend.multitienda.repositories.ICategoriaProductoRespository;
+import com.backend.multitienda.repositories.ICategoriaProductoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import static com.backend.multitienda.models.entity.Estado.INACTIVO;
 public class CategoriaProductoController {
 
   @Autowired
-  private ICategoriaProductoRespository categoriaProductoRespository;
+  private ICategoriaProductoRepository categoriaProductoRespository;
 
   @GetMapping
   @ApiOperation(value = "Listar las categorias de productos", notes = "Listar todas las categorias de los productos")

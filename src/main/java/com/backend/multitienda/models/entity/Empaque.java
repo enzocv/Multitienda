@@ -1,5 +1,7 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.EmpaqueEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -9,7 +11,8 @@ import java.util.Collection;
 
 @Data
 @Entity
-public class Empaque {
+@EntityListeners(EmpaqueEntityListener.class)
+public class Empaque extends Auditable<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

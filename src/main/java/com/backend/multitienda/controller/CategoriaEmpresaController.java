@@ -32,7 +32,7 @@ public class CategoriaEmpresaController {
   @GetMapping
   @ApiOperation(value = "Listar categoria empresas",
     notes = "Listar todas las categorias de las empresas")
-  public List<CategoriaEmpresa> getAllUsuarios() {
+  public List<CategoriaEmpresa> getAllCategoriasEmpresa() {
     return categoriaEmpresaRepository.findAll();
   }
   //endregion

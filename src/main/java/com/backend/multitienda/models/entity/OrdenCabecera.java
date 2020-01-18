@@ -1,6 +1,9 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.DistribuidorEntityListener;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -8,7 +11,8 @@ import java.sql.Date;
 
 @Data
 @Entity
-public class OrdenCabecera {
+@EntityListeners(DistribuidorEntityListener.class)
+public class OrdenCabecera extends Auditable<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -46,4 +46,8 @@ public class Empresa extends Auditable<String> {
   @JoinColumn(name = "id_categoria_empresa", referencedColumnName = "id_categoria_empresa", nullable = false)
   private CategoriaEmpresa categoriaEmpresa;
 
+  @ManyToOne
+  @JoinColumn(name = "id_distrito", referencedColumnName = "id_distrito", nullable = false)
+  private Distrito idDistrito;
+
 }

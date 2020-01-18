@@ -29,7 +29,7 @@ public class PermisoController {
 
     @GetMapping
     @ApiOperation(value = "Listar los Permisos", notes = "Listar todos los Permisos registrados en la BD")
-    public List<Permiso> getPermisos(){
+    public List<Permiso> getAllPermisos(){
         return permisoRepository.findAll();
     }
 

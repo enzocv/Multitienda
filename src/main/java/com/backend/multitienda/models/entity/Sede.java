@@ -42,4 +42,8 @@ public class Sede extends Auditable<String> {
   @OneToMany(mappedBy = "sede")
   private Collection<StockProducto> stockProductos;
 
+  @ManyToOne
+  @JoinColumn(name = "id_distrito", referencedColumnName = "id_distrito", nullable = false)
+  private Distrito idDistrito;
+
 }

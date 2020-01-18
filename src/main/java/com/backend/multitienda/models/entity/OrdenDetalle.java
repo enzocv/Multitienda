@@ -27,8 +27,8 @@ public class OrdenDetalle {
   @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
   private String estado;
 
-  @JsonIgnore
-  @OneToMany(mappedBy = "ordenDetalle")
-  private Collection<OrdenCabecera> ordenCabeceras;
+  @ManyToOne
+  @JoinColumn(name = "id_orden_cabecera", referencedColumnName = "id_orden_cabecera", nullable = false)
+  private OrdenCabecera idOrdenCabecera;
 
 }

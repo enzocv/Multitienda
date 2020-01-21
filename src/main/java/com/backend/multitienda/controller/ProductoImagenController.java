@@ -42,6 +42,11 @@ public class ProductoImagenController {
     return ResponseEntity.ok(findProductoImagen);
   }
 
+  @GetMapping("/producto/{idProducto}")
+  @ApiOperation(value = "Obtener todas las imagenes asignadas a un producto")
+  public List<ProductoImagen> getAllProductoImagenByIdProducto(@Valid @PathVariable Integer idProducto){
+    return productoImagenRepository.findAllByIdProducto(idProducto);
+  }
 
   @PostMapping
   @ApiOperation(value = "Agregar una nueva imagen para el Producto")

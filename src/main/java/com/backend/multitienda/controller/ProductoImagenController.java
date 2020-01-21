@@ -39,17 +39,6 @@ public class ProductoImagenController {
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro la imagen del producto")
       );
-
-    Producto findProducto = productoRepository.findById(findProductoImagen.getProducto().getIdProducto())
-      .orElseThrow(
-        ()-> new ResourceNotFoundException("No se encontro el Producto.")
-      );
-
-    String nameImage = findProducto.getIdProducto() + "-" + findProducto.getNombreProducto();
-
-    String encodeImage = encodeProductoImagen(nameImage);
-
-    findProductoImagen.setImagenProducto(encodeImage);
     return ResponseEntity.ok(findProductoImagen);
   }
 
@@ -62,11 +51,11 @@ public class ProductoImagenController {
         ()-> new ResourceNotFoundException("No se encontro el Producto.")
       );
 
-    String nameImage = findProducto.getIdProducto() + "-" + findProducto.getNombreProducto();
+    String nameImage = findProducto.getIdProducto() + "_" + findProducto.getNombreProducto();
     uploadImage(rqProductoImagen.getImagenProducto(), nameImage.replace(" ",""));
 
     rqProductoImagen.setEstado(ACTIVO.getName());
-    rqProductoImagen.setImagenProducto(nameImage.replace(" ","") + ".jpg");
+    rqProductoImagen.setImagenProducto(IMG_PATH + nameImage.replace(" ","") + ".jpg");
     productoImagenRepository.save(rqProductoImagen);
 
     return ResponseEntity.ok(rqProductoImagen);
@@ -85,20 +74,6 @@ public class ProductoImagenController {
     FileOutputStream fileOutputStream = new FileOutputStream(savepath);
     fileOutputStream.write(data);
     fileOutputStream.close();
-  }
-
-  /**
-   * Convertir a Base64 la imagen del Producto
-   * @param nameImage   nombre de la imagen guardada
-   * @return imagen codificada
-   * @throws Exception
-   */
-  private String encodeProductoImagen(String nameImage) throws Exception {
-    File imagepath = new File(IMG_PATH + nameImage.replace(" ","") + ".jpg");
-    FileInputStream imageStream = new FileInputStream(imagepath);
-    byte[] data = imageStream.readAllBytes();
-    String encodeImage = Base64.getEncoder().encodeToString(data);
-    return encodeImage;
   }
 
 }

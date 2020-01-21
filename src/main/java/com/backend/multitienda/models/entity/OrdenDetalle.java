@@ -1,14 +1,19 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.OrdenDetalleEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Data
 @Entity
-public class OrdenDetalle {
+@EqualsAndHashCode(callSuper = true)
+@EntityListeners({OrdenDetalleEntityListener.class})
+public class OrdenDetalle extends Auditable<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

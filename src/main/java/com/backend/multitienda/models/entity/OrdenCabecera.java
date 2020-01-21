@@ -13,6 +13,7 @@ import java.util.Collection;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @EntityListeners(DistribuidorEntityListener.class)
 public class OrdenCabecera extends Auditable<String> {
 

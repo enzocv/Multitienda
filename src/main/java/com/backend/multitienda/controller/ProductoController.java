@@ -72,7 +72,7 @@ public class ProductoController {
       );
     obtenerProducto.setEstado(INACTIVO.getName());
 
-    final Producto eliminarProducto = productoRepository.save(obtenerProducto);
+    productoRepository.save(obtenerProducto);
 
     Map<String,Boolean> response = new HashMap<>();
     response.put("Eliminado",Boolean.TRUE);

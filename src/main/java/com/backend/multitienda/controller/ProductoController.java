@@ -57,7 +57,9 @@ public class ProductoController {
         () -> new ResourceNotFoundException("No se encontro el producto con este id")
       );
 
-    final Producto modificarProducto = productoRepository.save(obtenerProducto);
+    rqProducto.setIdProducto(obtenerProducto.getIdProducto());
+
+    final Producto modificarProducto = productoRepository.save(rqProducto);
 
     return ResponseEntity.ok(modificarProducto);
   }
@@ -72,7 +74,7 @@ public class ProductoController {
       );
     obtenerProducto.setEstado(INACTIVO.getName());
 
-    final Producto eliminarProducto = productoRepository.save(obtenerProducto);
+    productoRepository.save(obtenerProducto);
 
     Map<String,Boolean> response = new HashMap<>();
     response.put("Eliminado",Boolean.TRUE);

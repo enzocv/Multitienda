@@ -1,8 +1,10 @@
 package com.backend.multitienda.models.entity;
 
-import lombok.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import java.util.Collection;
+import lombok.Data;
 
 @Data
 @Entity
@@ -24,4 +26,13 @@ public class Distrito {
   @ManyToOne
   @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad", nullable = false)
   private Ciudad ciudad;
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "idDistrito")
+  private Collection<Empresa> empresas;
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "idDistrito")
+  private Collection<Sede> sedes;
+
 }

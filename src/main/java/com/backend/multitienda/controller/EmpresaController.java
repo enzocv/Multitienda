@@ -1,6 +1,8 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.EmpresaDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Distrito;
 import com.backend.multitienda.models.entity.Empresa;
 import com.backend.multitienda.repositories.IEmpresaRepository;
 import io.swagger.annotations.Api;
@@ -46,21 +48,37 @@ public class EmpresaController {
 
   @PostMapping
   @ApiOperation(value = "Crear una empresa")
-  public Empresa addEmpresa(@RequestBody Empresa rqEmpresa) {
+  public Empresa addEmpresa(@RequestBody EmpresaDto rqEmpresa) {
     rqEmpresa.setEstado(ACTIVO.getName());
-    return empresaRepository.save(rqEmpresa);
+
+    Empresa empresa = new Empresa();
+    empresa.setNombreEmpresa(rqEmpresa.getNombreEmpresa());
+    empresa.setRucEmpresa(rqEmpresa.getRucEmpresa());
+    empresa.setTelefonoEmpresa(rqEmpresa.getTelefonoEmpresa());
+    empresa.setDireccionEmpresa(rqEmpresa.getDireccionEmpresa());
+    empresa.setEmailEmpresa(rqEmpresa.getEmailEmpresa());
+    empresa.setEstado(rqEmpresa.getEstado());
+    empresa.getCategoriaEmpresa().setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
+    empresa.getIdDistrito().setIdDistrito(rqEmpresa.getIdDistrito());
+
+    return empresaRepository.save(empresa);
   }
 
   @PutMapping("/{idEmpresa}")
   @ApiOperation(value = "Actualizar una Empresa", notes = "Actualiza una empresa registrada en la bd.")
   public ResponseEntity<Empresa> updateEmpresa(
     @Valid @PathVariable Integer idEmpresa,
-    @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException {
-    Empresa obtenerEmpresa = empresaRepository.findById(idEmpresa)
+    @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException{
+
+    Empresa findEmpresa = empresaRepository.findById(idEmpresa)
       .orElseThrow(
         () -> new ResourceNotFoundException("No se encontro una Empresa con el id: " + idEmpresa)
       );
-    final Empresa updateEmpresa = empresaRepository.save(obtenerEmpresa);
+
+    rqEmpresa.setIdEmpresa(findEmpresa.getIdEmpresa());
+
+    final Empresa updateEmpresa = empresaRepository.save(rqEmpresa);
+
     return ResponseEntity.ok(updateEmpresa);
   }
 

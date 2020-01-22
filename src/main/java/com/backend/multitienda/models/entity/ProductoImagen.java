@@ -13,7 +13,7 @@ public class ProductoImagen {
   private int idProductoImagen;
 
   @Basic
-  @Column(name = "imagen_producto", nullable = false)
+  @Column(name = "imagen_producto", columnDefinition = "TEXT", nullable = false)
   private String imagenProducto;
 
   @Basic

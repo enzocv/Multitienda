@@ -1,7 +1,10 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.EmpaqueEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -9,7 +12,9 @@ import java.util.Collection;
 
 @Data
 @Entity
-public class Empaque {
+@EqualsAndHashCode(callSuper = true)
+@EntityListeners(EmpaqueEntityListener.class)
+public class Empaque extends Auditable<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

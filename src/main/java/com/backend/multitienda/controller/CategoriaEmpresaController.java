@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,19 +28,18 @@ import static com.backend.multitienda.models.entity.Estado.INACTIVO;
 @RequestMapping("/api/categoriaempresas")
 public class CategoriaEmpresaController {
 
+  private final static String IMG_PATH = "src/main/java/com/backend/multitienda/img/CategoriaEmpresa/";
+
   @Autowired
   private ICategoriaEmpresaRepository categoriaEmpresaRepository;
 
-  //region Listar
   @GetMapping
   @ApiOperation(value = "Listar categoria empresas",
     notes = "Listar todas las categorias de las empresas")
-  public List<CategoriaEmpresa> getAllUsuarios() {
+  public List<CategoriaEmpresa> getAllCategoriasEmpresa() {
     return categoriaEmpresaRepository.findAll();
   }
-  //endregion
 
-  //region Obtener por ID
   @GetMapping("/{idCategoriaEmpresa}")
   @ApiOperation(value = "Obtener una categoria",
     notes = "Obtiene una categoria por su id")
@@ -51,26 +53,33 @@ public class CategoriaEmpresaController {
 
     return ResponseEntity.ok(categoriaEncontrada);
   }
-  //endregion
 
-  //region Crear
   @PostMapping
   @ApiOperation(value = "Crear una categoria para las empresas")
-  public CategoriaEmpresa addCategoriaEmpresa(@RequestBody CategoriaEmpresa rqCategoriaempresa) {
+  public CategoriaEmpresa addCategoriaEmpresa(@RequestBody CategoriaEmpresa rqCategoriaempresa) throws Exception {
     rqCategoriaempresa.setEstado(ACTIVO.getName());
+
+    String nameImage =
+      rqCategoriaempresa.getIdCategoriaEmpresa() + "_" + rqCategoriaempresa.getDescripcionCategoriaEmpresa();
+
+    rqCategoriaempresa.setImagenCategoriaEmpresa(uploadImage(rqCategoriaempresa.getImagenCategoriaEmpresa(),
+      nameImage ));
+
     return categoriaEmpresaRepository.save(rqCategoriaempresa);
   }
-  //endregion
 
   @PutMapping
   @ApiOperation(value = "Actualizar categoria Empresa")
   public ResponseEntity<CategoriaEmpresa> updateCategoriaEmpresa(
     @Valid @PathVariable Integer idCategoriaEmpresa,
     @RequestBody CategoriaEmpresa rqCategoriaempresa) throws ResourceNotFoundException {
-    CategoriaEmpresa obtenerCategoriaEmpresa = categoriaEmpresaRepository.findById(idCategoriaEmpresa)
+
+    CategoriaEmpresa findCategoriaEmpresa = categoriaEmpresaRepository.findById(idCategoriaEmpresa)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ninguna Categoria Empresa con el id: " + idCategoriaEmpresa)
       );
+
+    rqCategoriaempresa.setIdCategoriaEmpresa(findCategoriaEmpresa.getIdCategoriaEmpresa());
 
     final CategoriaEmpresa updateCategoriaEmpresa = categoriaEmpresaRepository.save(rqCategoriaempresa);
 
@@ -89,9 +98,25 @@ public class CategoriaEmpresaController {
         )
       );
     eliminarCategoria.setEstado(INACTIVO.getName());
-    categoriaEmpresaRepository.delete(eliminarCategoria);
+
+    categoriaEmpresaRepository.save(eliminarCategoria);
     Map<String, Boolean> response = new HashMap<>();
     response.put("Eliminado", Boolean.TRUE);
     return response;
   }
+
+  private String uploadImage(String encodeImage, String nameImage) throws Exception {
+    String image = nameImage.replace(" ","");
+
+    String pathImage = IMG_PATH + image + ".jpg";
+    File savepath = new File(pathImage);
+    byte[] data = Base64.getDecoder().decode(encodeImage);
+
+    FileOutputStream fileOutputStream = new FileOutputStream(savepath);
+    fileOutputStream.write(data);
+    fileOutputStream.close();
+
+    return pathImage;
+  }
+
 }

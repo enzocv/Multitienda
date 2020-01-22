@@ -54,12 +54,16 @@ public class DistribuidorController {
   public ResponseEntity<Distribuidor> updateDistribuidor(
     @Valid @PathVariable Integer idDistribuidor,
     @RequestBody Distribuidor rqDistribuidor) throws ResourceNotFoundException{
+
     Distribuidor obtenerDistribuidor = distribuidorRepository.findById(idDistribuidor)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ningun Distribuidor con este id.")
       );
 
-    final Distribuidor updateDistribuidor = distribuidorRepository.save(obtenerDistribuidor);
+    rqDistribuidor.setIdDistribuidor(obtenerDistribuidor.getIdDistribuidor());
+
+    final Distribuidor updateDistribuidor = distribuidorRepository.save(rqDistribuidor);
+
     return ResponseEntity.ok(updateDistribuidor);
   }
 
@@ -78,5 +82,4 @@ public class DistribuidorController {
     response.put("Eliminado",Boolean.TRUE);
     return response;
   }
-
 }

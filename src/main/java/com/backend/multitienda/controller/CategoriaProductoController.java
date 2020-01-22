@@ -2,7 +2,7 @@ package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.CategoriaProducto;
-import com.backend.multitienda.repositories.ICategoriaProductoRespository;
+import com.backend.multitienda.repositories.ICategoriaProductoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +27,10 @@ import static com.backend.multitienda.models.entity.Estado.INACTIVO;
 @RequestMapping("/api/categoriaproductos")
 public class CategoriaProductoController {
 
+  private final static String IMG_PATH = "src/main/java/com/backend/multitienda/img/CategoriaProducto/";
+
   @Autowired
-  private ICategoriaProductoRespository categoriaProductoRespository;
+  private ICategoriaProductoRepository categoriaProductoRespository;
 
   @GetMapping
   @ApiOperation(value = "Listar las categorias de productos", notes = "Listar todas las categorias de los productos")
@@ -47,8 +52,12 @@ public class CategoriaProductoController {
 
   @PostMapping
   @ApiOperation(value = "Agregar una categoria de producto")
-  public CategoriaProducto addCategoriaProducto(@RequestBody CategoriaProducto rqCategoriaProducto) {
+  public CategoriaProducto addCategoriaProducto(@RequestBody CategoriaProducto rqCategoriaProducto) throws Exception {
     rqCategoriaProducto.setEstado(ACTIVO.getName());
+
+    rqCategoriaProducto.setImagenCategoriaProducto(uploadImage(rqCategoriaProducto.getImagenCategoriaProducto(),
+      rqCategoriaProducto.getNombreCategoriaProducto()));
+
     return categoriaProductoRespository.save(rqCategoriaProducto);
   }
 
@@ -56,14 +65,16 @@ public class CategoriaProductoController {
   @ApiOperation(value = "Modificar una Categoria Producto")
   public ResponseEntity<CategoriaProducto> updateCategoriaProducto(
     @Valid @PathVariable int idCategoriaProducto,
-    @RequestBody CategoriaProducto rqCategoriaProducto
-  ) throws ResourceNotFoundException {
-    CategoriaProducto categoriaProducto = categoriaProductoRespository.findById(idCategoriaProducto)
+    @RequestBody CategoriaProducto rqCategoriaProducto) throws ResourceNotFoundException {
+
+    CategoriaProducto findCategoriaProducto = categoriaProductoRespository.findById(idCategoriaProducto)
       .orElseThrow(
         () -> new ResourceNotFoundException("No se encontro la categoria producto con este id.")
       );
 
-    final CategoriaProducto updateCategoriaProducto = categoriaProductoRespository.save(categoriaProducto);
+    rqCategoriaProducto.setIdCategoriaProducto(findCategoriaProducto.getIdCategoriaProducto());
+
+    final CategoriaProducto updateCategoriaProducto = categoriaProductoRespository.save(rqCategoriaProducto);
 
     return ResponseEntity.ok(updateCategoriaProducto);
   }
@@ -83,6 +94,20 @@ public class CategoriaProductoController {
     Map<String, Boolean> response = new HashMap<>();
     response.put("Eliminado", Boolean.TRUE);
     return response;
+  }
+
+  private String uploadImage(String encodeImage, String nameImage) throws Exception {
+    String image = nameImage.replace(" ","");
+
+    String pathImage = IMG_PATH + image + ".jpg";
+    File savepath = new File(pathImage);
+    byte[] data = Base64.getDecoder().decode(encodeImage);
+
+    FileOutputStream fileOutputStream = new FileOutputStream(savepath);
+    fileOutputStream.write(data);
+    fileOutputStream.close();
+
+    return pathImage;
   }
 
 }

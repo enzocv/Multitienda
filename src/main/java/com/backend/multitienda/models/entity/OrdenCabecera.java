@@ -1,14 +1,21 @@
 package com.backend.multitienda.models.entity;
 
+import com.backend.multitienda.audit.Auditable;
+import com.backend.multitienda.listeners.DistribuidorEntityListener;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Collection;
 
 @Data
 @Entity
-public class OrdenCabecera {
+@EqualsAndHashCode(callSuper = true)
+@EntityListeners(DistribuidorEntityListener.class)
+public class OrdenCabecera extends Auditable<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +42,9 @@ public class OrdenCabecera {
   @Column(name = "estado", nullable = false, length = 1, columnDefinition = "CHAR")
   private String estado;
 
-  @ManyToOne
-  @JoinColumn(name = "id_orden_detalle", referencedColumnName = "id_orden_detalle", nullable = false)
-  private OrdenDetalle ordenDetalle;
+  @JsonIgnore
+  @OneToMany(mappedBy = "idOrdenCabecera")
+  private Collection<OrdenDetalle> ordenDetalles;
 
   @ManyToOne
   @JoinColumn(name = "id_distribuidor", referencedColumnName = "id_distribuidor", nullable = false)

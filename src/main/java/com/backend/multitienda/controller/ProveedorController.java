@@ -58,11 +58,15 @@ public class ProveedorController {
   public ResponseEntity<Proveedor> updateProveedor(
     @Valid @PathVariable Integer idProveedor,
     @RequestBody Proveedor rqProveedor) throws ResourceNotFoundException{
+
     Proveedor obtenerProveedor = proveedorRepository.findById(idProveedor)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro un proveedor con este id.")
       );
-    final Proveedor updateProveedor = proveedorRepository.save(obtenerProveedor);
+
+    rqProveedor.setIdProveedor(obtenerProveedor.getIdProveedor());
+
+    final Proveedor updateProveedor = proveedorRepository.save(rqProveedor);
     return ResponseEntity.ok(updateProveedor);
   }
 

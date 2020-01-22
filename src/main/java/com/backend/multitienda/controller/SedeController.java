@@ -52,6 +52,17 @@ public class SedeController {
     return sedesRepository.save(rqsede);
   }
 
+  @PutMapping("/{idSede}")
+  @ApiOperation(value = "Actualizar una Sede")
+  public ResponseEntity<Sede> updateSede(@Valid @PathVariable Integer idSede, @RequestBody Sede rqSede) throws ResourceNotFoundException{
+    Sede findSede = sedesRepository.findById(idSede).orElseThrow(()->new ResourceNotFoundException("No se encontro " +
+      "ninguna Sede con este id."));
+
+    rqSede.setIdSede(findSede.getIdSede());
+    final Sede updateSede = sedesRepository.save(rqSede);
+    return ResponseEntity.ok(updateSede);
+  }
+
   @DeleteMapping("/{idSede}")
   @ApiOperation(value = "Eliminar sede")
   public Map<String, Boolean> deleteSede(

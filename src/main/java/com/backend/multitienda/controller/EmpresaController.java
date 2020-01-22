@@ -2,7 +2,6 @@ package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.Empresa;
-import com.backend.multitienda.models.entity.Usuario;
 import com.backend.multitienda.repositories.IEmpresaRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,10 +55,10 @@ public class EmpresaController {
   @ApiOperation(value = "Actualizar una Empresa", notes = "Actualiza una empresa registrada en la bd.")
   public ResponseEntity<Empresa> updateEmpresa(
     @Valid @PathVariable Integer idEmpresa,
-    @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException{
+    @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException {
     Empresa obtenerEmpresa = empresaRepository.findById(idEmpresa)
       .orElseThrow(
-        ()-> new ResourceNotFoundException("No se encontro una Empresa con el id: " + idEmpresa)
+        () -> new ResourceNotFoundException("No se encontro una Empresa con el id: " + idEmpresa)
       );
     final Empresa updateEmpresa = empresaRepository.save(obtenerEmpresa);
     return ResponseEntity.ok(updateEmpresa);
@@ -67,16 +66,16 @@ public class EmpresaController {
 
   @DeleteMapping("/{idEmpresa}")
   @ApiOperation(value = "Eliminar una Empresa", notes = "Cambia el estado a inactivo de una Empresa")
-  public Map<String,Boolean> deleteEmpresa(@Valid @PathVariable Integer idEpresa) throws ResourceNotFoundException{
+  public Map<String, Boolean> deleteEmpresa(@Valid @PathVariable Integer idEpresa) throws ResourceNotFoundException {
     Empresa obtenerEmpresa = empresaRepository.findById(idEpresa)
       .orElseThrow(
-        ()-> new ResourceNotFoundException("No se encontro ninguna Empresa con este id.")
+        () -> new ResourceNotFoundException("No se encontro ninguna Empresa con este id.")
       );
 
     obtenerEmpresa.setEstado(INACTIVO.getName());
     empresaRepository.save(obtenerEmpresa);
 
-    Map<String,Boolean> response = new HashMap<>();
+    Map<String, Boolean> response = new HashMap<>();
     response.put("Eliminado", Boolean.TRUE);
     return response;
   }

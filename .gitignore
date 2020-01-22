@@ -31,3 +31,5 @@ build/
 .vscode/
 
 hs_err_pid7560.log
+
+src/main/resources/application.properties

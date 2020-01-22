@@ -2,6 +2,7 @@ package com.backend.multitienda.controller;
 
 import com.backend.multitienda.dto.EmpresaDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.CategoriaEmpresa;
 import com.backend.multitienda.models.entity.Distrito;
 import com.backend.multitienda.models.entity.Empresa;
 import com.backend.multitienda.models.entity.Usuario;
@@ -59,8 +60,8 @@ public class EmpresaController {
     empresa.setDireccionEmpresa(rqEmpresa.getDireccionEmpresa());
     empresa.setEmailEmpresa(rqEmpresa.getEmailEmpresa());
     empresa.setEstado(rqEmpresa.getEstado());
-    empresa.getCategoriaEmpresa().setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
-    empresa.getIdDistrito().setIdDistrito(rqEmpresa.getIdDistrito());
+    empresa.setCategoriaEmpresa(new CategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa()));
+    empresa.setIdDistrito(new Distrito(rqEmpresa.getIdDistrito()));
 
     return empresaRepository.save(empresa);
   }

@@ -62,9 +62,11 @@ public class EmpresaController {
 
     CategoriaEmpresa categoriaEmpresa = new CategoriaEmpresa();
     categoriaEmpresa.setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
+    Distrito distrito = new Distrito();
+    distrito.setIdDistrito(rqEmpresa.getIdDistrito());
 
     empresa.setCategoriaEmpresa(categoriaEmpresa);
-    empresa.setIdDistrito(new Distrito(rqEmpresa.getIdDistrito()));
+    empresa.setDistrito(distrito);
 
     return empresaRepository.save(empresa);
   }

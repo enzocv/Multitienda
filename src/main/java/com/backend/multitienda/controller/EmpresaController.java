@@ -66,7 +66,7 @@ public class EmpresaController {
     empresa.setEmailEmpresa(rqEmpresa.getEmailEmpresa());
     empresa.setEstado(rqEmpresa.getEstado());
     empresa.setCategoriaEmpresa(categoriaEmpresa);
-    empresa.setIdDistrito(distrito);
+    empresa.setDistrito(distrito);
 
     return empresaRepository.save(empresa);
   }

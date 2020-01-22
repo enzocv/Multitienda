@@ -48,6 +48,6 @@ public class Empresa extends Auditable<String> {
 
   @ManyToOne
   @JoinColumn(name = "id_distrito", referencedColumnName = "id_distrito", nullable = false)
-  private Distrito idDistrito;
+  private Distrito distrito;
 
 }

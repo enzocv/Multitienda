@@ -2,9 +2,10 @@ package com.backend.multitienda.models.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Collection;
-import lombok.Data;
 
 @Data
 @Entity

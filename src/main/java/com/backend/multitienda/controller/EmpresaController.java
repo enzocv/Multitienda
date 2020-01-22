@@ -1,6 +1,8 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.EmpresaDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Distrito;
 import com.backend.multitienda.models.entity.Empresa;
 import com.backend.multitienda.models.entity.Usuario;
 import com.backend.multitienda.repositories.IEmpresaRepository;
@@ -47,9 +49,20 @@ public class EmpresaController {
 
   @PostMapping
   @ApiOperation(value = "Crear una empresa")
-  public Empresa addEmpresa(@RequestBody Empresa rqEmpresa) {
+  public Empresa addEmpresa(@RequestBody EmpresaDto rqEmpresa) {
     rqEmpresa.setEstado(ACTIVO.getName());
-    return empresaRepository.save(rqEmpresa);
+
+    Empresa empresa = new Empresa();
+    empresa.setNombreEmpresa(rqEmpresa.getNombreEmpresa());
+    empresa.setRucEmpresa(rqEmpresa.getRucEmpresa());
+    empresa.setTelefonoEmpresa(rqEmpresa.getTelefonoEmpresa());
+    empresa.setDireccionEmpresa(rqEmpresa.getDireccionEmpresa());
+    empresa.setEmailEmpresa(rqEmpresa.getEmailEmpresa());
+    empresa.setEstado(rqEmpresa.getEstado());
+    empresa.getCategoriaEmpresa().setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
+    empresa.getIdDistrito().setIdDistrito(rqEmpresa.getIdDistrito());
+
+    return empresaRepository.save(empresa);
   }
 
   @PutMapping("/{idEmpresa}")

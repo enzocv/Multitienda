@@ -59,7 +59,11 @@ public class EmpresaController {
     empresa.setDireccionEmpresa(rqEmpresa.getDireccionEmpresa());
     empresa.setEmailEmpresa(rqEmpresa.getEmailEmpresa());
     empresa.setEstado(rqEmpresa.getEstado());
-    empresa.setCategoriaEmpresa(new CategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa()));
+
+    CategoriaEmpresa categoriaEmpresa = new CategoriaEmpresa();
+    categoriaEmpresa.setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
+
+    empresa.setCategoriaEmpresa(categoriaEmpresa);
     empresa.setIdDistrito(new Distrito(rqEmpresa.getIdDistrito()));
 
     return empresaRepository.save(empresa);
@@ -69,7 +73,7 @@ public class EmpresaController {
   @ApiOperation(value = "Actualizar una Empresa", notes = "Actualiza una empresa registrada en la bd.")
   public ResponseEntity<Empresa> updateEmpresa(
     @Valid @PathVariable Integer idEmpresa,
-    @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException{
+    @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException {
 
     Empresa findEmpresa = empresaRepository.findById(idEmpresa)
       .orElseThrow(

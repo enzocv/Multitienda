@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -36,9 +35,5 @@ public class CategoriaEmpresa extends Auditable<String> {
   @JsonIgnore
   @OneToMany(mappedBy = "categoriaEmpresa")
   private Collection<Empresa> empresas;
-
-  public CategoriaEmpresa(int idCategoriaEmpresa){
-    this.idCategoriaEmpresa = idCategoriaEmpresa;
-  }
 
 }

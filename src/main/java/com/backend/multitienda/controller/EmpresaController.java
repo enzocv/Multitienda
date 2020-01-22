@@ -50,21 +50,23 @@ public class EmpresaController {
   @PostMapping
   @ApiOperation(value = "Crear una empresa")
   public Empresa addEmpresa(@RequestBody EmpresaDto rqEmpresa) {
-    rqEmpresa.setEstado(ACTIVO.getName());
 
     Empresa empresa = new Empresa();
+    CategoriaEmpresa categoriaEmpresa = new CategoriaEmpresa();
+    Distrito distrito = new Distrito();
+
+    categoriaEmpresa.setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
+    distrito.setIdDistrito(rqEmpresa.getIdDistrito());;
+    rqEmpresa.setEstado(ACTIVO.getName());
+
     empresa.setNombreEmpresa(rqEmpresa.getNombreEmpresa());
     empresa.setRucEmpresa(rqEmpresa.getRucEmpresa());
     empresa.setTelefonoEmpresa(rqEmpresa.getTelefonoEmpresa());
     empresa.setDireccionEmpresa(rqEmpresa.getDireccionEmpresa());
     empresa.setEmailEmpresa(rqEmpresa.getEmailEmpresa());
     empresa.setEstado(rqEmpresa.getEstado());
-
-    CategoriaEmpresa categoriaEmpresa = new CategoriaEmpresa();
-    categoriaEmpresa.setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
-
     empresa.setCategoriaEmpresa(categoriaEmpresa);
-    empresa.setIdDistrito(new Distrito(rqEmpresa.getIdDistrito()));
+    empresa.setIdDistrito(distrito);
 
     return empresaRepository.save(empresa);
   }

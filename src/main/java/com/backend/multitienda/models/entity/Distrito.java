@@ -35,8 +35,4 @@ public class Distrito {
   @OneToMany(mappedBy = "idDistrito")
   private Collection<Sede> sedes;
 
-  public Distrito(int idDistrito){
-    this.idDistrito = idDistrito;
-  }
-
 }

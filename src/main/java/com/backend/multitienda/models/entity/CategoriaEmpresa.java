@@ -35,5 +35,4 @@ public class CategoriaEmpresa extends Auditable<String> {
   @JsonIgnore
   @OneToMany(mappedBy = "categoriaEmpresa")
   private Collection<Empresa> empresas;
-
 }

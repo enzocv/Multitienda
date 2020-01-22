@@ -37,4 +37,8 @@ public class CategoriaEmpresa extends Auditable<String> {
   @OneToMany(mappedBy = "categoriaEmpresa")
   private Collection<Empresa> empresas;
 
+  public CategoriaEmpresa(int idCategoriaEmpresa){
+    this.idCategoriaEmpresa = idCategoriaEmpresa;
+  }
+
 }

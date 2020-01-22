@@ -22,6 +22,7 @@ import static com.backend.multitienda.models.entity.Estado.INACTIVO;
 @RestController
 @RequestMapping("/api/estadoordenes")
 public class EstadoOrdenController {
+
   @Autowired
   private IEstadoOrdenRepository estadoOrdenRespository;
 
@@ -53,12 +54,15 @@ public class EstadoOrdenController {
   @ApiOperation(value = "Actualizar un Estado Orden")
   public ResponseEntity<EstadoOrden> updateEstadoOrden(@Valid @PathVariable Integer idEstadoOrden,
                                                        @RequestBody EstadoOrden rqEstadoOrden) throws ResourceNotFoundException{
+
     EstadoOrden findEstadoOrden = estadoOrdenRespository.findById(idEstadoOrden)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ningun Estado Orden con este id.")
       );
 
-    final EstadoOrden updateEstadoOrden = estadoOrdenRespository.save(findEstadoOrden);
+    rqEstadoOrden.setIdEstadoOrden(findEstadoOrden.getIdEstadoOrden());
+
+    final EstadoOrden updateEstadoOrden = estadoOrdenRespository.save(rqEstadoOrden);
     return ResponseEntity.ok(updateEstadoOrden);
   }
 

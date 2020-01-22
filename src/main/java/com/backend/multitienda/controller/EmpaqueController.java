@@ -53,12 +53,15 @@ public class EmpaqueController {
   public ResponseEntity<Empaque> updateEmpaque(
     @Valid @PathVariable Integer idEmpaque,
     @RequestBody Empaque rqEmpaque) throws ResourceNotFoundException{
-    Empaque obtenerEmpaque = empaqueRepository.findById(idEmpaque)
+
+    Empaque findEmpaque = empaqueRepository.findById(idEmpaque)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro el Empaque con este id")
       );
 
-    final Empaque updateEmpaque = empaqueRepository.save(obtenerEmpaque);
+    rqEmpaque.setIdEmpaque(findEmpaque.getIdEmpaque());
+
+    final Empaque updateEmpaque = empaqueRepository.save(rqEmpaque);
 
     return ResponseEntity.ok(updateEmpaque);
   }

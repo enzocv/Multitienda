@@ -1,19 +1,22 @@
 package com.backend.multitienda.controller;
 
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Ciudad;
 import com.backend.multitienda.models.entity.Distrito;
 import com.backend.multitienda.repositories.IDistritoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.backend.multitienda.models.entity.Estado.ACTIVO;
+import static com.backend.multitienda.models.entity.Estado.INACTIVO;
 
 @Api(value = "Servicio de Distrito", description = "Esta API permite realizar las operaciones basicas de un Distrito")
 @RestController
@@ -38,4 +41,46 @@ public class DistritoController {
       );
     return ResponseEntity.ok(obtenerDistrito);
   }
+
+  @PostMapping
+  @ApiOperation(value = "Agregar un Distrito")
+  public Distrito addDistrito(@RequestBody Distrito rqDistrito){
+    rqDistrito.setEstado(ACTIVO.getName());
+
+    return distritoRepository.save(rqDistrito);
+  }
+
+  @PutMapping("/{idDistrito}")
+  @ApiOperation(value = "Actualizar un Distrito")
+  public ResponseEntity<Distrito> updateDistrito(@Valid @PathVariable Integer idDistrito,
+                                                 @RequestBody Distrito rqDistrito) throws ResourceNotFoundException{
+
+    Distrito findDistrito = distritoRepository.findById(idDistrito)
+      .orElseThrow(
+        ()-> new ResourceNotFoundException("No se encontro el distrito con el id: " + idDistrito)
+      );
+
+    findDistrito.setNombreDistrito(rqDistrito.getNombreDistrito());
+    findDistrito.setCiudad(rqDistrito.getCiudad());
+
+    final Distrito updateDistrito = distritoRepository.save(findDistrito);
+    return ResponseEntity.ok(updateDistrito);
+  }
+
+  @DeleteMapping("/{idDistrito}")
+  @ApiOperation(value = "Eliminar un Distrito")
+  public Map<String,Boolean> deleteDistrito(@Valid @PathVariable Integer idDistrito) throws ResourceNotFoundException{
+    Distrito findDistrito = distritoRepository.findById(idDistrito)
+      .orElseThrow(
+        ()-> new ResourceNotFoundException("No se encontro ningun distrito con este id.")
+      );
+
+    findDistrito.setEstado(INACTIVO.getName());
+    distritoRepository.save(findDistrito);
+
+    Map<String,Boolean> response = new HashMap<>();
+    response.put("Eliminado",Boolean.TRUE);
+    return response;
+  }
+
 }

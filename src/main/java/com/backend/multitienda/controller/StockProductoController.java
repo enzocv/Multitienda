@@ -57,7 +57,9 @@ public class StockProductoController {
         ()-> new ResourceNotFoundException("No se encontro ningun Stock para el producto con este id.")
       );
 
-    final StockProducto updateStockProducto = stockProductoRepository.save(findStockProducto);
+    rqStockProducto.setIdStockProducto(findStockProducto.getIdStockProducto());
+
+    final StockProducto updateStockProducto = stockProductoRepository.save(rqStockProducto);
     return ResponseEntity.ok(updateStockProducto);
   }
 

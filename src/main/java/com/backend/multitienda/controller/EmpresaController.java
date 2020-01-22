@@ -57,11 +57,16 @@ public class EmpresaController {
   public ResponseEntity<Empresa> updateEmpresa(
     @Valid @PathVariable Integer idEmpresa,
     @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException{
-    Empresa obtenerEmpresa = empresaRepository.findById(idEmpresa)
+
+    Empresa findEmpresa = empresaRepository.findById(idEmpresa)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro una Empresa con el id: " + idEmpresa)
       );
-    final Empresa updateEmpresa = empresaRepository.save(obtenerEmpresa);
+
+    rqEmpresa.setIdEmpresa(findEmpresa.getIdEmpresa());
+
+    final Empresa updateEmpresa = empresaRepository.save(rqEmpresa);
+
     return ResponseEntity.ok(updateEmpresa);
   }
 

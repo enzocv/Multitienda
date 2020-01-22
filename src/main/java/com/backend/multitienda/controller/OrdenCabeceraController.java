@@ -57,7 +57,9 @@ public class OrdenCabeceraController {
         ()-> new ResourceNotFoundException("No se encontro ningua orden cabecera con este id.")
       );
 
-    final OrdenCabecera updateOrdenCabecera = ordenCabeceraRepository.save(findOrdenCabecera);
+    rqOrdenCabecera.setIdOrdenCabecera(findOrdenCabecera.getIdOrdenCabecera());
+
+    final OrdenCabecera updateOrdenCabecera = ordenCabeceraRepository.save(rqOrdenCabecera);
     return ResponseEntity.ok(updateOrdenCabecera);
   }
 

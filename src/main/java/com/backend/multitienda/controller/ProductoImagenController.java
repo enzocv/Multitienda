@@ -24,7 +24,7 @@ import static com.backend.multitienda.models.entity.Estado.ACTIVO;
 @RequestMapping("/api/productosimagenes")
 public class ProductoImagenController {
 
-  private final static String IMG_PATH = "src/main/java/com/backend/multitienda/img/";
+  private final static String IMG_PATH = "src/main/java/com/backend/multitienda/img/ProductoImagen/";
 
   @Autowired
   private IProductoImagenRepository productoImagenRepository;
@@ -64,6 +64,22 @@ public class ProductoImagenController {
     productoImagenRepository.save(rqProductoImagen);
 
     return ResponseEntity.ok(rqProductoImagen);
+  }
+
+  //TODO: MODIFICAR LAS IMAGENES
+  @PutMapping("/{idProductoImagen}")
+  @ApiOperation(value = "Actualizar Producto Imagen")
+  public ResponseEntity<ProductoImagen> updateProductoImagen(@Valid @PathVariable Integer idProductoImagen,
+                                                             @RequestBody ProductoImagen rqProductoImagen) throws ResourceNotFoundException{
+    ProductoImagen findProductoImagen = productoImagenRepository.findById(idProductoImagen)
+      .orElseThrow(
+        ()-> new ResourceNotFoundException("No se encontro ningun Producto Imagen con el id: " + idProductoImagen)
+      );
+
+    rqProductoImagen.setIdProductoImagen(findProductoImagen.getIdProductoImagen());
+    final ProductoImagen updateProdudctoImagen = productoImagenRepository.save(rqProductoImagen);
+
+    return ResponseEntity.ok(updateProdudctoImagen);
   }
 
   /**

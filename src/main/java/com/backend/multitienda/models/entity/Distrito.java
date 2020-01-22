@@ -29,11 +29,10 @@ public class Distrito {
   private Ciudad ciudad;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "idDistrito")
+  @OneToMany(mappedBy = "distrito")
   private Collection<Empresa> empresas;
 
   @JsonIgnore
   @OneToMany(mappedBy = "idDistrito")
   private Collection<Sede> sedes;
-
 }

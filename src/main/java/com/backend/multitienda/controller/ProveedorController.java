@@ -1,6 +1,8 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.ProveedorDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Empresa;
 import com.backend.multitienda.models.entity.Proveedor;
 import com.backend.multitienda.models.entity.Usuario;
 import com.backend.multitienda.repositories.IProveedorRepository;
@@ -48,25 +50,47 @@ public class ProveedorController {
 
   @PostMapping
   @ApiOperation(value = "Crear un proveedor")
-  public Proveedor addProveedor(@RequestBody Proveedor rqProveedor) {
-    rqProveedor.setEstado(ACTIVO.getName());
-    return proveedorRepository.save(rqProveedor);
+  public Proveedor addProveedor(@RequestBody ProveedorDto rqProveedor) {
+
+    Proveedor proveedor = new Proveedor();
+    Usuario usuario = new Usuario();
+    Empresa empresa = new Empresa();
+    usuario.setIdUsuario(rqProveedor.getIdUsuario());
+    empresa.setIdEmpresa(rqProveedor.getIdEmpresa());
+
+    proveedor.setNombreProveedor(rqProveedor.getNombreProveedor());
+    proveedor.setApellidoProveedor(rqProveedor.getApellidoProveedor());
+    proveedor.setRucProveedor(rqProveedor.getRucProveedor());
+    proveedor.setUsuario(usuario);
+    proveedor.setEmpresa(empresa);
+    proveedor.setEstado(ACTIVO.getName());
+
+    return proveedorRepository.save(proveedor);
   }
 
   @PutMapping("/{idProveedor}")
   @ApiOperation(value = "Actualizar Proveedor")
   public ResponseEntity<Proveedor> updateProveedor(
     @Valid @PathVariable Integer idProveedor,
-    @RequestBody Proveedor rqProveedor) throws ResourceNotFoundException{
+    @RequestBody ProveedorDto rqProveedor) throws ResourceNotFoundException{
 
     Proveedor obtenerProveedor = proveedorRepository.findById(idProveedor)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro un proveedor con este id.")
       );
 
-    rqProveedor.setIdProveedor(obtenerProveedor.getIdProveedor());
+    Usuario usuario = new Usuario();
+    Empresa empresa = new Empresa();
+    usuario.setIdUsuario(rqProveedor.getIdUsuario());
+    empresa.setIdEmpresa(rqProveedor.getIdEmpresa());
 
-    final Proveedor updateProveedor = proveedorRepository.save(rqProveedor);
+    obtenerProveedor.setNombreProveedor(rqProveedor.getNombreProveedor());
+    obtenerProveedor.setApellidoProveedor(rqProveedor.getApellidoProveedor());
+    obtenerProveedor.setRucProveedor(rqProveedor.getRucProveedor());
+    obtenerProveedor.setUsuario(usuario);
+    obtenerProveedor.setEmpresa(empresa);
+
+    final Proveedor updateProveedor = proveedorRepository.save(obtenerProveedor);
     return ResponseEntity.ok(updateProveedor);
   }
 

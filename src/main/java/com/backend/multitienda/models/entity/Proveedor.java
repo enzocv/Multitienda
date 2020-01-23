@@ -36,5 +36,4 @@ public class Proveedor {
   @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", nullable = false)
   private Empresa empresa;
 
-
 }

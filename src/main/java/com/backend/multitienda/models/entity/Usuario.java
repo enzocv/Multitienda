@@ -46,5 +46,4 @@ public class Usuario extends Auditable<String> {
   @JsonIgnore
   private Collection<Proveedor> proveedores;
 
-
 }

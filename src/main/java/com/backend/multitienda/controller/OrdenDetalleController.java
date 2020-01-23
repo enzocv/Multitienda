@@ -52,11 +52,11 @@ public class OrdenDetalleController {
     OrdenCabecera ordenCabecera = new OrdenCabecera();
     producto.setIdProducto(rqOrdenDetalle.getIdProducto());
     ordenCabecera.setIdOrdenCabecera(rqOrdenDetalle.getIdOrdenCabecera());
-    rqOrdenDetalle.setEstado(ACTIVO.getName());
 
     ordenDetalle.setCantidadProducto(rqOrdenDetalle.getCantidadProducto());
     ordenDetalle.setProducto(producto);
     ordenDetalle.setIdOrdenCabecera(ordenCabecera);
+    ordenDetalle.setEstado(ACTIVO.getName());
 
     return ordenDetalleRepository.save(ordenDetalle);
   }

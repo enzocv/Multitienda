@@ -54,7 +54,6 @@ public class ProductoController {
     unidadMedida.setIdUnidadMedida(rqProducto.getIdUnidadMedida());
     empresa.setIdEmpresa(rqProducto.getIdEmpresa());
     categoriaProducto.setIdCategoriaProducto(rqProducto.getIdCategoriaProducto());
-    rqProducto.setEstado(ACTIVO.getName());
 
     producto.setNombreProducto(rqProducto.getNombreProducto());
     producto.setDescripcionProducto(rqProducto.getDescripcionProducto());
@@ -66,6 +65,7 @@ public class ProductoController {
     producto.setUnidadMedida(unidadMedida);
     producto.setEmpresa(empresa);
     producto.setCategoriaProducto(categoriaProducto);
+    producto.setEstado(ACTIVO.getName());
 
     return productoRepository.save(producto);
   }

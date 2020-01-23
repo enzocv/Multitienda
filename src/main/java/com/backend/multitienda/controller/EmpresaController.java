@@ -56,7 +56,6 @@ public class EmpresaController {
     Distrito distrito = new Distrito();
     categoriaEmpresa.setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
     distrito.setIdDistrito(rqEmpresa.getIdDistrito());;
-    rqEmpresa.setEstado(ACTIVO.getName());
 
     empresa.setNombreEmpresa(rqEmpresa.getNombreEmpresa());
     empresa.setRucEmpresa(rqEmpresa.getRucEmpresa());
@@ -66,6 +65,7 @@ public class EmpresaController {
     empresa.setEstado(rqEmpresa.getEstado());
     empresa.setCategoriaEmpresa(categoriaEmpresa);
     empresa.setDistrito(distrito);
+    empresa.setEstado(ACTIVO.getName());
 
     return empresaRepository.save(empresa);
   }

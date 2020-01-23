@@ -50,10 +50,10 @@ public class DistritoController {
     Distrito distrito = new Distrito();
     Ciudad ciudad = new Ciudad();
     ciudad.setIdCiudad(rqDistrito.getIdCiudad());
-    rqDistrito.setEstado(ACTIVO.getName());
 
     distrito.setNombreDistrito(rqDistrito.getNombreDistrito());
     distrito.setCiudad(ciudad);
+    distrito.setEstado(ACTIVO.getName());
 
     return distritoRepository.save(distrito);
   }

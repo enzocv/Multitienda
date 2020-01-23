@@ -1,5 +1,6 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.ProductoImagenDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.Producto;
 import com.backend.multitienda.models.entity.ProductoImagen;
@@ -50,34 +51,44 @@ public class ProductoImagenController {
 
   @PostMapping
   @ApiOperation(value = "Agregar una nueva imagen para el Producto")
-  public ResponseEntity addProductoImagen(@RequestBody ProductoImagen rqProductoImagen) throws Exception {
-    Producto findProducto = productoRepository.findById(rqProductoImagen.getProducto().getIdProducto())
+  public ResponseEntity addProductoImagen(@RequestBody ProductoImagenDto rqProductoImagen) throws Exception {
+    Producto findProducto = productoRepository.findById(rqProductoImagen.getIdProducto())
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro el Producto.")
       );
+    ProductoImagen productoImagen = new ProductoImagen();
+    Producto producto = new Producto();
+    producto.setIdProducto(rqProductoImagen.getIdProducto());
 
     String nameImage = findProducto.getIdProducto() + "_" + findProducto.getNombreProducto();
     uploadImage(rqProductoImagen.getImagenProducto(), nameImage.replace(" ",""));
 
-    rqProductoImagen.setEstado(ACTIVO.getName());
-    rqProductoImagen.setImagenProducto(IMG_PATH + nameImage.replace(" ","") + ".jpg");
-    productoImagenRepository.save(rqProductoImagen);
+    productoImagen.setImagenProducto(IMG_PATH + nameImage.replace(" ","") + ".jpg");
+    productoImagen.setProducto(producto);
+    productoImagen.setEstado(ACTIVO.getName());
 
-    return ResponseEntity.ok(rqProductoImagen);
+    productoImagenRepository.save(productoImagen);
+
+    return ResponseEntity.ok(productoImagen);
   }
 
   //TODO: MODIFICAR LAS IMAGENES
   @PutMapping("/{idProductoImagen}")
   @ApiOperation(value = "Actualizar Producto Imagen")
   public ResponseEntity<ProductoImagen> updateProductoImagen(@Valid @PathVariable Integer idProductoImagen,
-                                                             @RequestBody ProductoImagen rqProductoImagen) throws ResourceNotFoundException{
+                                                             @RequestBody ProductoImagenDto rqProductoImagen) throws ResourceNotFoundException{
     ProductoImagen findProductoImagen = productoImagenRepository.findById(idProductoImagen)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ningun Producto Imagen con el id: " + idProductoImagen)
       );
 
-    rqProductoImagen.setIdProductoImagen(findProductoImagen.getIdProductoImagen());
-    final ProductoImagen updateProdudctoImagen = productoImagenRepository.save(rqProductoImagen);
+    Producto producto = new Producto();
+    producto.setIdProducto(rqProductoImagen.getIdProducto());
+
+    findProductoImagen.setProducto(producto);
+    findProductoImagen.setImagenProducto(rqProductoImagen.getImagenProducto());
+
+    final ProductoImagen updateProdudctoImagen = productoImagenRepository.save(findProductoImagen);
 
     return ResponseEntity.ok(updateProdudctoImagen);
   }

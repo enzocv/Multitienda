@@ -48,7 +48,6 @@ public class OrdenCabeceraController {
   @PostMapping
   @ApiOperation(value = "Agregar una Orden Cabecera")
   public OrdenCabecera addOrdenCabecera(@RequestBody OrdenCabeceraDto rqOrdenCabecera){
-    rqOrdenCabecera.setEstado(ACTIVO.getName());
 
     OrdenCabecera ordenCabecera = new OrdenCabecera();
     Distribuidor distribuidor = new Distribuidor();
@@ -65,6 +64,7 @@ public class OrdenCabeceraController {
     ordenCabecera.setDistribuidor(distribuidor);
     ordenCabecera.setSede(sede);
     ordenCabecera.setEstadoOrden(estadoOrden);
+    ordenCabecera.setEstado(ACTIVO.getName());
 
     return ordenCabeceraRepository.save(ordenCabecera);
   }

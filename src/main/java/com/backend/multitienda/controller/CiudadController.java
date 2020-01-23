@@ -47,7 +47,6 @@ public class CiudadController {
   @PostMapping
   @ApiOperation(value = "Agregar una ciudad")
   public Ciudad addCiudad(@RequestBody CiudadDto rqCiudad){
-    rqCiudad.setEstado(ACTIVO.getName());
 
     Ciudad ciudad = new Ciudad();
     Pais pais = new Pais();
@@ -55,6 +54,7 @@ public class CiudadController {
 
     ciudad.setNombreCiudad(rqCiudad.getNombreCiudad());
     ciudad.setPais(pais);
+    ciudad.setEstado(ACTIVO.getName());
 
     return ciudadRepository.save(ciudad);
   }

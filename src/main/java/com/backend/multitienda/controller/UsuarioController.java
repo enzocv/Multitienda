@@ -1,6 +1,8 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.UsuarioDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Rol;
 import com.backend.multitienda.models.entity.Usuario;
 import com.backend.multitienda.repositories.IUsuarioRepository;
 import io.swagger.annotations.Api;
@@ -52,26 +54,36 @@ public class UsuarioController {
 
   @PostMapping
   @ApiOperation(value = "Crear un usuario")
-  public Usuario addUsuario(@RequestBody Usuario rqUsuario) {
-    rqUsuario.setPassword(bCryptPasswordEncoder.encode(rqUsuario.getPassword()));
-    rqUsuario.setEstado(ACTIVO.getName());
-    return usuarioRepository.save(rqUsuario);
+  public Usuario addUsuario(@RequestBody UsuarioDto rqUsuario) {
+    Usuario usuario = new Usuario();
+    Rol rol = new Rol();
+    rol.setIdRol(rqUsuario.getIdRol());
+
+    usuario.setPassword(bCryptPasswordEncoder.encode(rqUsuario.getPassword()));
+    usuario.setEmailUsuario(rqUsuario.getEmailUsuario());
+    usuario.setRol(rol);
+    usuario.setEstado(ACTIVO.getName());
+
+    return usuarioRepository.save(usuario);
   }
 
   @PutMapping("/{idUsuario}")
   @ApiOperation(value = "Actualizar usuario")
   public ResponseEntity<Usuario> updateUsuario(
     @Valid @PathVariable(value = "idUsuario") Integer idUsuario,
-    @RequestBody Usuario rqUsuario) throws ResourceNotFoundException {
+    @RequestBody UsuarioDto rqUsuario) throws ResourceNotFoundException {
 
     Usuario usuario = usuarioRepository.findById(idUsuario)
       .orElseThrow(() ->
         new ResourceNotFoundException("No se encontró usuario con este id")
       );
 
+    Rol rol = new Rol();
+    rol.setIdRol(rqUsuario.getIdRol());
+
     usuario.setEmailUsuario(rqUsuario.getEmailUsuario());
     //    usuario.setPassword(rqUsuario.getPassword());
-    usuario.setRol(rqUsuario.getRol());
+    usuario.setRol(rol);
 
     final Usuario updatedUsuario = usuarioRepository.save(usuario);
     return ResponseEntity.ok(updatedUsuario);

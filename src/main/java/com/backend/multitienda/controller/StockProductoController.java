@@ -1,6 +1,9 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.StockProductoDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Producto;
+import com.backend.multitienda.models.entity.Sede;
 import com.backend.multitienda.models.entity.StockProducto;
 import com.backend.multitienda.repositories.IStockProductoRepository;
 import io.swagger.annotations.Api;
@@ -43,23 +46,40 @@ public class StockProductoController {
 
   @PostMapping
   @ApiOperation(value = "Agregar un stock para un Producto")
-  public StockProducto addStockProducto(@RequestBody StockProducto rqStockProducto){
-    rqStockProducto.setEstado(ACTIVO.getName());
-    return stockProductoRepository.save(rqStockProducto);
+  public StockProducto addStockProducto(@RequestBody StockProductoDto rqStockProducto){
+    StockProducto stockProducto = new StockProducto();
+    Producto producto = new Producto();
+    Sede sede = new Sede();
+    producto.setIdProducto(rqStockProducto.getIdProducto());
+    sede.setIdSede(rqStockProducto.getIdSede());
+
+    stockProducto.setStockProducto(rqStockProducto.getStockProducto());
+    stockProducto.setProducto(producto);
+    stockProducto.setSede(sede);
+    stockProducto.setEstado(ACTIVO.getName());
+
+    return stockProductoRepository.save(stockProducto);
   }
 
   @PutMapping("/{idStockProducto}")
   @ApiOperation(value = "Actualizar el Stock de un Producto")
   public ResponseEntity<StockProducto> updateStockProducto(@Valid @PathVariable Integer idStockProducto,
-                                                           @RequestBody StockProducto rqStockProducto) throws ResourceNotFoundException{
+                                                           @RequestBody StockProductoDto rqStockProducto) throws ResourceNotFoundException{
     StockProducto findStockProducto = stockProductoRepository.findById(idStockProducto)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ningun Stock para el producto con este id.")
       );
 
-    rqStockProducto.setIdStockProducto(findStockProducto.getIdStockProducto());
+    Producto producto = new Producto();
+    Sede sede = new Sede();
+    producto.setIdProducto(rqStockProducto.getIdProducto());
+    sede.setIdSede(rqStockProducto.getIdSede());
 
-    final StockProducto updateStockProducto = stockProductoRepository.save(rqStockProducto);
+    findStockProducto.setStockProducto(rqStockProducto.getStockProducto());
+    findStockProducto.setProducto(producto);
+    findStockProducto.setSede(sede);
+
+    final StockProducto updateStockProducto = stockProductoRepository.save(findStockProducto);
     return ResponseEntity.ok(updateStockProducto);
   }
 

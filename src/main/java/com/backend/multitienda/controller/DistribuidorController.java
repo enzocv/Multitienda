@@ -51,7 +51,6 @@ public class DistribuidorController {
     Distribuidor distribuidor = new Distribuidor();
     Usuario usuario = new Usuario();
     usuario.setIdUsuario(rqDistribuidor.getIdUsuario());
-    rqDistribuidor.setEstado(ACTIVO.getName());
 
     distribuidor.setNombreEmpresaDistribuidor(rqDistribuidor.getNombreEmpresaDistribuidor());
     distribuidor.setNombreDistribuidor(rqDistribuidor.getNombreDistribuidor());
@@ -60,6 +59,7 @@ public class DistribuidorController {
     distribuidor.setEmailDistribuidor(rqDistribuidor.getEmailDistribuidor());
     distribuidor.setRucDistribuidor(rqDistribuidor.getRucDistribuidor());
     distribuidor.setUsuario(usuario);
+    distribuidor.setEstado(ACTIVO.getName());
 
     return distribuidorRepository.save(distribuidor);
   }

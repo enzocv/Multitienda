@@ -1,7 +1,10 @@
 package com.backend.multitienda.controller;
 
 
+import com.backend.multitienda.dto.SedeDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Distrito;
+import com.backend.multitienda.models.entity.Empresa;
 import com.backend.multitienda.models.entity.Sede;
 import com.backend.multitienda.repositories.ISedesRepository;
 import io.swagger.annotations.Api;
@@ -47,19 +50,39 @@ public class SedeController {
 
   @PostMapping
   @ApiOperation(value = "Crear una Sede")
-  public Sede addSede(@RequestBody Sede rqsede){
-    rqsede.setEstado(ACTIVO.getName());
-    return sedesRepository.save(rqsede);
+  public Sede addSede(@RequestBody SedeDto rqsede){
+    Sede sede = new Sede();
+    Empresa empresa = new Empresa();
+    Distrito distrito = new Distrito();
+    empresa.setIdEmpresa(rqsede.getIdEmpresa());
+    distrito.setIdDistrito(rqsede.getIdDistrito());
+
+    sede.setNombreSede(rqsede.getNombreSede());
+    sede.setDireccionSede(rqsede.getDireccionSede());
+    sede.setEmpresa(empresa);
+    sede.setIdDistrito(distrito);
+    sede.setEstado(ACTIVO.getName());
+
+    return sedesRepository.save(sede);
   }
 
   @PutMapping("/{idSede}")
   @ApiOperation(value = "Actualizar una Sede")
-  public ResponseEntity<Sede> updateSede(@Valid @PathVariable Integer idSede, @RequestBody Sede rqSede) throws ResourceNotFoundException{
+  public ResponseEntity<Sede> updateSede(@Valid @PathVariable Integer idSede, @RequestBody SedeDto rqsede) throws ResourceNotFoundException{
     Sede findSede = sedesRepository.findById(idSede).orElseThrow(()->new ResourceNotFoundException("No se encontro " +
       "ninguna Sede con este id."));
 
-    rqSede.setIdSede(findSede.getIdSede());
-    final Sede updateSede = sedesRepository.save(rqSede);
+    Empresa empresa = new Empresa();
+    Distrito distrito = new Distrito();
+    empresa.setIdEmpresa(rqsede.getIdEmpresa());
+    distrito.setIdDistrito(rqsede.getIdDistrito());
+
+    findSede.setNombreSede(rqsede.getNombreSede());
+    findSede.setDireccionSede(rqsede.getDireccionSede());
+    findSede.setEmpresa(empresa);
+    findSede.setIdDistrito(distrito);
+
+    final Sede updateSede = sedesRepository.save(findSede);
     return ResponseEntity.ok(updateSede);
   }
 

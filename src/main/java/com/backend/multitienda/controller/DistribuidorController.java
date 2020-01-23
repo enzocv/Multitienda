@@ -1,7 +1,9 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.DistribuidorDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.Distribuidor;
+import com.backend.multitienda.models.entity.Usuario;
 import com.backend.multitienda.repositories.IDistribuidorRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,25 +46,48 @@ public class DistribuidorController {
 
   @PostMapping
   @ApiOperation(value = "Agregar un nuevo Distribuidor")
-  public Distribuidor addDistribuidor(@RequestBody Distribuidor rqDistribuidor){
+  public Distribuidor addDistribuidor(@RequestBody DistribuidorDto rqDistribuidor){
+
+    Distribuidor distribuidor = new Distribuidor();
+    Usuario usuario = new Usuario();
+    usuario.setIdUsuario(rqDistribuidor.getIdUsuario());
     rqDistribuidor.setEstado(ACTIVO.getName());
-    return distribuidorRepository.save(rqDistribuidor);
+
+    distribuidor.setNombreEmpresaDistribuidor(rqDistribuidor.getNombreEmpresaDistribuidor());
+    distribuidor.setNombreDistribuidor(rqDistribuidor.getNombreDistribuidor());
+    distribuidor.setApellidoDistribuidor(rqDistribuidor.getApellidoDistribuidor());
+    distribuidor.setDireccionDistribuidor(rqDistribuidor.getDireccionDistribuidor());
+    distribuidor.setEmailDistribuidor(rqDistribuidor.getEmailDistribuidor());
+    distribuidor.setRucDistribuidor(rqDistribuidor.getRucDistribuidor());
+    distribuidor.setUsuario(usuario);
+
+    return distribuidorRepository.save(distribuidor);
   }
 
   @PutMapping("/{idDistribuidor}")
   @ApiOperation(value = "Actulizar un Distribuidor", notes = "ACtualiza un Distribuidor por su id")
   public ResponseEntity<Distribuidor> updateDistribuidor(
     @Valid @PathVariable Integer idDistribuidor,
-    @RequestBody Distribuidor rqDistribuidor) throws ResourceNotFoundException{
+    @RequestBody DistribuidorDto rqDistribuidor) throws ResourceNotFoundException{
 
     Distribuidor obtenerDistribuidor = distribuidorRepository.findById(idDistribuidor)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ningun Distribuidor con este id.")
       );
 
-    rqDistribuidor.setIdDistribuidor(obtenerDistribuidor.getIdDistribuidor());
+    Usuario usuario = new Usuario();
+    usuario.setIdUsuario(rqDistribuidor.getIdUsuario());
 
-    final Distribuidor updateDistribuidor = distribuidorRepository.save(rqDistribuidor);
+    obtenerDistribuidor.setIdDistribuidor(rqDistribuidor.getIdDistribuidor());
+    obtenerDistribuidor.setNombreEmpresaDistribuidor(rqDistribuidor.getNombreEmpresaDistribuidor());
+    obtenerDistribuidor.setNombreDistribuidor(rqDistribuidor.getNombreDistribuidor());
+    obtenerDistribuidor.setApellidoDistribuidor(rqDistribuidor.getApellidoDistribuidor());
+    obtenerDistribuidor.setDireccionDistribuidor(rqDistribuidor.getDireccionDistribuidor());
+    obtenerDistribuidor.setEmailDistribuidor(rqDistribuidor.getEmailDistribuidor());
+    obtenerDistribuidor.setRucDistribuidor(rqDistribuidor.getRucDistribuidor());
+    obtenerDistribuidor.setUsuario(usuario);
+
+    final Distribuidor updateDistribuidor = distribuidorRepository.save(obtenerDistribuidor);
 
     return ResponseEntity.ok(updateDistribuidor);
   }

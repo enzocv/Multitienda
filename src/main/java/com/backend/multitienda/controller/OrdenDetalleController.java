@@ -1,7 +1,10 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.OrdenDetalleDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.OrdenCabecera;
 import com.backend.multitienda.models.entity.OrdenDetalle;
+import com.backend.multitienda.models.entity.Producto;
 import com.backend.multitienda.repositories.IOrdenDetalleRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,9 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static com.backend.multitienda.models.entity.Estado.ACTIVO;
@@ -44,23 +45,40 @@ public class OrdenDetalleController {
 
   @PostMapping
   @ApiOperation(value = "Agregar un Detalle para la Orden")
-  public ResponseEntity<String> addOrdenDetalle(@RequestBody List<OrdenDetalle> rqOrdenDetalle){
-    rqOrdenDetalle.forEach(orden -> orden.setEstado(ACTIVO.getName()));
-    ordenDetalleRepository.saveAll(rqOrdenDetalle);
-    return ResponseEntity.ok("Ordenes Guradadas");
+  public OrdenDetalle addOrdenDetalle(@RequestBody OrdenDetalleDto rqOrdenDetalle){
+
+    OrdenDetalle ordenDetalle = new OrdenDetalle();
+    Producto producto = new Producto();
+    OrdenCabecera ordenCabecera = new OrdenCabecera();
+    producto.setIdProducto(rqOrdenDetalle.getIdProducto());
+    ordenCabecera.setIdOrdenCabecera(rqOrdenDetalle.getIdOrdenCabecera());
+    rqOrdenDetalle.setEstado(ACTIVO.getName());
+
+    ordenDetalle.setCantidadProducto(rqOrdenDetalle.getCantidadProducto());
+    ordenDetalle.setProducto(producto);
+    ordenDetalle.setIdOrdenCabecera(ordenCabecera);
+
+    return ordenDetalleRepository.save(ordenDetalle);
   }
 
   @PutMapping("/{idOrdenDetalle}")
   @ApiOperation(value = "Actualizar una Orden Detalle")
   public ResponseEntity<OrdenDetalle> updateOrdenDetalle(@Valid @PathVariable Integer idOrdenDetalle,
-                                                         @RequestBody OrdenDetalle rqOrdenDetalle) throws ResourceNotFoundException{
+                                                         @RequestBody OrdenDetalleDto rqOrdenDetalle) throws ResourceNotFoundException{
     OrdenDetalle findOrdenDetalle = ordenDetalleRepository.findById(idOrdenDetalle)
     .orElseThrow(
       ()-> new ResourceNotFoundException("No se encontron ningun Detalle Orden con el id: " + idOrdenDetalle)
     );
-    rqOrdenDetalle.setIdOrdenDetalle(findOrdenDetalle.getIdOrdenDetalle());
+    Producto producto = new Producto();
+    OrdenCabecera ordenCabecera = new OrdenCabecera();
+    producto.setIdProducto(rqOrdenDetalle.getIdProducto());
+    ordenCabecera.setIdOrdenCabecera(rqOrdenDetalle.getIdOrdenCabecera());
 
-    final OrdenDetalle updateOrdenDetalle = ordenDetalleRepository.save(rqOrdenDetalle);
+    findOrdenDetalle.setCantidadProducto(rqOrdenDetalle.getCantidadProducto());
+    findOrdenDetalle.setProducto(producto);
+    findOrdenDetalle.setIdOrdenCabecera(ordenCabecera);
+
+    final OrdenDetalle updateOrdenDetalle = ordenDetalleRepository.save(findOrdenDetalle);
     return ResponseEntity.ok(updateOrdenDetalle);
   }
 

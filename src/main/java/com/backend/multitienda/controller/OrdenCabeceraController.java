@@ -1,7 +1,11 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.OrdenCabeceraDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
+import com.backend.multitienda.models.entity.Distribuidor;
+import com.backend.multitienda.models.entity.EstadoOrden;
 import com.backend.multitienda.models.entity.OrdenCabecera;
+import com.backend.multitienda.models.entity.Sede;
 import com.backend.multitienda.repositories.IOrdenCabeceraRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,23 +47,53 @@ public class OrdenCabeceraController {
 
   @PostMapping
   @ApiOperation(value = "Agregar una Orden Cabecera")
-  public OrdenCabecera addOrdenCabecera(@RequestBody OrdenCabecera rqOrdenCabecera){
+  public OrdenCabecera addOrdenCabecera(@RequestBody OrdenCabeceraDto rqOrdenCabecera){
     rqOrdenCabecera.setEstado(ACTIVO.getName());
-    return ordenCabeceraRepository.save(rqOrdenCabecera);
+
+    OrdenCabecera ordenCabecera = new OrdenCabecera();
+    Distribuidor distribuidor = new Distribuidor();
+    EstadoOrden estadoOrden = new EstadoOrden();
+    Sede sede = new Sede();
+    distribuidor.setIdDistribuidor(rqOrdenCabecera.getIdDistribuidor());
+    estadoOrden.setIdEstadoOrden(rqOrdenCabecera.getIdEstadoOrden());
+    sede.setIdSede(rqOrdenCabecera.getIdSede());
+
+    ordenCabecera.setFechaOrdenRealizada(rqOrdenCabecera.getFechaOrdenRealizada());
+    ordenCabecera.setFechaPagoRealizada(rqOrdenCabecera.getFechaPagoRealizada());
+    ordenCabecera.setPrecioTotalOrdenCabecera(rqOrdenCabecera.getPrecioTotalOrdenCabecera());
+    ordenCabecera.setComenarioOrdenCabecera(rqOrdenCabecera.getComenarioOrdenCabecera());
+    ordenCabecera.setDistribuidor(distribuidor);
+    ordenCabecera.setSede(sede);
+    ordenCabecera.setEstadoOrden(estadoOrden);
+
+    return ordenCabeceraRepository.save(ordenCabecera);
   }
 
   @PutMapping("/{idOrdenCabecera}")
   @ApiOperation(value = "Actualizar una Orden Cabecera")
   public ResponseEntity<OrdenCabecera> updateOrdenCabecera(@Valid @PathVariable Integer idOrdenCabecera,
-                                                           @RequestBody OrdenCabecera rqOrdenCabecera) throws ResourceNotFoundException{
+                                                           @RequestBody OrdenCabeceraDto rqOrdenCabecera) throws ResourceNotFoundException{
     OrdenCabecera findOrdenCabecera = ordenCabeceraRepository.findById(idOrdenCabecera)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ningua orden cabecera con este id.")
       );
 
-    rqOrdenCabecera.setIdOrdenCabecera(findOrdenCabecera.getIdOrdenCabecera());
+    Distribuidor distribuidor = new Distribuidor();
+    EstadoOrden estadoOrden = new EstadoOrden();
+    Sede sede = new Sede();
+    distribuidor.setIdDistribuidor(rqOrdenCabecera.getIdDistribuidor());
+    estadoOrden.setIdEstadoOrden(rqOrdenCabecera.getIdEstadoOrden());
+    sede.setIdSede(rqOrdenCabecera.getIdSede());
 
-    final OrdenCabecera updateOrdenCabecera = ordenCabeceraRepository.save(rqOrdenCabecera);
+    findOrdenCabecera.setFechaOrdenRealizada(rqOrdenCabecera.getFechaOrdenRealizada());
+    findOrdenCabecera.setFechaPagoRealizada(rqOrdenCabecera.getFechaPagoRealizada());
+    findOrdenCabecera.setPrecioTotalOrdenCabecera(rqOrdenCabecera.getPrecioTotalOrdenCabecera());
+    findOrdenCabecera.setComenarioOrdenCabecera(rqOrdenCabecera.getComenarioOrdenCabecera());
+    findOrdenCabecera.setDistribuidor(distribuidor);
+    findOrdenCabecera.setSede(sede);
+    findOrdenCabecera.setEstadoOrden(estadoOrden);
+
+    final OrdenCabecera updateOrdenCabecera = ordenCabeceraRepository.save(findOrdenCabecera);
     return ResponseEntity.ok(updateOrdenCabecera);
   }
 

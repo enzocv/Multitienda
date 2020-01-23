@@ -1,7 +1,9 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.CiudadDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.Ciudad;
+import com.backend.multitienda.models.entity.Pais;
 import com.backend.multitienda.repositories.ICiudadRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,21 +46,32 @@ public class CiudadController {
 
   @PostMapping
   @ApiOperation(value = "Agregar una ciudad")
-  public Ciudad addCiudad(@RequestBody Ciudad rqCiudad){
+  public Ciudad addCiudad(@RequestBody CiudadDto rqCiudad){
     rqCiudad.setEstado(ACTIVO.getName());
 
-    return ciudadRepository.save(rqCiudad);
+    Ciudad ciudad = new Ciudad();
+    Pais pais = new Pais();
+    pais.setIdPais(rqCiudad.getIdPais());
+
+    ciudad.setNombreCiudad(rqCiudad.getNombreCiudad());
+    ciudad.setPais(pais);
+
+    return ciudadRepository.save(ciudad);
   }
 
   @PutMapping("/{idCiudad}")
   @ApiOperation(value = "Actualizar una Ciudad")
-  public ResponseEntity<Ciudad> updateCiudad(@Valid @PathVariable Integer idCiudad, @RequestBody Ciudad rqCiudad) throws ResourceNotFoundException{
+  public ResponseEntity<Ciudad> updateCiudad(@Valid @PathVariable Integer idCiudad, @RequestBody CiudadDto rqCiudad) throws ResourceNotFoundException{
     Ciudad findCiudad = ciudadRepository.findById(idCiudad)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ciudad con el id: "+ idCiudad)
       );
+
+    Pais pais = new Pais();
+    pais.setIdPais(rqCiudad.getIdPais());
+
     findCiudad.setNombreCiudad(rqCiudad.getNombreCiudad());
-    findCiudad.setPais(rqCiudad.getPais());
+    findCiudad.setPais(pais);
 
     final Ciudad updateCiudad = ciudadRepository.save(findCiudad);
 

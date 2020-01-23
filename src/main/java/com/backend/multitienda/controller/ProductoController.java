@@ -1,7 +1,8 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.ProductoDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
-import com.backend.multitienda.models.entity.Producto;
+import com.backend.multitienda.models.entity.*;
 import com.backend.multitienda.repositories.IProductoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,26 +43,66 @@ public class ProductoController {
 
   @PostMapping
   @ApiOperation(value = "Crear un producto",notes = "Crear un producto nuevo")
-  public Producto addProducto(@RequestBody Producto rqProducto){
+  public Producto addProducto(@RequestBody ProductoDto rqProducto){
+
+    Producto producto = new Producto();
+    Empaque empaque = new Empaque();
+    UnidadMedida unidadMedida = new UnidadMedida();
+    Empresa empresa = new Empresa();
+    CategoriaProducto categoriaProducto = new CategoriaProducto();
+    empaque.setIdEmpaque(rqProducto.getIdEmpaque());
+    unidadMedida.setIdUnidadMedida(rqProducto.getIdUnidadMedida());
+    empresa.setIdEmpresa(rqProducto.getIdEmpresa());
+    categoriaProducto.setIdCategoriaProducto(rqProducto.getIdCategoriaProducto());
     rqProducto.setEstado(ACTIVO.getName());
-    return productoRepository.save(rqProducto);
+
+    producto.setNombreProducto(rqProducto.getNombreProducto());
+    producto.setDescripcionProducto(rqProducto.getDescripcionProducto());
+    producto.setPrecioUnitario(rqProducto.getPrecioUnitario());
+    producto.setPrecioEmpaque(rqProducto.getPrecioEmpaque());
+    producto.setPrecioPorMayor(rqProducto.getPrecioPorMayor());
+    producto.setIgvProducto(rqProducto.isIgvProducto());
+    producto.setEmpaque(empaque);
+    producto.setUnidadMedida(unidadMedida);
+    producto.setEmpresa(empresa);
+    producto.setCategoriaProducto(categoriaProducto);
+
+    return productoRepository.save(producto);
   }
 
   @PutMapping("/{idProducto}")
   @ApiOperation(value = "Actualizar Producto")
   public ResponseEntity<Producto> updateProducto(
     @Valid @PathVariable int idProducto,
-    @RequestBody Producto rqProducto) throws ResourceNotFoundException {
-    Producto obtenerProducto = productoRepository.findById(idProducto)
+    @RequestBody ProductoDto rqProducto) throws ResourceNotFoundException {
+    Producto findProducto = productoRepository.findById(idProducto)
       .orElseThrow(
         () -> new ResourceNotFoundException("No se encontro el producto con este id")
       );
 
-    rqProducto.setIdProducto(obtenerProducto.getIdProducto());
+    Empaque empaque = new Empaque();
+    UnidadMedida unidadMedida = new UnidadMedida();
+    Empresa empresa = new Empresa();
+    CategoriaProducto categoriaProducto = new CategoriaProducto();
+    empaque.setIdEmpaque(rqProducto.getIdEmpaque());
+    unidadMedida.setIdUnidadMedida(rqProducto.getIdUnidadMedida());
+    empresa.setIdEmpresa(rqProducto.getIdEmpresa());
+    categoriaProducto.setIdCategoriaProducto(rqProducto.getIdCategoriaProducto());
 
-    final Producto modificarProducto = productoRepository.save(rqProducto);
+    findProducto.setNombreProducto(rqProducto.getNombreProducto());
+    findProducto.setDescripcionProducto(rqProducto.getDescripcionProducto());
+    findProducto.setPrecioUnitario(rqProducto.getPrecioUnitario());
+    findProducto.setPrecioEmpaque(rqProducto.getPrecioEmpaque());
+    findProducto.setPrecioPorMayor(rqProducto.getPrecioPorMayor());
+    findProducto.setIgvProducto(rqProducto.isIgvProducto());
+    findProducto.setEmpaque(empaque);
+    findProducto.setUnidadMedida(unidadMedida);
+    findProducto.setEmpresa(empresa);
+    findProducto.setCategoriaProducto(categoriaProducto);
 
-    return ResponseEntity.ok(modificarProducto);
+    final Producto updateProducto = productoRepository.save(findProducto);
+
+    return ResponseEntity.ok(updateProducto);
   }
 
   @DeleteMapping("/{idProducto}")

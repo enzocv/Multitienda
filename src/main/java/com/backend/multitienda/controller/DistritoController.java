@@ -1,5 +1,6 @@
 package com.backend.multitienda.controller;
 
+import com.backend.multitienda.dto.DistritoDto;
 import com.backend.multitienda.exceptions.ResourceNotFoundException;
 import com.backend.multitienda.models.entity.Ciudad;
 import com.backend.multitienda.models.entity.Distrito;
@@ -44,24 +45,34 @@ public class DistritoController {
 
   @PostMapping
   @ApiOperation(value = "Agregar un Distrito")
-  public Distrito addDistrito(@RequestBody Distrito rqDistrito){
+  public Distrito addDistrito(@RequestBody DistritoDto rqDistrito){
+
+    Distrito distrito = new Distrito();
+    Ciudad ciudad = new Ciudad();
+    ciudad.setIdCiudad(rqDistrito.getIdCiudad());
     rqDistrito.setEstado(ACTIVO.getName());
 
-    return distritoRepository.save(rqDistrito);
+    distrito.setNombreDistrito(rqDistrito.getNombreDistrito());
+    distrito.setCiudad(ciudad);
+
+    return distritoRepository.save(distrito);
   }
 
   @PutMapping("/{idDistrito}")
   @ApiOperation(value = "Actualizar un Distrito")
   public ResponseEntity<Distrito> updateDistrito(@Valid @PathVariable Integer idDistrito,
-                                                 @RequestBody Distrito rqDistrito) throws ResourceNotFoundException{
+                                                 @RequestBody DistritoDto rqDistrito) throws ResourceNotFoundException{
 
     Distrito findDistrito = distritoRepository.findById(idDistrito)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro el distrito con el id: " + idDistrito)
       );
 
+    Ciudad ciudad = new Ciudad();
+    ciudad.setIdCiudad(rqDistrito.getIdCiudad());
+
     findDistrito.setNombreDistrito(rqDistrito.getNombreDistrito());
-    findDistrito.setCiudad(rqDistrito.getCiudad());
+    findDistrito.setCiudad(ciudad);
 
     final Distrito updateDistrito = distritoRepository.save(findDistrito);
     return ResponseEntity.ok(updateDistrito);

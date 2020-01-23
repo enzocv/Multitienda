@@ -54,7 +54,6 @@ public class EmpresaController {
     Empresa empresa = new Empresa();
     CategoriaEmpresa categoriaEmpresa = new CategoriaEmpresa();
     Distrito distrito = new Distrito();
-
     categoriaEmpresa.setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
     distrito.setIdDistrito(rqEmpresa.getIdDistrito());;
     rqEmpresa.setEstado(ACTIVO.getName());
@@ -75,16 +74,28 @@ public class EmpresaController {
   @ApiOperation(value = "Actualizar una Empresa", notes = "Actualiza una empresa registrada en la bd.")
   public ResponseEntity<Empresa> updateEmpresa(
     @Valid @PathVariable Integer idEmpresa,
-    @RequestBody Empresa rqEmpresa) throws ResourceNotFoundException {
+    @RequestBody EmpresaDto rqEmpresa) throws ResourceNotFoundException {
 
     Empresa findEmpresa = empresaRepository.findById(idEmpresa)
       .orElseThrow(
         () -> new ResourceNotFoundException("No se encontro una Empresa con el id: " + idEmpresa)
       );
 
-    rqEmpresa.setIdEmpresa(findEmpresa.getIdEmpresa());
+    CategoriaEmpresa categoriaEmpresa = new CategoriaEmpresa();
+    Distrito distrito = new Distrito();
+    categoriaEmpresa.setIdCategoriaEmpresa(rqEmpresa.getIdCategoriaEmpresa());
+    distrito.setIdDistrito(rqEmpresa.getIdDistrito());;
 
-    final Empresa updateEmpresa = empresaRepository.save(rqEmpresa);
+    findEmpresa.setNombreEmpresa(rqEmpresa.getNombreEmpresa());
+    findEmpresa.setRucEmpresa(rqEmpresa.getRucEmpresa());
+    findEmpresa.setTelefonoEmpresa(rqEmpresa.getTelefonoEmpresa());
+    findEmpresa.setDireccionEmpresa(rqEmpresa.getDireccionEmpresa());
+    findEmpresa.setEmailEmpresa(rqEmpresa.getEmailEmpresa());
+    findEmpresa.setEstado(rqEmpresa.getEstado());
+    findEmpresa.setCategoriaEmpresa(categoriaEmpresa);
+    findEmpresa.setDistrito(distrito);
+
+    final Empresa updateEmpresa = empresaRepository.save(findEmpresa);
 
     return ResponseEntity.ok(updateEmpresa);
   }

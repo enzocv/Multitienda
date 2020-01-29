@@ -58,12 +58,8 @@ public class CategoriaEmpresaController {
   @ApiOperation(value = "Crear una categoria para las empresas")
   public CategoriaEmpresa addCategoriaEmpresa(@RequestBody CategoriaEmpresa rqCategoriaempresa) throws Exception {
     rqCategoriaempresa.setEstado(ACTIVO.getName());
-
-    String nameImage =
-      rqCategoriaempresa.getIdCategoriaEmpresa() + "_" + rqCategoriaempresa.getDescripcionCategoriaEmpresa();
-
     rqCategoriaempresa.setImagenCategoriaEmpresa(uploadImage(rqCategoriaempresa.getImagenCategoriaEmpresa(),
-      nameImage ));
+      rqCategoriaempresa.getDescripcionCategoriaEmpresa(), " "));
 
     return categoriaEmpresaRepository.save(rqCategoriaempresa);
   }
@@ -72,14 +68,15 @@ public class CategoriaEmpresaController {
   @ApiOperation(value = "Actualizar categoria Empresa")
   public ResponseEntity<CategoriaEmpresa> updateCategoriaEmpresa(
     @Valid @PathVariable Integer idCategoriaEmpresa,
-    @RequestBody CategoriaEmpresa rqCategoriaempresa) throws ResourceNotFoundException {
+    @RequestBody CategoriaEmpresa rqCategoriaempresa) throws Exception {
 
     CategoriaEmpresa findCategoriaEmpresa = categoriaEmpresaRepository.findById(idCategoriaEmpresa)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ninguna Categoria Empresa con el id: " + idCategoriaEmpresa)
       );
 
-    rqCategoriaempresa.setIdCategoriaEmpresa(findCategoriaEmpresa.getIdCategoriaEmpresa());
+    findCategoriaEmpresa.setImagenCategoriaEmpresa(uploadImage(rqCategoriaempresa.getImagenCategoriaEmpresa(),
+      rqCategoriaempresa.getDescripcionCategoriaEmpresa(), rqCategoriaempresa.getImagenCategoriaEmpresa()));
 
     final CategoriaEmpresa updateCategoriaEmpresa = categoriaEmpresaRepository.save(rqCategoriaempresa);
 
@@ -105,11 +102,19 @@ public class CategoriaEmpresaController {
     return response;
   }
 
-  private String uploadImage(String encodeImage, String nameImage) throws Exception {
+  private String uploadImage(String encodeImage, String nameImage, String oldNameImage) throws Exception {
     String image = nameImage.replace(" ","");
 
     String pathImage = IMG_PATH + image + ".jpg";
     File savepath = new File(pathImage);
+
+    if (!oldNameImage.equals(" ")) {
+      File oldPath = new File(oldNameImage);
+      if (oldPath.exists()){
+        oldPath.delete();
+      }
+    }
+
     byte[] data = Base64.getDecoder().decode(encodeImage);
 
     FileOutputStream fileOutputStream = new FileOutputStream(savepath);

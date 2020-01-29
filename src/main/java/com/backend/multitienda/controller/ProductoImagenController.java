@@ -61,7 +61,7 @@ public class ProductoImagenController {
     producto.setIdProducto(rqProductoImagen.getIdProducto());
 
     String nameImage = findProducto.getIdProducto() + "_" + findProducto.getNombreProducto();
-    uploadImage(rqProductoImagen.getImagenProducto(), nameImage.replace(" ",""));
+    uploadImage(rqProductoImagen.getImagenProducto(), nameImage.replace(" ",""), " ");
 
     productoImagen.setImagenProducto(IMG_PATH + nameImage.replace(" ","") + ".jpg");
     productoImagen.setProducto(producto);
@@ -76,17 +76,23 @@ public class ProductoImagenController {
   @PutMapping("/{idProductoImagen}")
   @ApiOperation(value = "Actualizar Producto Imagen")
   public ResponseEntity<ProductoImagen> updateProductoImagen(@Valid @PathVariable Integer idProductoImagen,
-                                                             @RequestBody ProductoImagenDto rqProductoImagen) throws ResourceNotFoundException{
+                                                             @RequestBody ProductoImagenDto rqProductoImagen) throws Exception {
     ProductoImagen findProductoImagen = productoImagenRepository.findById(idProductoImagen)
       .orElseThrow(
         ()-> new ResourceNotFoundException("No se encontro ningun Producto Imagen con el id: " + idProductoImagen)
       );
 
-    Producto producto = new Producto();
-    producto.setIdProducto(rqProductoImagen.getIdProducto());
+    Producto findProducto = productoRepository.findById(rqProductoImagen.getIdProducto())
+      .orElseThrow(
+        ()-> new ResourceNotFoundException("No se encontro el producto con este id.")
+      );
 
-    findProductoImagen.setProducto(producto);
-    findProductoImagen.setImagenProducto(rqProductoImagen.getImagenProducto());
+    String nameImage = findProducto.getIdProducto() + "_" + findProducto.getNombreProducto();
+    String oldImagePath = rqProductoImagen.getImagenProducto();
+    uploadImage(rqProductoImagen.getImagenProducto(),nameImage.replace(" ", ""), oldImagePath);
+
+    findProductoImagen.setProducto(findProducto);
+    findProductoImagen.setImagenProducto(IMG_PATH + nameImage.replace(" ","") + ".jpg");
 
     final ProductoImagen updateProdudctoImagen = productoImagenRepository.save(findProductoImagen);
 
@@ -99,13 +105,20 @@ public class ProductoImagenController {
    * @param nameImage     nombre con el que se guardara la imagen del producto
    * @throws Exception
    */
-  private void uploadImage(String encodeImage, String nameImage) throws Exception {
-    File savepath = new File(IMG_PATH + nameImage.replace(" ","") + ".jpg");
+  private void uploadImage(String encodeImage, String nameImage, String oldNameImage) throws Exception {
+    File savepath = new File(IMG_PATH + nameImage + ".jpg");
+
+    if (!oldNameImage.equals(" ")) {
+      File oldPath = new File(oldNameImage);
+      if (oldPath.exists()){
+        oldPath.delete();
+      }
+    }
+
     byte[] data = Base64.getDecoder().decode(encodeImage);
 
     FileOutputStream fileOutputStream = new FileOutputStream(savepath);
     fileOutputStream.write(data);
     fileOutputStream.close();
   }
-
 }
